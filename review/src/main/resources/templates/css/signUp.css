@@ -1,0 +1,18 @@
+*{
+    margin: 0 auto;
+}
+h1{
+    text-align: center;
+}
+#join{
+    border: 1px solid #0000;
+    width: 400px; height: 300px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+.box.on{color: #999}
+#join .answer{
+    text-align: center;
+}
