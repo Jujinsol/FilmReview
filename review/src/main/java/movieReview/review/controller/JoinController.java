@@ -30,14 +30,17 @@ public class JoinController {
 
     @PostMapping
     public String joinUser(@ModelAttribute userInfo userinfo, mangerInfo mangerinfo, BindingResult bindingResult, RedirectAttributes redirectAttributes){
+        System.out.println("userinfo.getId() = " + userinfo.getId());
+        System.out.println("userinfo.getEmail() = " + userinfo.getEmail());
+        System.out.println("userinfo.getPassword() = " + userinfo.getPassword());
 
-        if(userinfo.getId()==null){
+        if(userinfo.getId().isEmpty()){
             bindingResult.addError(new FieldError("userinfo","id","id는 필수로 작성해야 합니다."));
         }
         if(userinfo.getPassword()==null){
             bindingResult.addError(new FieldError("userinfo","password","비밀번호는 필수로 작성해야 합니다."));
         }
-        if(userinfo.getEmail()==null){
+        if(userinfo.getEmail().isEmpty()){
             bindingResult.addError(new FieldError("userinfo","email","이메일은 필수로 작성해야 합니다."));
         }
 
@@ -52,7 +55,6 @@ public class JoinController {
                 redirectAttributes.addAttribute("id", joinResult.getId());
                 redirectAttributes.addAttribute("email", joinResult.getEmail());
                 return "redirect:/Join/{id}";
-
             } else {
                 joinService.join(userinfo.getEmail(), userinfo.getId(), userinfo.getPassword(), mangerinfo.getNumber());
 

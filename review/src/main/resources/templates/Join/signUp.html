@@ -13,9 +13,13 @@
     <table>
         <tr>
             <td>ID</td>
-            <td><label>
-                <input type="text" th:name="id" th::field="*{id}">
-            </label></td>
+            <td>
+                <label>
+                    <input type="text" th:name="id" th:field="*{id}" th:errorclass="field-error">
+                    <div class="field-error" th:error="*{id}" >
+                    </div>
+                </label>
+            </td>
         </tr>
 
         <tr>
