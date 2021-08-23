@@ -12,7 +12,7 @@ h1{
     top: 50%;
     transform: translate(-50%, -50%);
 }
-.box.on{color: #999}
 #join .answer{
     text-align: center;
 }
+.box.on{color:#999;}

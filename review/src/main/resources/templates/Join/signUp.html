@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="">
 </head>
 <body>
-<form action="#" method="post" name="joinForm"></form>
+<form action="#" method="post" name="form">
 <div id="join">
     <h1>회원가입</h1>
     <table>
@@ -32,14 +32,18 @@
         <tr>
             <td>관리자입니까?</td>
             <td>
-                <label for="chk"></label><input type="checkbox" id="chk">
+                <label>
+                    <input type="checkbox" name="checkbutton" onclick="f_check()">
+                </label>
             </td>
         </tr>
         <tr>
             <td>관리자 번호</td>
-            <td><label class="manager">
-                <input type="text">
-            </label></td>
+            <td>
+                <label>
+                    <input type="text" name="textbox">
+                </label>
+            </td>
         </tr>
         <tr>
             <td>e-mail</td>
@@ -60,7 +64,8 @@
             </td>
         </tr>
     </table>
+    <script src="../js/signUp.js" charset="utf-8"></script>
 </div>
-<!--<script src="../js/signUp.js" charset="utf-8"></script>-->
+</form>
 </body>
 </html>
