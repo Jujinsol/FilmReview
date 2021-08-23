@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>sign up success</title>
-    <link rel="stylesheet" href="/css/signUpSuccess.css" th:href="@{/css/signUpSuccess.css}">
+    <link rel="stylesheet" href="../../static/css/signUpSuccess.css" th:href="@{../../static/css/signUpSuccess.css}">
 </head>
 <body>
 <h1>회원가입이 완료되었습니다!</h1>
 <h3  th:name="id" th:text="${userInfo.id}"></h3>
 <h3 th:name="email" th:text="${userInfo.email}"></h3>
+<br><br><br>
+<input type="button" value="메인화면으로 돌아가기">
 </body>
 </html>
