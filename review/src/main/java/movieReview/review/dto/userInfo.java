@@ -10,5 +10,5 @@ import org.springframework.stereotype.Component;
 public class userInfo {
     String id;
     String email;
-    int password;
+    Integer password;
 }

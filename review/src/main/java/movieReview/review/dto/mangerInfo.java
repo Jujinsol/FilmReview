@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class mangerInfo {
     String id;
-    int number;
+    Integer number;
     int password;
     String email;
 }
