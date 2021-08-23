@@ -1,0 +1,16 @@
+*{
+    margin: 0 auto;
+}
+body{
+    border: 1px solid #0000;
+    width: 350px; height: 230px;
+    box-sizing: border-box;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+input[type="button"]{
+    width: 350px;
+    margin-top: 5px;
+}
