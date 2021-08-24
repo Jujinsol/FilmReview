@@ -2,18 +2,12 @@ package movieReview.review.repository;
 
 import movieReview.review.dto.mangerInfo;
 import movieReview.review.dto.userInfo;
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Before;
-import org.assertj.core.api.Assertions;
+import movieReview.review.repository.Join.joinRepositoryImpl;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class joinRepositoryImplTest {
     joinRepositoryImpl jo = new joinRepositoryImpl();
@@ -31,7 +25,6 @@ class joinRepositoryImplTest {
         int result = jo.createUser(userinfo);
         //then
         assertThat(result).isEqualTo(1);
-
 
     }
 
@@ -90,4 +83,24 @@ class joinRepositoryImplTest {
 
     }
 
+    @Test
+    void mangerInfoSelect(){
+        //given
+        mangerinfo.setId("imy0529");
+        mangerinfo.setEmail("imy0529@naver.com");
+        mangerinfo.setPassword(1111);
+        mangerinfo.setNumber(2222);
+
+        jo.createManger(mangerinfo);
+
+        //when
+        mangerInfo findResult = jo.selectMangerinfo(mangerinfo);
+        //then
+        assertThat(findResult.getId()).isEqualTo("imy0529");
+        assertThat(findResult.getEmail()).isEqualTo("imy0529@naver.com");
+        assertThat(findResult.getPassword()).isEqualTo(1111);
+        assertThat(findResult.getNumber()).isEqualTo(2222);
+
+        jo.deleteManger(mangerinfo);
+    }
 }

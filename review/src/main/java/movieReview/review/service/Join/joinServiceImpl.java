@@ -1,11 +1,13 @@
-package movieReview.review.service;
+package movieReview.review.service.Join;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import movieReview.review.dto.mangerInfo;
 import movieReview.review.dto.userInfo;
-import movieReview.review.repository.joinRepositoryImpl;
+import movieReview.review.repository.Join.joinRepositoryImpl;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -23,16 +25,28 @@ public class joinServiceImpl implements joinService{
             userinfo.setEmail(email);
             userinfo.setPassword(password);
 
-            int userResult = joinRepository.createUser(userinfo);
+            // null이 반환되면 회원가입을 진행해야 하기 때문에 Optional로 감싸준다.
+            Optional<userInfo> findUser = Optional.ofNullable(joinRepository.selectMyinfo(userinfo));
 
-            return userResult;
+            if(findUser.isEmpty()){
+                return joinRepository.createUser(userinfo);
+            }else{
+                return 0;
+            }
+
         }else{
             mangerinfo.setId(id);
             mangerinfo.setPassword(password);
             mangerinfo.setEmail(email);
             mangerinfo.setNumber(mangerNum);
 
-            return joinRepository.createManger(mangerinfo);
+            Optional<mangerInfo> findManger = Optional.ofNullable(joinRepository.selectMangerinfo(mangerinfo));
+
+            if(findManger.isEmpty()){
+                return joinRepository.createManger(mangerinfo);
+            }else{
+                return 0;
+            }
         }
     }
 

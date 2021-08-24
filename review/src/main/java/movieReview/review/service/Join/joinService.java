@@ -1,4 +1,4 @@
-package movieReview.review.service;
+package movieReview.review.service.Join;
 
 import movieReview.review.dto.userInfo;
 
