@@ -148,6 +148,20 @@ public class joinRepositoryImpl implements joinRepository{
         return result;
     }
 
+    @Override
+    public int updateMangInfo(mangerInfo mangerinfo) {
+        int result = 0;
+
+        final String sql = "UPDATE master SET pw = ? WHERE masterId = ?";
+        // select를 제외한 CUD들은 template.update를 사용하면 된다.
+        result = template.update(sql,
+                mangerinfo.getPassword(),
+                mangerinfo.getId()
+        );
+
+        return result;
+    }
+
     // 유저 회원 탈퇴
     @Override
     public int delete(userInfo userinfo) {

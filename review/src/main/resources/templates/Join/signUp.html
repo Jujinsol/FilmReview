@@ -25,7 +25,7 @@
                            th:name="id"
                            th:field="*{id}"
                            th:errorclass="field-error">
-                    <div class="field-error" th:field="*{id}" th:if="${#fields.hasErrors('id')}" th:errors="*{id}">
+                    <div class="field-error" th:field="*{id}" th:errors="*{id}">
                         id 오류
                     </div>
                 </label>
