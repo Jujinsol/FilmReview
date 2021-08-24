@@ -36,7 +36,6 @@ public class JoinController {
 
         if(userinfo.getId().isEmpty()){
             bindingResult.addError(new FieldError("userinfo", "id", userinfo.getId(), false, new String[]{"login.id"}, null, null));
-
         }
         if(userinfo.getPassword()==null){
             bindingResult.addError(new FieldError("userinfo","password",userinfo.getPassword(),false,new String[]{"login.password"},new Object[]{45},null));
@@ -51,17 +50,29 @@ public class JoinController {
             return "Join/signUp";
         }else {
             if (mangerinfo.getNumber() == null) {
-                joinService.join(userinfo.getEmail(), userinfo.getId(), userinfo.getPassword(), null);
+                int join = joinService.join(userinfo.getEmail(), userinfo.getId(), userinfo.getPassword(), null);
 
-                userInfo joinResult = joinService.myInfo(userinfo.getId());
-                redirectAttributes.addAttribute("id", joinResult.getId());
-                redirectAttributes.addAttribute("email", joinResult.getEmail());
+                if(join==1){
+                    userInfo joinResult = joinService.myInfo(userinfo.getId());
+                    redirectAttributes.addAttribute("id", joinResult.getId());
+                    redirectAttributes.addAttribute("email", joinResult.getEmail());
+                }else{
+                    bindingResult.addError(new FieldError("userinfo","id",userinfo.getId(),false,new String[]{"login.id.equal"},null,null));
+                    log.info("errors={}",bindingResult);
+                    return "Join/signUp";
+                }
             } else {
-                joinService.join(userinfo.getEmail(), userinfo.getId(), userinfo.getPassword(), mangerinfo.getNumber());
+                int mangerJoin = joinService.join(userinfo.getEmail(), userinfo.getId(), userinfo.getPassword(), mangerinfo.getNumber());
 
-                userInfo mangerInfo = joinService.myInfo(userinfo.getId());
-                redirectAttributes.addAttribute("id", mangerInfo.getId());
-                redirectAttributes.addAttribute("email", mangerInfo.getId());
+                if(mangerJoin==1) {
+                    userInfo mangerInfo = joinService.myInfo(userinfo.getId());
+                    redirectAttributes.addAttribute("id", mangerInfo.getId());
+                    redirectAttributes.addAttribute("email", mangerInfo.getId());
+                }else{
+                    bindingResult.addError(new FieldError("userinfo","id",mangerinfo.getId(),false,new String[]{"login.id.equal"},null,null));
+                    log.info("errors={}",bindingResult);
+                    return "Join/signUp";
+                }
 
             }
             return "redirect:/Join/{id}";
@@ -69,7 +80,7 @@ public class JoinController {
     }
 
     @GetMapping("/{id}")
-    public String myInfo(@PathVariable String id, Model model){
+    public String myInfo(@PathVariable("id") String id, Model model){
         userInfo userInfo = joinService.myInfo(id);
         model.addAttribute("userInfo",userInfo);
         return "/Join/signUpSuccess";

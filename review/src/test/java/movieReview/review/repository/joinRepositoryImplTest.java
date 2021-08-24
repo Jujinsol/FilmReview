@@ -32,7 +32,6 @@ class joinRepositoryImplTest {
         //then
         assertThat(result).isEqualTo(1);
 
-
     }
 
 
@@ -90,4 +89,24 @@ class joinRepositoryImplTest {
 
     }
 
+    @Test
+    void mangerInfoSelect(){
+        //given
+        mangerinfo.setId("imy0529");
+        mangerinfo.setEmail("imy0529@naver.com");
+        mangerinfo.setPassword(1111);
+        mangerinfo.setNumber(2222);
+
+        jo.createManger(mangerinfo);
+
+        //when
+        mangerInfo findResult = jo.selectMangerinfo(mangerinfo);
+        //then
+        assertThat(findResult.getId()).isEqualTo("imy0529");
+        assertThat(findResult.getEmail()).isEqualTo("imy0529@naver.com");
+        assertThat(findResult.getPassword()).isEqualTo(1111);
+        assertThat(findResult.getNumber()).isEqualTo(2222);
+
+        jo.deleteManger(mangerinfo);
+    }
 }

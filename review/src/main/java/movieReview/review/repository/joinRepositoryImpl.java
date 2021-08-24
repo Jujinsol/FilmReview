@@ -44,6 +44,7 @@ public class joinRepositoryImpl implements joinRepository{
         template.setDataSource(dataSource);
     }
 
+    // 유저회원가입
     @Override
     public int createUser(userInfo userinfo) {
         int result = 0;
@@ -56,6 +57,7 @@ public class joinRepositoryImpl implements joinRepository{
         return result;
     }
 
+    // 관리자 회원가입
     @Override
     public int createManger(mangerInfo mangerinfo) {
         int result = 0;
@@ -69,6 +71,7 @@ public class joinRepositoryImpl implements joinRepository{
         return result;
     }
 
+    // 내정보 확인 ( 유저 )
     @Override
     public userInfo selectMyinfo(userInfo userinfo) {
         List<userInfo> stocks = null;
@@ -99,6 +102,38 @@ public class joinRepositoryImpl implements joinRepository{
         }
     }
 
+    // 관리자 정보확인
+    @Override
+    public mangerInfo selectMangerinfo(mangerInfo mangerinfo) {
+        List<mangerInfo> mang = null;
+        final String sql = "SELECT * FROM master WHERE masterId = ?";
+
+        mang = template.query(sql, new PreparedStatementSetter() {
+
+            @Override
+            public void setValues(PreparedStatement pstmt) throws SQLException {
+                pstmt.setString(1, mangerinfo.getId());
+
+            }
+        }, new RowMapper<mangerInfo>() {
+
+            @Override
+            public mangerInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
+                mangerinfo.setId(rs.getString("masterId"));
+                mangerinfo.setPassword(rs.getInt("pw"));
+                mangerinfo.setEmail(rs.getString("email"));
+                mangerinfo.setNumber(rs.getInt("number"));
+                return mangerinfo;
+            }
+
+        });
+        if (mang.isEmpty()) {
+            return null;
+        } else {
+            return mangerinfo;
+        }    }
+
+    // 유저 비밀번호 변경
     @Override
     public int updateMyinfo(userInfo userinfo) {
         int result = 0;
@@ -113,6 +148,7 @@ public class joinRepositoryImpl implements joinRepository{
         return result;
     }
 
+    // 유저 회원 탈퇴
     @Override
     public int delete(userInfo userinfo) {
         int result = 0;
@@ -125,6 +161,7 @@ public class joinRepositoryImpl implements joinRepository{
         return result;
     }
 
+    // 관리자 회원 탈퇴
     @Override
     public int deleteManger(mangerInfo mangerinfo){
         int result = 0;
