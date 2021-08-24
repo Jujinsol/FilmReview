@@ -53,7 +53,6 @@ public class joinServiceImpl implements joinService{
     @Override
     public userInfo myInfo(String id) {
         userinfo.setId(id);
-
         return joinRepository.selectMyinfo(userinfo);
     }
 
@@ -61,7 +60,6 @@ public class joinServiceImpl implements joinService{
     public int update(String id,int password) {
         userinfo.setId(id);
         userinfo.setPassword(password);
-
         return joinRepository.updateMyinfo(userinfo);
     }
 
@@ -69,7 +67,6 @@ public class joinServiceImpl implements joinService{
     public int delete(String id, int password) {
         userinfo.setId(id);
         userinfo.setPassword(password);
-
         return joinRepository.delete(userinfo);
     }
 }

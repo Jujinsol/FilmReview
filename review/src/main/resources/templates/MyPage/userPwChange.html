@@ -6,32 +6,26 @@
     <link rel="stylesheet" href="/css/userPwChange.css">
 </head>
 <body>
-<form action="#" method="post" th:object="${userInfo}">
+<form th:action method="post" th:object="${userInfo}" name="form">
     <table>
         <tr>
             <td th:name="id" th:text="*{id}">ID</td><!--사용자의 아이디가 보여야함-->
         </tr>
         <tr>
-            <td th:name="password" th:text="*{password}">비밀번호</td>
-            <td><label>
-                <input type="password">
-            </label></td>
-        </tr>
-        <tr>
             <td>바꿀 비밀번호</td>
             <td><label>
-                <input type="password"><!--새로운 비밀번호 입력창-->
+                <input type="password" th:field="*{password}"><!--새로운 비밀번호 입력창-->
             </label></td>
         </tr>
         <tr>
             <td>바꿀 비밀번호 확인</td>
             <td><label>
-                <input type="password">
+                <input type="password" >
             </label></td>
         </tr>
     </table>
-    <input type="button" value="비밀번호 변경하기">
-    <input type="button" value="나가기">
+    <input type="submit" value="비밀번호 변경하기">
+    <input type="button" value="메인페이지로 나가기" th:onclick="|location.href='@{/MainPage}'|">
     <input type="button" value="회원 탈퇴하기">
 </form>
 </body>
