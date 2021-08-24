@@ -29,22 +29,24 @@ public class JoinController {
     }
 
     @PostMapping
-    public String joinUser(@ModelAttribute userInfo userinfo, mangerInfo mangerinfo, BindingResult bindingResult, RedirectAttributes redirectAttributes){
-        System.out.println("userinfo.getId() = " + userinfo.getId());
-        System.out.println("userinfo.getEmail() = " + userinfo.getEmail());
-        System.out.println("userinfo.getPassword() = " + userinfo.getPassword());
+    public String joinUser(userInfo userinfo, mangerInfo mangerinfo, BindingResult bindingResult, RedirectAttributes redirectAttributes,Model model){
+        log.info("userinfo.getId()={}",userinfo.getId());
+        log.info("userinfo.getPassword()={}",userinfo.getPassword());
+        log.info("userinfo.getEmail()={}",userinfo.getEmail());
 
         if(userinfo.getId().isEmpty()){
-            bindingResult.addError(new FieldError("userinfo","id","id는 필수로 작성해야 합니다."));
+            bindingResult.addError(new FieldError("userinfo", "id", userinfo.getId(), false, new String[]{"login.id"}, null, null));
+
         }
         if(userinfo.getPassword()==null){
-            bindingResult.addError(new FieldError("userinfo","password","비밀번호는 필수로 작성해야 합니다."));
+            bindingResult.addError(new FieldError("userinfo","password",userinfo.getPassword(),false,new String[]{"login.password"},new Object[]{45},null));
         }
         if(userinfo.getEmail().isEmpty()){
-            bindingResult.addError(new FieldError("userinfo","email","이메일은 필수로 작성해야 합니다."));
+            bindingResult.addError(new FieldError("userinfo","email",userinfo.getEmail(),false,new String[]{"login.email"},null,null));
         }
 
         if(bindingResult.hasErrors()){
+            model.addAttribute("errors",bindingResult);
             log.info("errors={}",bindingResult);
             return "Join/signUp";
         }else {
@@ -54,16 +56,15 @@ public class JoinController {
                 userInfo joinResult = joinService.myInfo(userinfo.getId());
                 redirectAttributes.addAttribute("id", joinResult.getId());
                 redirectAttributes.addAttribute("email", joinResult.getEmail());
-                return "redirect:/Join/{id}";
             } else {
                 joinService.join(userinfo.getEmail(), userinfo.getId(), userinfo.getPassword(), mangerinfo.getNumber());
 
                 userInfo mangerInfo = joinService.myInfo(userinfo.getId());
                 redirectAttributes.addAttribute("id", mangerInfo.getId());
                 redirectAttributes.addAttribute("email", mangerInfo.getId());
-                return "redirect:/Join/{id}";
 
             }
+            return "redirect:/Join/{id}";
         }
     }
 
