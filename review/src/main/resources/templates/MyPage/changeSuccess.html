@@ -6,8 +6,8 @@
 </head>
 <body>
 <h1>회원정보 변경이 완료되었습니다!</h1>
-<h3 th:name="id" th:text="${userInfo.id}"></h3>
-<h3 th:name="password" th:text="${userInfo.password}"></h3>
+<h3 th:name="id" th:text="${user.id}"></h3>
+<h3 th:name="password" th:text="${user.password}"></h3>
 <br><br><br>
 <input type="button" value="메인화면으로 돌아가기" th:onclick="|location.href='@{/MainPage}'|">
 </body>

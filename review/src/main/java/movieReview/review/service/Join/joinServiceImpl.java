@@ -57,10 +57,23 @@ public class joinServiceImpl implements joinService{
     }
 
     @Override
+    public mangerInfo mangerInfo(String id) {
+        mangerinfo.setId(id);
+        return joinRepository.selectMangerinfo(mangerinfo);
+    }
+
+    @Override
     public int update(String id,int password) {
         userinfo.setId(id);
         userinfo.setPassword(password);
         return joinRepository.updateMyinfo(userinfo);
+    }
+
+    @Override
+    public int mangerUpdate(String id, int password) {
+        mangerinfo.setId(id);
+        mangerinfo.setPassword(password);
+        return joinRepository.updateMangInfo(mangerinfo);
     }
 
     @Override
