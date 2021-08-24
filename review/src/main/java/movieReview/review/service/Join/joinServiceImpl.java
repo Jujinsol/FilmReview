@@ -1,10 +1,10 @@
-package movieReview.review.service;
+package movieReview.review.service.Join;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import movieReview.review.dto.mangerInfo;
 import movieReview.review.dto.userInfo;
-import movieReview.review.repository.joinRepositoryImpl;
+import movieReview.review.repository.Join.joinRepositoryImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

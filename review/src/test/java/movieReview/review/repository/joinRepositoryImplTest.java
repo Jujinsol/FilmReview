@@ -2,18 +2,12 @@ package movieReview.review.repository;
 
 import movieReview.review.dto.mangerInfo;
 import movieReview.review.dto.userInfo;
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Before;
-import org.assertj.core.api.Assertions;
+import movieReview.review.repository.Join.joinRepositoryImpl;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class joinRepositoryImplTest {
     joinRepositoryImpl jo = new joinRepositoryImpl();

@@ -2,16 +2,11 @@ package movieReview.review.service;
 
 import movieReview.review.dto.mangerInfo;
 import movieReview.review.dto.userInfo;
-import movieReview.review.repository.joinRepository;
-import movieReview.review.repository.joinRepositoryImpl;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
+import movieReview.review.repository.Join.joinRepositoryImpl;
+import movieReview.review.service.Join.joinServiceImpl;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class joinServiceImplTest {
     joinRepositoryImpl jo = new joinRepositoryImpl();

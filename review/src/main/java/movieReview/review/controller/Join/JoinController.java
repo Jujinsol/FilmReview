@@ -1,18 +1,16 @@
-package movieReview.review.controller;
+package movieReview.review.controller.Join;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import movieReview.review.dto.mangerInfo;
 import movieReview.review.dto.userInfo;
-import movieReview.review.repository.joinRepositoryImpl;
-import movieReview.review.service.joinServiceImpl;
+import movieReview.review.service.Join.joinServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.thymeleaf.exceptions.ParserInitializationException;
 
 @Controller
 @Slf4j

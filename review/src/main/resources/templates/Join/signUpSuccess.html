@@ -10,6 +10,6 @@
 <h3  th:name="id" th:text="${userInfo.id}"></h3>
 <h3 th:name="email" th:text="${userInfo.email}"></h3>
 <br><br><br>
-<input type="button" value="메인화면으로 돌아가기">
+<input type="button" value="메인화면으로 돌아가기" th:onclick="|location.href='@{/MainPage}'|">
 </body>
 </html>

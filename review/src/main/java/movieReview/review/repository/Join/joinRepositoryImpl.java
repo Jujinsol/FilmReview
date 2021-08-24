@@ -1,4 +1,4 @@
-package movieReview.review.repository;
+package movieReview.review.repository.Join;
 
 import lombok.extern.slf4j.Slf4j;
 import movieReview.review.dto.mangerInfo;

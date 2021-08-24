@@ -1,4 +1,4 @@
-package movieReview.review.repository;
+package movieReview.review.repository.Join;
 
 import movieReview.review.dto.mangerInfo;
 import movieReview.review.dto.userInfo;

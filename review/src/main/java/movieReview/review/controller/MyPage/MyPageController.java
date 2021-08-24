@@ -1,9 +1,9 @@
-package movieReview.review.controller;
+package movieReview.review.controller.MyPage;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import movieReview.review.dto.userInfo;
-import movieReview.review.service.joinServiceImpl;
+import movieReview.review.service.Join.joinServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,5 +28,4 @@ public class MyPageController {
         model.addAttribute("password",findInfo.getPassword());
         return "/MyPage/userPwChange";
     }
-
 }
