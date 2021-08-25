@@ -3,14 +3,18 @@
 }
 body{
     border: 1px solid #0000;
-    width: 315px; height: 230px;
+    width: 430px; height: 230px;
     box-sizing: border-box;
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
 }
+input[type="submit"]{
+    width: 430px;
+    margin-top: 10px;
+}
 input[type="button"]{
-    width: 315px;
+    width: 430px;
     margin-top: 5px;
 }

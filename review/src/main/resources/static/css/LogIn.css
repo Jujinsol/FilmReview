@@ -1,7 +1,12 @@
-body{
-    text-align: center;
-    width: 500px;
+*{
     margin: 0 auto;
+}
+h1{
+    text-align: center;
+}
+body{
+
+    width: 400px;
     position: absolute;
     left: 50%;
     top: 50%;
