@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Log In</title>
-    <link rel="stylesheet" href="/static/css/LogIn.css">
+    <link rel="stylesheet" href="/css/LogIn.css">
+    <link rel="stylesheet" th:href="@{/css/LogIn.css}">
 </head>
 <body>
 <form th:action th:object="${userinfo}" method="post">

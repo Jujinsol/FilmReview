@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>sign up</title>
-    <link rel="stylesheet" href="/static/css/signUp.css">
-    <link rel="stylesheet" th:href="@{/static/css/signUp.css}">
+    <link rel="stylesheet" href="/css/signUp.css">
+    <link rel="stylesheet" th:href="@{/css/signUp.css}">
     <style>
         .field-error {
             border-color: #dc3545;
@@ -13,7 +13,7 @@
     </style>
 </head>
 <body>
-<form th:action th:object="${userInfo}" method="post" name="form">
+<form th:action th:object="${userInfo}" th:method="post" name="form">
 <div id="join">
     <h1>회원가입</h1>
     <table>
@@ -64,7 +64,7 @@
             <td>관리자 번호</td>
             <td>
                 <label>
-                    <input type="text" name="textbox">
+                    <input type="text" name="textbox" th:field="${mangerInfo.number}">
                 </label>
             </td>
         </tr>

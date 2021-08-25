@@ -43,13 +43,13 @@ public class LoginController {
         //사용자인지
         //관리자인지 구분해야됌
         if(userinfo.getPassword()==null){
-            bindingResult.addError(new FieldError("userinfo","password",userinfo.getId(),false,null,null,"잘못입력하셨습니다."));
+            log.info("pw 미입력");
             return "redirect:/Login";
         }else if(userinfo.getId()==null){
-            bindingResult.addError(new FieldError("userinfo","ID",userinfo.getId(),false,null,null,"잘못입력하셨습니다."));
+            log.info("id 미입력");
             return "redirect:/Login";
         }else if(userinfo.getPassword()==null&&userinfo.getId()==null){
-            bindingResult.addError(new FieldError("userinfo","ID",userinfo.getId(),false,null,null,"잘못입력하셨습니다."));
+            log.info("둘다 미입력");
             return "redirect:/Login";
         }else{
             int result = loginServiceImpl.FirstCheck(userinfo.getId());
@@ -57,7 +57,7 @@ public class LoginController {
                 //사용자
                 Optional<userInfo> userLoginResult = Optional.ofNullable(loginServiceImpl.userLogin(userinfo));
                 if(userLoginResult.isEmpty()){
-                    bindingResult.addError(new FieldError("userinfo","id",userinfo.getId(),false,null,null,"잘못입력하셨습니다."));
+                    log.info("사용자 둘중에하나 틀렸음");
                     return "redirect:/Login";
                 }else{
                     Cookie userCookie = new Cookie("id",String.valueOf(userinfo.getId()));
@@ -71,7 +71,7 @@ public class LoginController {
                 mangerinfo.setEmail(userinfo.getEmail());
                 Optional<mangerInfo> mangerLoginResult = Optional.ofNullable(loginServiceImpl.mangerLogin(mangerinfo));
                 if(mangerLoginResult.isEmpty()){
-                    bindingResult.addError(new FieldError("userinfo","id",userinfo.getId(),false,null,null,"잘못입력하셨습니다."));
+                    log.info("관리자 둘중에하나 틀렸음");
                     return "redirect:/Login";
                 }else{
                     Cookie mangerCookie = new Cookie("id",String.valueOf(mangerinfo.getId()));

@@ -24,9 +24,9 @@ public class LoginServiceImpl implements LoginService{
 
     @Override
     public userInfo userLogin(userInfo userinfo) {
-        Optional<userInfo> userIdCheck = checkInfoExist.userIdCheck(userinfo.getId());
-        Optional<userInfo> userPwCheck = checkInfoExist.userPwChcek(userinfo.getPassword());
-        Optional<userInfo> userCheck = checkInfoExist.checkUser(userinfo.getId(), userinfo.getPassword());
+        Optional<userInfo> userIdCheck = Optional.ofNullable(checkInfoExist.userIdCheck(userinfo.getId()));
+        Optional<userInfo> userPwCheck = Optional.ofNullable(checkInfoExist.userPwChcek(userinfo.getPassword()));
+        Optional<userInfo> userCheck = Optional.ofNullable(checkInfoExist.checkUser(userinfo.getId(), userinfo.getPassword()));
 
         if(!userIdCheck.isEmpty()){
             if(!userPwCheck.isEmpty()){
@@ -46,9 +46,9 @@ public class LoginServiceImpl implements LoginService{
 
     @Override
     public mangerInfo mangerLogin(mangerInfo mangerinfo) {
-        Optional<mangerInfo> mangerIdCheck = checkInfoExist.mangerIdCheck(mangerinfo.getId());
-        Optional<mangerInfo> mangerPwCheck = checkInfoExist.mangerPwCheck(mangerinfo.getPassword());
-        Optional<mangerInfo> mangerCheck = checkInfoExist.checkManger(mangerinfo.getId(), mangerinfo.getPassword());
+        Optional<mangerInfo> mangerIdCheck = Optional.ofNullable(checkInfoExist.mangerIdCheck(mangerinfo.getId()));
+        Optional<mangerInfo> mangerPwCheck = Optional.ofNullable(checkInfoExist.mangerPwCheck(mangerinfo.getPassword()));
+        Optional<mangerInfo> mangerCheck = Optional.ofNullable(checkInfoExist.checkManger(mangerinfo.getId(), mangerinfo.getPassword()));
 
         if(!mangerIdCheck.isEmpty()){
             if(!mangerPwCheck.isEmpty()){

@@ -53,8 +53,8 @@ class CheckInfoExistImplTest {
     @Test
     void checkUser성공() {
         //when
-        Optional<userInfo> jjs1111 = checkInfoExist.checkUser("jjs1111", 222);
-        userInfo userInfo = jjs1111.get();
+        userInfo userInfo = checkInfoExist.checkUser("jjs1111", 222);
+
         //then
         assertThat(userInfo.getId()).isEqualTo("jjs1111");
         assertThat(userInfo.getPassword()).isEqualTo(222);
@@ -64,7 +64,7 @@ class CheckInfoExistImplTest {
     @Test
     void checkUser로그인실패아예다른idpw작성시(){
         //when
-        Optional<userInfo> jjj = checkInfoExist.checkUser("jjj", 1);
+        userInfo jjj = checkInfoExist.checkUser("jjj", 1);
         //then
         assertThat(jjj).isNull();
     }
@@ -72,8 +72,7 @@ class CheckInfoExistImplTest {
     @Test
     void checkManger성공() {
         //given
-        Optional<mangerInfo> imy0111 = checkInfoExist.checkManger("imy0111", 222);
-        mangerInfo mangerInfo = imy0111.get();
+        mangerInfo mangerInfo = checkInfoExist.checkManger("imy0111", 222);
 
         assertThat(mangerInfo.getId()).isEqualTo("imy0111");
         assertThat(mangerInfo.getEmail()).isEqualTo("imy0529@asdf");
@@ -84,7 +83,7 @@ class CheckInfoExistImplTest {
 
     @Test
     void checkManger로그인실패아에다른idpw작성시(){
-        Optional<mangerInfo> iii = checkInfoExist.checkManger("iii", 11);
+        mangerInfo iii = checkInfoExist.checkManger("iii", 11);
         assertThat(iii).isNull();
     }
 
@@ -92,8 +91,7 @@ class CheckInfoExistImplTest {
     @Test
     void userIdCheck성공() {
         //when
-        Optional<userInfo> jjs1111 = checkInfoExist.userIdCheck("jjs1111");
-        userInfo userInfo = jjs1111.get();
+        userInfo userInfo = checkInfoExist.userIdCheck("jjs1111");
         //then
         assertThat(userInfo.getId()).isEqualTo("jjs1111");
         assertThat(userInfo.getPassword()).isEqualTo(222);
@@ -104,7 +102,7 @@ class CheckInfoExistImplTest {
     @Test
     void userIdCheck실패(){
         //when
-        Optional<userInfo> jjs1111 = checkInfoExist.userIdCheck("jjs0");
+        userInfo jjs1111 = checkInfoExist.userIdCheck("jjs0");
         //then
         assertThat(jjs1111).isNull();
     }
@@ -112,8 +110,8 @@ class CheckInfoExistImplTest {
     @Test
     void mangerIdCheck성공() {
         //when
-        Optional<mangerInfo> imy0111 = checkInfoExist.mangerIdCheck("imy0111");
-        mangerInfo mangerInfo = imy0111.get();
+        mangerInfo mangerInfo = checkInfoExist.mangerIdCheck("imy0111");
+
         //then
         assertThat(mangerInfo.getId()).isEqualTo("imy0111");
         assertThat(mangerInfo.getEmail()).isEqualTo("imy0529@asdf");
@@ -124,7 +122,7 @@ class CheckInfoExistImplTest {
     @Test
     void mangerIdCheck실패(){
         //when
-        Optional<mangerInfo> imy = checkInfoExist.mangerIdCheck("imy");
+        mangerInfo imy = checkInfoExist.mangerIdCheck("imy");
         //then
         assertThat(imy).isNull();
 
@@ -133,8 +131,8 @@ class CheckInfoExistImplTest {
     @Test
     void userPwChcek성공() {
         //when
-        Optional<userInfo> findInfo = checkInfoExist.userPwChcek(222);
-        var userInfo = findInfo.get();
+        userInfo userInfo = checkInfoExist.userPwChcek(222);
+
         //then
         assertThat(userInfo.getId()).isEqualTo("jjs1111");
         assertThat(userInfo.getPassword()).isEqualTo(222);
@@ -144,7 +142,7 @@ class CheckInfoExistImplTest {
     @Test
     void userPwCheck실패(){
         //when
-        Optional<userInfo> userInfo = checkInfoExist.userPwChcek(1);
+        userInfo userInfo = checkInfoExist.userPwChcek(1);
         //then
         assertThat(userInfo).isNull();
 
@@ -153,8 +151,8 @@ class CheckInfoExistImplTest {
     @Test
     void mangerPwCheck성공() {
         //when
-        Optional<mangerInfo> findInfo = checkInfoExist.mangerPwCheck(222);
-        mangerInfo mangerInfo = findInfo.get();
+        mangerInfo mangerInfo = checkInfoExist.mangerPwCheck(222);
+
         //then
         assertThat(mangerInfo.getId()).isEqualTo("imy0111");
         assertThat(mangerInfo.getEmail()).isEqualTo("imy0529@asdf");

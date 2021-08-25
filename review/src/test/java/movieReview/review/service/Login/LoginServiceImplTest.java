@@ -82,7 +82,7 @@ class LoginServiceImplTest {
         user.setEmail("abcd");
         userInfo result = loginServiceImpl.userLogin(user);
 
-        assertThat(result).isEqualTo("id문제");
+        assertThat(result).isEqualTo(null);
     }
 
     @Test
