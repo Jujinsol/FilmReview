@@ -70,47 +70,95 @@ class CheckInfoExistImplTest {
     }
 
     @Test
-    void checkManger() {
+    void checkManger성공() {
         //given
+        Optional<mangerInfo> imy0111 = checkInfoExist.checkManger("imy0111", 222);
+        mangerInfo mangerInfo = imy0111.get();
 
-        //when
+        assertThat(mangerInfo.getId()).isEqualTo("imy0111");
+        assertThat(mangerInfo.getEmail()).isEqualTo("imy0529@asdf");
+        assertThat(mangerInfo.getNumber()).isEqualTo(1111);
+        assertThat(mangerInfo.getPassword()).isEqualTo(222);
 
-        //then
     }
 
     @Test
-    void userIdCheck() {
-        //given
+    void checkManger로그인실패아에다른idpw작성시(){
+        Optional<mangerInfo> iii = checkInfoExist.checkManger("iii", 11);
+        assertThat(iii).isNull();
+    }
 
+
+    @Test
+    void userIdCheck성공() {
         //when
-
+        Optional<userInfo> jjs1111 = checkInfoExist.userIdCheck("jjs1111");
+        userInfo userInfo = jjs1111.get();
         //then
+        assertThat(userInfo.getId()).isEqualTo("jjs1111");
+        assertThat(userInfo.getPassword()).isEqualTo(222);
+        assertThat(userInfo.getEmail()).isEqualTo("abcd");
+
     }
 
     @Test
-    void mangerIdCheck() {
-        //given
-
+    void userIdCheck실패(){
         //when
-
+        Optional<userInfo> jjs1111 = checkInfoExist.userIdCheck("jjs0");
         //then
+        assertThat(jjs1111).isNull();
     }
 
     @Test
-    void userPwChcek() {
-        //given
-
+    void mangerIdCheck성공() {
         //when
-
+        Optional<mangerInfo> imy0111 = checkInfoExist.mangerIdCheck("imy0111");
+        mangerInfo mangerInfo = imy0111.get();
         //then
+        assertThat(mangerInfo.getId()).isEqualTo("imy0111");
+        assertThat(mangerInfo.getEmail()).isEqualTo("imy0529@asdf");
+        assertThat(mangerInfo.getNumber()).isEqualTo(1111);
+        assertThat(mangerInfo.getPassword()).isEqualTo(222);
     }
 
     @Test
-    void mangerPwCheck() {
-        //given
-
+    void mangerIdCheck실패(){
         //when
-
+        Optional<mangerInfo> imy = checkInfoExist.mangerIdCheck("imy");
         //then
+        assertThat(imy).isNull();
+
+    }
+
+    @Test
+    void userPwChcek성공() {
+        //when
+        Optional<userInfo> findInfo = checkInfoExist.userPwChcek(222);
+        var userInfo = findInfo.get();
+        //then
+        assertThat(userInfo.getId()).isEqualTo("jjs1111");
+        assertThat(userInfo.getPassword()).isEqualTo(222);
+        assertThat(userInfo.getEmail()).isEqualTo("abcd");
+    }
+
+    @Test
+    void userPwCheck실패(){
+        //when
+        Optional<userInfo> userInfo = checkInfoExist.userPwChcek(1);
+        //then
+        assertThat(userInfo).isNull();
+
+    }
+
+    @Test
+    void mangerPwCheck성공() {
+        //when
+        Optional<mangerInfo> findInfo = checkInfoExist.mangerPwCheck(222);
+        mangerInfo mangerInfo = findInfo.get();
+        //then
+        assertThat(mangerInfo.getId()).isEqualTo("imy0111");
+        assertThat(mangerInfo.getEmail()).isEqualTo("imy0529@asdf");
+        assertThat(mangerInfo.getNumber()).isEqualTo(1111);
+        assertThat(mangerInfo.getPassword()).isEqualTo(222);
     }
 }

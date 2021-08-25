@@ -7,4 +7,5 @@ import org.springframework.stereotype.Service;
 public interface LoginService {
     userInfo userLogin(userInfo userinfo);
     mangerInfo mangerLogin(mangerInfo mangerinfo);
+    int noSuchuser(String id);
 }

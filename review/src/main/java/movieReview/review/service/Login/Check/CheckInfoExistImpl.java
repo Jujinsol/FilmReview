@@ -1,14 +1,10 @@
 package movieReview.review.service.Login.Check;
-
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import movieReview.review.dto.mangerInfo;
 import movieReview.review.dto.userInfo;
 import movieReview.review.repository.Login.LoginRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import javax.swing.text.html.Option;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -99,17 +95,31 @@ public class CheckInfoExistImpl implements CheckInfoExist{
     }
 
     public userInfo setuser(String id, Integer password){
-        log.info("setuser.id={},setuser.pw={}",id,password);
         userInfo userinfo = new userInfo();
-        userinfo.setId(id);
-        userinfo.setPassword(password);
-        log.info("userinfo.getId={},userinfo.getPassword={}",userinfo.getId(),userinfo.getPassword());
-        return userinfo;
+        if(id==null){
+            userinfo.setPassword(password);
+            return userinfo;
+        }else if(password==null){
+            userinfo.setId(id);
+            return userinfo;
+        }else{
+            userinfo.setId(id);
+            userinfo.setPassword(password);
+            return userinfo;
+        }
     }
     public mangerInfo setmanger(String id, Integer password){
         mangerInfo mangerinfo = new mangerInfo();
-        mangerinfo.setId(id);
-        mangerinfo.setPassword(password);
-        return mangerinfo;
+        if(id==null){
+            mangerinfo.setPassword(password);
+            return mangerinfo;
+        }else if(password==null){
+            mangerinfo.setId(id);
+            return mangerinfo;
+        }else{
+            mangerinfo.setId(id);
+            mangerinfo.setPassword(password);
+            return mangerinfo;
+        }
     }
 }

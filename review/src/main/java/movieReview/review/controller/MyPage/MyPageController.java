@@ -9,10 +9,7 @@ import movieReview.review.service.Join.joinServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
@@ -24,8 +21,8 @@ public class MyPageController {
     private final joinServiceImpl joinService;
     private final checkMangerOrUser checkMangerOrUser;
 
-    @GetMapping("/{id}")
-    public String userChagePage(@PathVariable("id") String id, Model model){
+    @GetMapping
+    public String userChagePage(@CookieValue(name = "id", required = false) String id, Model model){
         int check = checkMangerOrUser.check(id);
 
         if(check==1){
@@ -38,7 +35,7 @@ public class MyPageController {
             model.addAttribute("password",findInfo.getPassword());
             return "/MyPage/userPwChange";
 
-        }else{
+        }else if(check==2){
             // 관리자
             mangerInfo mangerInfo = joinService.mangerInfo(id);;
 
@@ -47,12 +44,13 @@ public class MyPageController {
             model.addAttribute("id",mangerInfo.getId());
             model.addAttribute("password",mangerInfo.getPassword());
             return "/MyPage/managerPwChange";
+        }else{
+         return "/MainPage/MainPage";
         }
-
     }
 
-    @PostMapping("/{id}")
-    public String userChangePassword(userInfo userinfo, @PathVariable("id") String id,RedirectAttributes redirectAttributes){
+    @PostMapping
+    public String userChangePassword(userInfo userinfo, @CookieValue(name = "id", required = false) String id,RedirectAttributes redirectAttributes){
         int userUpdate = joinService.update(id, userinfo.getPassword());
         int mangerUpdate = joinService.mangerUpdate(id, userinfo.getPassword());
         if(userUpdate==1){
