@@ -131,7 +131,8 @@ public class joinRepositoryImpl implements joinRepository{
             return null;
         } else {
             return mangerinfo;
-        }    }
+        }
+    }
 
     // 유저 비밀번호 변경
     @Override

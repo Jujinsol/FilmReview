@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>manager Pw Change</title>
-    <link rel="stylesheet" href="/static/css/managerPwChange.css">
+    <link rel="stylesheet" href="/css/changeSuccess.css">
+    <link rel="stylesheet" th:href="@{/css/changeSuccess.css}">
 </head>
 <body>
-<h1>관리자 비밀번호 변경 페이지</h1>
+<h>관리자 비밀번호 변경 페이지</h>
 <form th:action method="post" th:object="${mangerInfo}" name="form">
     <table>
         <tr>

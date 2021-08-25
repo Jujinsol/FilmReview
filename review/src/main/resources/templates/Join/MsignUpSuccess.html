@@ -8,9 +8,10 @@
 </head>
 <body>
 <h1>회원가입이 완료되었습니다!</h1>
-<h3 th:name="id" th:text="${userInfo.id}"></h3>
-<h3 th:name="password" th:text="${userInfo.password}"></h3>
-<h3 th:name="email" th:text="${userInfo.email}"></h3>
+<h3 th:name="id" th:text="${mangerInfo.id}"></h3>
+<h3 th:name="password" th:text="${mangerInfo.password}"></h3>
+<h3 th:name="email" th:text="${mangerInfo.email}"></h3>
+<h3 th:name="email" th:text="${mangerInfo.number}"></h3>
 <br><br><br>
 <input type="button" value="메인화면으로 돌아가기" th:onclick="|location.href='@{/MainPage}'|">
 </body>
