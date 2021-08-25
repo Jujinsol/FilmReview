@@ -29,20 +29,20 @@ public class MyPageController {
             // 사용자
             userInfo findInfo = joinService.myInfo(id);
 
-            model.addAttribute("userInfo",findInfo);
-
             model.addAttribute("id",findInfo.getId());
             model.addAttribute("password",findInfo.getPassword());
+
+            model.addAttribute("userInfo",findInfo);
             return "/MyPage/userPwChange";
 
         }else if(check==2){
             // 관리자
             mangerInfo mangerInfo = joinService.mangerInfo(id);;
 
-            model.addAttribute("mangerInfo",mangerInfo);
-
             model.addAttribute("id",mangerInfo.getId());
             model.addAttribute("password",mangerInfo.getPassword());
+
+            model.addAttribute("mangerInfo",mangerInfo);
             return "/MyPage/managerPwChange";
         }else{
          return "/MainPage/MainPage";
