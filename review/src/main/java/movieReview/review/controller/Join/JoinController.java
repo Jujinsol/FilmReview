@@ -45,7 +45,7 @@ public class JoinController {
     }
 
     @PostMapping
-    public String joinUser(@Validated userInfo userinfo, mangerInfo mangerinfo, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+    public String joinUser( userInfo userinfo, mangerInfo mangerinfo, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
 
         joinValidation.validate(userinfo, bindingResult);
 

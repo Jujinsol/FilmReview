@@ -9,6 +9,7 @@ import movieReview.review.validation.LoginValidation;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -42,7 +43,7 @@ public class LoginController {
     }
 
     @PostMapping
-    public String doLogin(userInfo userinfo, mangerInfo mangerinfo, BindingResult bindingResult, HttpServletResponse response) {
+    public String doLogin( userInfo userinfo, mangerInfo mangerinfo, BindingResult bindingResult, HttpServletResponse response) {
         int result = loginServiceImpl.FirstCheck(userinfo.getId());
 
         loginValidation.validate(userinfo,bindingResult);
