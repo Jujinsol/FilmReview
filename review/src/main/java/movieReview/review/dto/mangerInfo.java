@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Getter
 @Setter
 @Component
-public class mangerInfo {
+public class mangerInfo{
     String id;
     Integer number;
     int password;
