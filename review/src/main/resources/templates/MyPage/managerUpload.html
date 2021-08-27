@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>manager Movie Upload</title>
+    <link rel="stylesheet" href="../../static/css/managerUpload.css">
+</head>
+<body>
+<form action="#" method="post">
+    <h1>관리자 영화 등록 페이지</h1>
+    <table>
+        <tr>
+            <td>영화 이름 : </td>
+            <td>
+                <label>
+                    <input type="text">
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>포스터 사진 : </td>
+            <td>
+                <input type="file" accept="image/*">
+            </td>
+        </tr>
+        <tr>
+            <td>개봉연도 : </td>
+            <td>
+                <label>
+                    <input type="text">
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>감독 이름 : </td>
+            <td>
+                <label>
+                    <input type="text">
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>줄거리 : </td>
+            <td>
+                <label>
+                    <input type="text">
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="button" value="메인페이지로 나가기" th:onclick="|location.href='@{/MainPage}'|">
+                <input type="submit" value="등록하기">
+            </td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

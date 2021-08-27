@@ -1,0 +1,19 @@
+*{
+    margin: 0 auto;
+}
+body{
+    width: 360px; height: 230px;
+    box-sizing: border-box;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+input[type="submit"]{
+    width: 360px;
+    margin-top: 10px;
+}
+input[type="button"]{
+    width: 360px;
+    margin-top: 5px;
+}
