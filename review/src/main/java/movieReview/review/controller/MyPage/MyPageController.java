@@ -79,4 +79,17 @@ public class MyPageController {
 
         return "/MyPage/changeSuccess";
     }
+
+    @ResponseBody
+    @GetMapping("/delete")
+    public int deleteUser(@CookieValue(name = "id", required = false) String id){
+        int check = checkMangerOrUser.check(id);
+        if(check==1){
+
+        }else{
+
+        }
+
+        return 0;
+    }
 }
