@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>manager Movie Upload</title>
-    <link rel="stylesheet" href="../../static/css/managerUpload.css">
+    <link rel="stylesheet" href="/css/managerUpload.css">
     <link rel="stylesheet" th:href="@{/css/managerUpload.css}">
 </head>
 <body>
-<form th:action th:method="post" th:object="${movieInfo}">
+<form th:action th:method="post" th:object="${movieInfo}" enctype="multipart/form-data">
     <h1>관리자 영화 등록 페이지</h1>
     <table>
         <tr>
@@ -21,7 +21,7 @@
         <tr>
             <td>포스터 사진 : </td>
             <td>
-                <input type="file" accept="image/*" th:name="moviePoster" th:field="*{moviePoster}">
+                <input type="file"  accept="image/*" th:name="moviePoster" >
             </td>
         </tr>
         <tr>
