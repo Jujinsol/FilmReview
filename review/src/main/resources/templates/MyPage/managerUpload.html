@@ -4,30 +4,31 @@
     <meta charset="UTF-8">
     <title>manager Movie Upload</title>
     <link rel="stylesheet" href="../../static/css/managerUpload.css">
+    <link rel="stylesheet" th:href="@{/css/managerUpload.css}">
 </head>
 <body>
-<form action="#" method="post">
+<form th:action th:method="post" th:object="${movieInfo}">
     <h1>관리자 영화 등록 페이지</h1>
     <table>
         <tr>
             <td>영화 이름 : </td>
             <td>
                 <label>
-                    <input type="text">
+                    <input type="text" th:name="movieName" th:field="*{movieName}">
                 </label>
             </td>
         </tr>
         <tr>
             <td>포스터 사진 : </td>
             <td>
-                <input type="file" accept="image/*">
+                <input type="file" accept="image/*" th:name="moviePoster" th:field="*{moviePoster}">
             </td>
         </tr>
         <tr>
             <td>개봉연도 : </td>
             <td>
                 <label>
-                    <input type="text">
+                    <input type="text" th:name="openYear" th:field="*{openYear}">
                 </label>
             </td>
         </tr>
@@ -35,7 +36,7 @@
             <td>감독 이름 : </td>
             <td>
                 <label>
-                    <input type="text">
+                    <input type="text" th:name="directorName" th:field="*{directorName}">
                 </label>
             </td>
         </tr>
@@ -43,7 +44,7 @@
             <td>줄거리 : </td>
             <td>
                 <label>
-                    <input type="text">
+                    <input type="text" th:name="storyLine" th:field="*{storyLine}">
                 </label>
             </td>
         </tr>
