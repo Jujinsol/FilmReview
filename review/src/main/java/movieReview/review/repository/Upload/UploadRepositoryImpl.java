@@ -1,10 +1,18 @@
 package movieReview.review.repository.Upload;
 
 import lombok.extern.slf4j.Slf4j;
+import movieReview.review.dto.mangerInfo;
 import movieReview.review.dto.photoUriInfo;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementSetter;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Repository;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
 
 @Repository
 @Slf4j
@@ -43,7 +51,30 @@ public class UploadRepositoryImpl implements UploadRepository{
     }
 
     @Override
-    public photoUriInfo select(photoUriInfo photoUriInfo) {
-        return null;
+    public photoUriInfo select(photoUriInfo photoUriinfo) {
+        List<photoUriInfo> mang = null;
+        final String sql = "SELECT photoUri FROM photoinfo WHERE photoOriName = ?";
+
+        mang = template.query(sql, new PreparedStatementSetter() {
+
+            @Override
+            public void setValues(PreparedStatement pstmt) throws SQLException {
+                pstmt.setString(1, photoUriinfo.getPhotoOriName());
+
+            }
+        }, new RowMapper<photoUriInfo>() {
+
+            @Override
+            public photoUriInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
+                photoUriinfo.setPhotoUri(rs.getString("photoUri"));
+                return photoUriinfo;
+            }
+
+        });
+        if (mang.isEmpty()) {
+            return null;
+        } else {
+            return photoUriinfo;
+        }
     }
 }

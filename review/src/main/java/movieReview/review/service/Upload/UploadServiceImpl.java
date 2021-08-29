@@ -14,4 +14,9 @@ public class UploadServiceImpl implements UploadService {
     public int create(photoUriInfo photoUriinfo) {
         return uploadRepository.insert(photoUriinfo);
     }
+
+    @Override
+    public photoUriInfo showPhoto(photoUriInfo photoUriinfo) {
+        return uploadRepository.select(photoUriinfo);
+    }
 }

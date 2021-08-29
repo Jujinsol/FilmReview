@@ -7,13 +7,18 @@ import movieReview.review.dto.photoUriInfo;
 import movieReview.review.service.Upload.UploadServiceImpl;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/Upload")
@@ -33,7 +38,7 @@ public class UploadController {
     }
 
     @PostMapping
-    public String uploadCompletion(movieInfo movieinfo) throws IOException {
+    public String uploadCompletion(movieInfo movieinfo, Model model,RedirectAttributes redirectAttributes) throws IOException {
         MultipartFile myPoster = movieinfo.getMoviePoster();
         files= new File(environment.getProperty("FilePath")+myPoster.getOriginalFilename());
 
@@ -45,9 +50,17 @@ public class UploadController {
         photoUri.setPhotoUri(path);
 
         // db 저장
-        int result = uploadService.create(photoUri);
+        uploadService.create(photoUri);
 
-        return "/MainPage/MainPage";
+        photoUriInfo photoUriInfo = uploadService.showPhoto(photoUri);
+        ClassPathResource resource = new ClassPathResource("moviePhoto"+photoUriInfo.getPhotoUri());
+
+        Path path1 = Paths.get(resource.getURI());
+
+        photoUriInfo.setPath(path1);
+        model.addAttribute("photoUriInfo",photoUriInfo);
+
+        return "/MyPage/managerUploadSuccess";
     }
 
 }

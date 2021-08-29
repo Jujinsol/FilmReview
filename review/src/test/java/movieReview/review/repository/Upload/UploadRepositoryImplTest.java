@@ -25,5 +25,16 @@ class UploadRepositoryImplTest {
 
     @Test
     void select() {
+        //given
+        photoUriInfo photoUriinfo = new photoUriInfo();
+
+        photoUriinfo.setPhotoUri("static/---");
+        photoUriinfo.setPhotoOriName("test.png");
+
+        //when
+        photoUriInfo select = uploadRepository.select(photoUriinfo);
+        //then
+        assertThat(select.getPhotoUri()).isEqualTo("static/---");
+        assertThat(select.getPhotoOriName()).isEqualTo("test.png");
     }
 }
