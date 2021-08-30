@@ -1,9 +1,10 @@
 package movieReview.review.repository.Login;
 
+import movieReview.review.dto.Login.loginMangerInfo;
+import movieReview.review.dto.Login.loginUserInfo;
 import movieReview.review.dto.mangerInfo;
 import movieReview.review.dto.userInfo;
 import movieReview.review.repository.Join.joinRepositoryImpl;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,15 +14,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class LoginRepositoryImplTest {
     joinRepositoryImpl joinRepository = new joinRepositoryImpl();
     LoginRepositoryImpl loginRepository = new LoginRepositoryImpl();
 
 
-    userInfo userinfo = new userInfo();
-    mangerInfo mangerinfo = new mangerInfo();
+    loginUserInfo userinfo = new loginUserInfo();
+    loginMangerInfo mangerinfo = new loginMangerInfo();
+
+    loginUserInfo loginuser = new loginUserInfo();
+    loginMangerInfo loginmanger = new loginMangerInfo();
+
+    mangerInfo createmanger = new mangerInfo();
+    userInfo createuser = new userInfo();
     public static Map<String,String> sql = new HashMap<>();
 
     @BeforeAll
@@ -39,36 +45,40 @@ class LoginRepositoryImplTest {
     @BeforeEach
     void createUserAndMaster(){
 
-        userinfo.setId("jjs1111");
-        userinfo.setPassword(222);
-        userinfo.setEmail("abcd");
+        createuser.setId("jjs1111");
+        createuser.setPassword(222);
+        createuser.setEmail("abcd");
 
-        joinRepository.createUser(userinfo);
+        joinRepository.createUser(createuser);
 
+        loginuser.setId("jjs1111");
+        loginuser.setPassword(222);
 
-        mangerinfo.setId("imy0111");
-        mangerinfo.setPassword(222);
-        mangerinfo.setEmail("imy0529@asdf");
-        mangerinfo.setNumber(1111);
+        createmanger.setId("imy0111");
+        createmanger.setPassword(222);
+        createmanger.setEmail("imy0529@asdf");
+        createmanger.setNumber(1111);
 
-        joinRepository.createManger(mangerinfo);
+        joinRepository.createManger(createmanger);
+
+        loginmanger.setId("imy0111");
+        loginmanger.setPassword(222);
     }
 
     @AfterEach
     void delete(){
-        joinRepository.delete(userinfo);
-        joinRepository.deleteManger(mangerinfo);
+        joinRepository.delete(createuser);
+        joinRepository.deleteManger(createmanger);
     }
 
 
     @Test
     void userLoginCheck() {
         //when
-        userInfo checkuser = loginRepository.userLoginCheck(userinfo,sql.get("userSql"));
+        loginUserInfo checkuser = loginRepository.userLoginCheck(loginuser,sql.get("userSql"));
 
         //then
         assertThat(checkuser.getId()).isEqualTo("jjs1111");
-        assertThat(checkuser.getEmail()).isEqualTo("abcd");
         assertThat(checkuser.getPassword()).isEqualTo(222);
 
     }
@@ -76,34 +86,29 @@ class LoginRepositoryImplTest {
     @Test
     void mangerLoginCheck() {
         //when
-        mangerInfo checkmanger = loginRepository.mangerLoginCheck(mangerinfo,sql.get("masterSql"));
+        loginMangerInfo checkmanger = loginRepository.mangerLoginCheck(loginmanger,sql.get("masterSql"));
 
         //then
         assertThat(checkmanger.getId()).isEqualTo("imy0111");
         assertThat(checkmanger.getPassword()).isEqualTo(222);
-        assertThat(checkmanger.getNumber()).isEqualTo(1111);
-        assertThat(checkmanger.getEmail()).isEqualTo("imy0529@asdf");
-
     }
 
     @Test
     void userIdCheck(){
         //when
-        userInfo check = loginRepository.userIdCheck(userinfo, sql.get("checkUserId"));
+        loginUserInfo check = loginRepository.userIdCheck(loginuser, sql.get("checkUserId"));
 
         //then
         assertThat(check.getId()).isEqualTo("jjs1111");
-        assertThat(check.getEmail()).isEqualTo("abcd");
         assertThat(check.getPassword()).isEqualTo(222);
     }
 
     @Test
     void userPwCheck(){
         //when
-        userInfo check = loginRepository.userPwCheck(userinfo, sql.get("checkUserPassword"));
+        loginUserInfo check = loginRepository.userPwCheck(loginuser, sql.get("checkUserPassword"));
         //then
         assertThat(check.getId()).isEqualTo("jjs1111");
-        assertThat(check.getEmail()).isEqualTo("abcd");
         assertThat(check.getPassword()).isEqualTo(222);
 
     }
@@ -111,24 +116,20 @@ class LoginRepositoryImplTest {
     @Test
     void mangerIdCheck(){
         //when
-        mangerInfo checkmanger = loginRepository.mangerIdCheck(mangerinfo, sql.get("checkMasterId"));
+        loginMangerInfo checkmanger = loginRepository.mangerIdCheck(loginmanger, sql.get("checkMasterId"));
 
         //then
         assertThat(checkmanger.getId()).isEqualTo("imy0111");
         assertThat(checkmanger.getPassword()).isEqualTo(222);
-        assertThat(checkmanger.getNumber()).isEqualTo(1111);
-        assertThat(checkmanger.getEmail()).isEqualTo("imy0529@asdf");
     }
 
     @Test
     void mangerPwCheck(){
         //when
-        mangerInfo checkmanger = loginRepository.mangerPwCheck(mangerinfo, sql.get("checkMasterPassword"));
+        loginMangerInfo checkmanger = loginRepository.mangerPwCheck(loginmanger, sql.get("checkMasterPassword"));
 
         //then
         assertThat(checkmanger.getId()).isEqualTo("imy0111");
         assertThat(checkmanger.getPassword()).isEqualTo(222);
-        assertThat(checkmanger.getNumber()).isEqualTo(1111);
-        assertThat(checkmanger.getEmail()).isEqualTo("imy0529@asdf");
     }
 }

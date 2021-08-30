@@ -2,8 +2,8 @@ package movieReview.review.controller.managerUpload;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import movieReview.review.dto.movieInfo;
-import movieReview.review.dto.photoUriInfo;
+import movieReview.review.dto.MovieInfo.movieInfo;
+import movieReview.review.dto.FileInfo.photoUriInfo;
 import movieReview.review.service.Upload.UploadServiceImpl;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -18,7 +18,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.UUID;
 
 @Controller
 @RequestMapping("/Upload")

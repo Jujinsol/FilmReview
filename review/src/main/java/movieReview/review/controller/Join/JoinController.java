@@ -19,25 +19,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/Join")
 public class JoinController {
     private final joinServiceImpl joinService;
-   // private final joinValidation joinValidation;
-
-    /**
-     * @InitBinder public void init(WebDataBinder dataBinder){
-     * dataBinder.addValidators(joinValidation);
-     * }
-     * 내프로젝트에서는 얘 못쓴다.
-     * 왜냐면 검증코드에 들어가야하는 dto의 종류가 두가지니까.
-     *
-     * mangerInfo랑 userInfo랑 둘다 섞여서 회원가입이 되는데,
-     * 둘은 상속관계를 가지고있지도 않고, 부모가 같지도 않기때문에
-     * @InitBinder를 사용할때 모든 메서드가 실행하기전에 안에있는 검증코드가 자동으로 실행된다.
-     * 그때 joinPage메서드가 실행되면서 mangerInfo도 넘겨주는데,
-     *
-     * 나의 검증코드에는 userInfo만 return해주고있기 때문이다.
-     * 그래서 nullPointException이 발생한다.
-     *
-     * 여러개의 class를 return하는방법은 모르겠다..
-     **/
 
     @GetMapping
     public String joinPage(@ModelAttribute("userInfo") userInfo userinfo, @ModelAttribute("mangerInfo") mangerInfo mangerinfo) {
@@ -46,9 +27,6 @@ public class JoinController {
 
     @PostMapping
     public String joinUser(@Validated @ModelAttribute userInfo userinfo, BindingResult userError, @ModelAttribute mangerInfo mangerinfo, BindingResult managerError, RedirectAttributes redirectAttributes) {
-
-        // joinValidation.validate(userinfo, bindingResult);
-
         if (managerError.hasErrors() || userError.hasErrors()) {
             log.info("errors={}", managerError);
             return "Join/signUp";

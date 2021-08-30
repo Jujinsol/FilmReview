@@ -1,7 +1,7 @@
 package movieReview.review.service.Upload;
 
 import lombok.RequiredArgsConstructor;
-import movieReview.review.dto.photoUriInfo;
+import movieReview.review.dto.FileInfo.photoUriInfo;
 import movieReview.review.repository.Upload.UploadRepositoryImpl;
 import org.springframework.stereotype.Service;
 

@@ -1,5 +1,5 @@
 package movieReview.review.repository.Upload;
-import movieReview.review.dto.photoUriInfo;
+import movieReview.review.dto.FileInfo.photoUriInfo;
 import org.junit.jupiter.api.Test;
 import org.springframework.transaction.annotation.Transactional;
 

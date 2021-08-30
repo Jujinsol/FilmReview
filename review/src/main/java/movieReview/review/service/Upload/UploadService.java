@@ -1,6 +1,6 @@
 package movieReview.review.service.Upload;
 
-import movieReview.review.dto.photoUriInfo;
+import movieReview.review.dto.FileInfo.photoUriInfo;
 
 public interface UploadService {
     int create(photoUriInfo photoUriInfo);

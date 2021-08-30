@@ -23,9 +23,17 @@
                 <td>
                     <label>
                         <input type="text" th:name="id" th:field="*{id}" th:errorclass="field-error">
+
+                        <div class="field-error" th:if="${mangerInfo.getNumber()!=null}">
+                            <div th:errorclass="field-error" th:errors="${mangerInfo.id}">
+                                id 오류
+                            </div>
+                        </div>
+
                         <div class="field-error" th:errors="*{id}">
                             id 오류
                         </div>
+
                     </label>
                 </td>
             </tr>

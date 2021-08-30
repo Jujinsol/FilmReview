@@ -13,10 +13,14 @@
     </style>
 </head>
 <body>
-<form th:action th:object="${userinfo}" method="post">
+<form th:action th:object="${loginUserInfo}" method="post">
     <h1>로그인 창</h1>
     <table>
         <tr>
+            <div th:if="${#fields.hasGlobalErrors()}" th:each="err : ${#fields.globalErrors()}">
+                <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>
+            </div>
+
             <td>ID</td>
             <td>
                 <label>

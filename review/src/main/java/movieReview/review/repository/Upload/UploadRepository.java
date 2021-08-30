@@ -1,6 +1,6 @@
 package movieReview.review.repository.Upload;
 
-import movieReview.review.dto.photoUriInfo;
+import movieReview.review.dto.FileInfo.photoUriInfo;
 
 public interface UploadRepository {
     int insert(photoUriInfo photoUriInfo); // 관리자가 사진 업로드
