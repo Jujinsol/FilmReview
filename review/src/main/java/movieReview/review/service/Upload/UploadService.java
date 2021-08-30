@@ -4,4 +4,5 @@ import movieReview.review.dto.photoUriInfo;
 
 public interface UploadService {
     int create(photoUriInfo photoUriInfo);
+    photoUriInfo showPhoto(photoUriInfo photoUriinfo); // 등록한 포스터 읽어오기 ( 파일저장경로 )
 }
