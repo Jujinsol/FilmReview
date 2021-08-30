@@ -38,28 +38,26 @@ public class UploadController {
     }
 
     @PostMapping
-    public String uploadCompletion(movieInfo movieinfo, Model model,RedirectAttributes redirectAttributes) throws IOException {
-        MultipartFile myPoster = movieinfo.getMoviePoster();
-        files= new File(environment.getProperty("FilePath")+myPoster.getOriginalFilename());
+    public String uploadCompletion(movieInfo movieinfo,MultipartFile moviePoster, Model model,RedirectAttributes redirectAttributes) throws IOException {
+        moviePoster = movieinfo.getMoviePoster();
+        files= new File(environment.getProperty("FilePath")+moviePoster.getOriginalFilename());
 
         // DB에 저장될 파일 경로
         String path = files.getPath();
-        myPoster.transferTo(files);
+        moviePoster.transferTo(files);
 
-        photoUri.setPhotoOriName(myPoster.getOriginalFilename());
+        photoUri.setPhotoOriName(moviePoster.getOriginalFilename());
         photoUri.setPhotoUri(path);
 
         // db 저장
         uploadService.create(photoUri);
 
         photoUriInfo photoUriInfo = uploadService.showPhoto(photoUri);
-        ClassPathResource resource = new ClassPathResource("moviePhoto"+photoUriInfo.getPhotoUri());
+        ClassPathResource resource = new ClassPathResource("/moviePhoto/"+photoUriInfo.getPhotoOriName());
 
-        Path path1 = Paths.get(resource.getURI());
+        Path path1 = Paths.get(resource.getPath());
 
-        photoUriInfo.setPath(path1);
-        model.addAttribute("photoUriInfo",photoUriInfo);
-
+        model.addAttribute("photoUriInfo",path1);
         return "/MyPage/managerUploadSuccess";
     }
 

@@ -14,29 +14,29 @@
 </head>
 <body>
 <form th:action th:object="${userInfo}" th:method="post" name="form">
-<div id="join">
-    <h1>회원가입</h1>
-    <table>
-        <tr>
-            <td>ID</td>
-            <td>
-                <label>
-                    <input type="text"
-                           th:name="id"
-                           th:field="*{id}"
-                           th:errorclass="field-error">
-                    <div class="field-error" th:field="*{id}" th:errors="*{id}">
-                        id 오류
-                    </div>
-                </label>
-            </td>
-        </tr>
+                    <div id="join">
+                        <h1>회원가입</h1>
+                        <table>
+                            <tr>
+                                <td>ID</td>
+                                <td>
+                                    <label>
+                                        <input type="text"
+                                               th:name="id"
+                                               th:field="*{id}"
+                                               th:errorclass="field-error">
+                                        <div class="field-error" th:field="*{id}" th:errors="*{id}">
+                                            id 오류
+                                        </div>
+                                    </label>
+                                </td>
+                            </tr>
 
-        <tr>
-            <td>비밀번호</td>
-            <td>
-                <label>
-                    <input type="password"
+                            <tr>
+                                <td>비밀번호</td>
+                                <td>
+                                    <label>
+                                        <input type="password"
                            th:name="password"
                            th:field="*{password}"
                            th:errorclass="field-error">
