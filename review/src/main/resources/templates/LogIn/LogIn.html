@@ -5,6 +5,12 @@
     <title>Log In</title>
     <link rel="stylesheet" href="/css/LogIn.css">
     <link rel="stylesheet" th:href="@{/css/LogIn.css}">
+    <style>
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+    </style>
 </head>
 <body>
 <form th:action th:object="${userinfo}" method="post">
@@ -14,10 +20,7 @@
             <td>ID</td>
             <td>
                 <label>
-                    <input type="text"
-                    th:name="id"
-                    th:field="*{id}"
-                    th:errorclass="field-error">
+                    <input type="text" th:name="id" th:field="*{id}" th:errorclass="field-error">
                     <div class = "field-error" th:errors="*{id}">
                         id 오류
                     </div>

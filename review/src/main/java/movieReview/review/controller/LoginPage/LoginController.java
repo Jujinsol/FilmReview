@@ -11,10 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -29,29 +26,28 @@ public class LoginController {
     private final LoginServiceImpl loginServiceImpl;
     private final LoginValidation loginValidation;
 
-//    @InitBinder
-//    public void init(WebDataBinder dataBinder) {
-//        dataBinder.addValidators(loginValidation);
-//    }
-
+    @InitBinder
+    public void init(WebDataBinder dataBinder){
+        dataBinder.addValidators(loginValidation);
+    }
 
     @GetMapping
     public String LoginPage(Model model) {
         model.addAttribute("userinfo", new userInfo());
-        model.addAttribute("mangerinfo", new mangerInfo());
         return "/LogIn/LogIn";
     }
 
     @PostMapping
-    public String doLogin( userInfo userinfo, mangerInfo mangerinfo, BindingResult bindingResult, HttpServletResponse response) {
-        int result = loginServiceImpl.FirstCheck(userinfo.getId());
+    public String doLogin(@Validated @ModelAttribute userInfo userinfo, BindingResult bindingResult, HttpServletResponse response) {
+        mangerInfo mangerinfo = new mangerInfo();
+        log.info("err");
 
-        loginValidation.validate(userinfo,bindingResult);
-
-        if (bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors() ) {
             log.info("errors={}", bindingResult);
-            return "redirect:/Login";
+            return "redirect:/LogIn/LogIn";
         }
+
+        int result = loginServiceImpl.FirstCheck(userinfo.getId());
 
         if (result == 1) {
             //사용자
@@ -59,7 +55,7 @@ public class LoginController {
             if (userLoginResult.isEmpty()) {
                 bindingResult.rejectValue("id", "userLoginWorn");
                 log.info("사용자 둘중에하나 틀렸음");
-                return "redirect:/Login";
+                return "LogIn/LogIn";
             } else {
                 Cookie userCookie = new Cookie("id", String.valueOf(userinfo.getId()));
                 response.addCookie(userCookie);
@@ -75,7 +71,7 @@ public class LoginController {
             if (mangerLoginResult.isEmpty()) {
                 bindingResult.rejectValue("id", "mangerLoginWorn");
                 log.info("관리자 둘중에하나 틀렸음");
-                return "redirect:/Login";
+                return "LogIn/LogIn";
             } else {
                 Cookie mangerCookie = new Cookie("id", String.valueOf(mangerinfo.getId()));
                 response.addCookie(mangerCookie);
@@ -84,7 +80,7 @@ public class LoginController {
         } else {
             //없는 회원 id
             bindingResult.reject("noSuchId");
-            return "redirect:/Login";
+            return "LogIn/LogIn";
         }
     }
 }

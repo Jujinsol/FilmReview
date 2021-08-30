@@ -19,7 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/Join")
 public class JoinController {
     private final joinServiceImpl joinService;
-    private final joinValidation joinValidation;
+   // private final joinValidation joinValidation;
 
     /**
      * @InitBinder public void init(WebDataBinder dataBinder){
@@ -45,12 +45,12 @@ public class JoinController {
     }
 
     @PostMapping
-    public String joinUser( userInfo userinfo, mangerInfo mangerinfo, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String joinUser(@Validated @ModelAttribute userInfo userinfo, BindingResult userError, @ModelAttribute mangerInfo mangerinfo, BindingResult managerError, RedirectAttributes redirectAttributes) {
 
-        joinValidation.validate(userinfo, bindingResult);
+        // joinValidation.validate(userinfo, bindingResult);
 
-        if (bindingResult.hasErrors()) {
-            log.info("errors={}", bindingResult);
+        if (managerError.hasErrors() || userError.hasErrors()) {
+            log.info("errors={}", managerError);
             return "Join/signUp";
         }
 
@@ -66,8 +66,8 @@ public class JoinController {
 
                 return "redirect:/Join/{id}";
             } else {
-                bindingResult.rejectValue("id", "equal");
-                log.info("errors={}", bindingResult);
+                userError.rejectValue("id", "equal");
+                log.info("errors={}", userError);
                 return "Join/signUp";
             }
         } else {
@@ -83,8 +83,8 @@ public class JoinController {
 
                 return "redirect:/Join/Man/{id}";
             } else {
-                bindingResult.rejectValue("id", "equal");
-                log.info("errors={}", bindingResult);
+                managerError.rejectValue("id", "equal");
+                log.info("errors={}", managerError);
                 return "Join/signUp";
             }
 
