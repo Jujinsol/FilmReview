@@ -13,87 +13,90 @@
     </style>
 </head>
 <body>
-<form th:action th:object="${userInfo}" th:method="post" name="form">
-                    <div id="join">
-                        <h1>회원가입</h1>
-                        <table>
-                            <tr>
-                                <td>ID</td>
-                                <td>
-                                    <label>
-                                        <input type="text"
-                                               th:name="id"
-                                               th:field="*{id}"
-                                               th:errorclass="field-error">
-                                        <div class="field-error" th:field="*{id}" th:errors="*{id}">
-                                            id 오류
-                                        </div>
-                                    </label>
-                                </td>
-                            </tr>
 
-                            <tr>
-                                <td>비밀번호</td>
-                                <td>
-                                    <label>
-                                        <input type="password"
-                           th:name="password"
-                           th:field="*{password}"
-                           th:errorclass="field-error">
-                    <div class="field-error" th:errors="*{password}" >
-                        password 오류
-                    </div>
-                </label>
-            </td>
-        </tr>
-        <tr>
-            <td>비밀번호 확인</td>
-            <td><label>
-                <input type="password" th:field="*{password}">
-            </label></td>
-        </tr>
-        <tr>
-            <td>관리자입니까?</td>
-            <td>
-                <label>
-                    <input type="checkbox" name="checkbutton" onclick="f_check()">
-                </label>
-            </td>
-        </tr>
-        <tr>
-            <td>관리자 번호</td>
-            <td>
-                <label>
-                    <input type="text" name="textbox" th:field="${mangerInfo.number}">
-                </label>
-            </td>
-        </tr>
-        <tr>
-            <td>e-mail</td>
-            <td>
-                <label>
-                    <input type="text" name="email" th:field="*{email}" th:errorclass="field-error">
-                    <div class="field-error" th:errors="*{email}" >
-                        email 오류
-                    </div>
-                </label>
-            </td>
-        </tr>
-        <tr>
-            <td>e-mail 인증번호</td>
-            <td><label>
-                <input type="text" name="emailCheck" >
-            </label></td>
-        </tr>
-        <tr>
-            <td colspan="2" class="answer">
-                <input type="button" value="메인페이지로 나가기" th:onclick="|location.href='@{/MainPage}'|">
-                <input type="submit" value="가입하기">
-            </td>
-        </tr>
-    </table>
-    <script src="../js/signUp.js" charset="utf-8"></script>
-</div>
+<form th:action th:object="${userInfo}" th:method="post" name="form">
+    <div id="join">
+        <h1>회원가입</h1>
+        <table>
+            <tr>
+                <td>ID</td>
+                <td>
+                    <label>
+                        <input type="text" th:name="id" th:field="*{id}" th:errorclass="field-error">
+
+                        <div class="field-error" th:if="${mangerInfo.getNumber()!=null}">
+                            <div th:errorclass="field-error" th:errors="${mangerInfo.id}">
+                                id 오류
+                            </div>
+                        </div>
+
+                        <div class="field-error" th:errors="*{id}">
+                            id 오류
+                        </div>
+
+                    </label>
+                </td>
+            </tr>
+
+            <tr>
+                <td>비밀번호</td>
+                <td>
+                    <label>
+                        <input type="password" th:name="password" th:field="*{password}" th:errorclass="field-error">
+                        <div class="field-error" th:errors="*{password}">
+                            password 오류
+                        </div>
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td>비밀번호 확인</td>
+                <td><label>
+                    <input type="password" th:field="*{password}">
+                </label></td>
+            </tr>
+            <tr>
+                <td>관리자입니까?</td>
+                <td>
+                    <label>
+                        <input type="checkbox" name="checkbutton" onclick="f_check()">
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td>관리자 번호</td>
+                <td>
+                    <label>
+                        <input type="text" name="textbox" th:field="${mangerInfo.number}">
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td>e-mail</td>
+                <td>
+                    <label>
+                        <input type="text" name="email" th:field="*{email}" th:errorclass="field-error">
+                        <div class="field-error" th:errors="*{email}">
+                            email 오류
+                        </div>
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td>e-mail 인증번호</td>
+                <td><label>
+                    <input type="text" name="emailCheck">
+                </label></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="answer">
+                    <input type="button" value="메인페이지로 나가기" th:onclick="|location.href='@{/MainPage}'|">
+                    <input type="submit" value="가입하기">
+                </td>
+            </tr>
+        </table>
+        <script src="../js/signUp.js" charset="utf-8"></script>
+    </div>
 </form>
 </body>
 </html>

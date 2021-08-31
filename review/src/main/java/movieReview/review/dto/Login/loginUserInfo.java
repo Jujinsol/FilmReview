@@ -1,21 +1,17 @@
-package movieReview.review.dto;
+package movieReview.review.dto.Login;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.validator.constraints.Length;
-import org.springframework.stereotype.Component;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 @Getter
 @Setter
-@Component
-public class userInfo {
+public class loginUserInfo{
     @NotBlank(message = "id는 필수로 작성해야 합니다.")
     private String id;
-
-    @NotBlank(message = "E-mail은 필수로 작성해야 합니다.")
-    private String email;
 
     @NotNull(message = "비밀번호는 필수로 작성해야 합니다.")
     @Positive(message = "양수로만 작성해 주세요.")

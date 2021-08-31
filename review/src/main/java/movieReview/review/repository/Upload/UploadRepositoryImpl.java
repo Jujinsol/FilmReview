@@ -1,8 +1,7 @@
 package movieReview.review.repository.Upload;
 
 import lombok.extern.slf4j.Slf4j;
-import movieReview.review.dto.mangerInfo;
-import movieReview.review.dto.photoUriInfo;
+import movieReview.review.dto.FileInfo.photoUriInfo;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;

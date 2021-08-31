@@ -1,11 +1,10 @@
 package movieReview.review.service.Login;
 
-import movieReview.review.dto.mangerInfo;
-import movieReview.review.dto.userInfo;
-import org.springframework.stereotype.Service;
+import movieReview.review.dto.Login.loginMangerInfo;
+import movieReview.review.dto.Login.loginUserInfo;
 
 public interface LoginService {
-    userInfo userLogin(userInfo userinfo);
-    mangerInfo mangerLogin(mangerInfo mangerinfo);
+    loginUserInfo userLogin(loginUserInfo userinfo);
+    loginMangerInfo mangerLogin(loginMangerInfo mangerinfo);
     int noSuchuser(String id);
 }

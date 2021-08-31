@@ -1,9 +1,10 @@
 package movieReview.review.service.Login;
 
+import movieReview.review.dto.Login.loginMangerInfo;
+import movieReview.review.dto.Login.loginUserInfo;
 import movieReview.review.dto.mangerInfo;
 import movieReview.review.dto.userInfo;
 import movieReview.review.repository.Join.joinRepositoryImpl;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,6 +26,9 @@ class LoginServiceImplTest {
     userInfo userinfo = new userInfo();
     mangerInfo mangerinfo = new mangerInfo();
 
+    loginUserInfo loginuser = new loginUserInfo();
+    loginMangerInfo loginmanger = new loginMangerInfo();
+
     @BeforeEach
     void createUserAndMaster(){
 
@@ -34,6 +38,8 @@ class LoginServiceImplTest {
 
         joinRepository.createUser(userinfo);
 
+        loginuser.setId("jjs1111");
+        loginuser.setPassword(222);
 
         mangerinfo.setId("imy0111");
         mangerinfo.setPassword(222);
@@ -41,6 +47,9 @@ class LoginServiceImplTest {
         mangerinfo.setNumber(1111);
 
         joinRepository.createManger(mangerinfo);
+
+        loginmanger.setId("imy0111");
+        loginmanger.setPassword(222);
     }
 
     @AfterEach
@@ -67,20 +76,19 @@ class LoginServiceImplTest {
     @Test
     void userLogin() {
         //사용자 성공
-        userInfo result = loginServiceImpl.userLogin(userinfo);
+        loginUserInfo result = loginServiceImpl.userLogin(loginuser);
 
         assertThat(result.getId()).isEqualTo("jjs1111");
         assertThat(result.getPassword()).isEqualTo(222);
-        assertThat(result.getEmail()).isEqualTo("abcd");
     }
 
     @Test
     void userLoginid실패시(){
-        userInfo user = new userInfo();
+        loginUserInfo user = new loginUserInfo();
         user.setId("jj");
         user.setPassword(222);
-        user.setEmail("abcd");
-        userInfo result = loginServiceImpl.userLogin(user);
+
+        loginUserInfo result = loginServiceImpl.userLogin(user);
 
         assertThat(result).isEqualTo(null);
     }
@@ -88,12 +96,10 @@ class LoginServiceImplTest {
     @Test
     void mangerLogin() {
         // 관리자 성공
-        mangerInfo result = loginServiceImpl.mangerLogin(mangerinfo);
+        loginMangerInfo result = loginServiceImpl.mangerLogin(loginmanger);
 
         assertThat(result.getId()).isEqualTo("imy0111");
-        assertThat(result.getEmail()).isEqualTo("imy0529@asdf");
         assertThat(result.getPassword()).isEqualTo(222);
-        assertThat(result.getNumber()).isEqualTo(1111);
 
     }
 }

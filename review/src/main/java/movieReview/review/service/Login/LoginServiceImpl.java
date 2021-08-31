@@ -2,8 +2,8 @@ package movieReview.review.service.Login;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import movieReview.review.dto.mangerInfo;
-import movieReview.review.dto.userInfo;
+import movieReview.review.dto.Login.loginMangerInfo;
+import movieReview.review.dto.Login.loginUserInfo;
 import movieReview.review.service.Join.checkMangerOrUser;
 import movieReview.review.service.Login.Check.CheckInfoExistImpl;
 import org.springframework.stereotype.Service;
@@ -23,10 +23,10 @@ public class LoginServiceImpl implements LoginService{
     }
 
     @Override
-    public userInfo userLogin(userInfo userinfo) {
-        Optional<userInfo> userIdCheck = Optional.ofNullable(checkInfoExist.userIdCheck(userinfo.getId()));
-        Optional<userInfo> userPwCheck = Optional.ofNullable(checkInfoExist.userPwChcek(userinfo.getPassword()));
-        Optional<userInfo> userCheck = Optional.ofNullable(checkInfoExist.checkUser(userinfo.getId(), userinfo.getPassword()));
+    public loginUserInfo userLogin(loginUserInfo userinfo) {
+        Optional<loginUserInfo> userIdCheck = Optional.ofNullable(checkInfoExist.userIdCheck(userinfo.getId()));
+        Optional<loginUserInfo> userPwCheck = Optional.ofNullable(checkInfoExist.userPwChcek(userinfo.getPassword()));
+        Optional<loginUserInfo> userCheck = Optional.ofNullable(checkInfoExist.checkUser(userinfo.getId(), userinfo.getPassword()));
 
         if(!userIdCheck.isEmpty()){
             if(!userPwCheck.isEmpty()){
@@ -45,10 +45,10 @@ public class LoginServiceImpl implements LoginService{
     }
 
     @Override
-    public mangerInfo mangerLogin(mangerInfo mangerinfo) {
-        Optional<mangerInfo> mangerIdCheck = Optional.ofNullable(checkInfoExist.mangerIdCheck(mangerinfo.getId()));
-        Optional<mangerInfo> mangerPwCheck = Optional.ofNullable(checkInfoExist.mangerPwCheck(mangerinfo.getPassword()));
-        Optional<mangerInfo> mangerCheck = Optional.ofNullable(checkInfoExist.checkManger(mangerinfo.getId(), mangerinfo.getPassword()));
+    public loginMangerInfo mangerLogin(loginMangerInfo mangerinfo) {
+        Optional<loginMangerInfo> mangerIdCheck = Optional.ofNullable(checkInfoExist.mangerIdCheck(mangerinfo.getId()));
+        Optional<loginMangerInfo> mangerPwCheck = Optional.ofNullable(checkInfoExist.mangerPwCheck(mangerinfo.getPassword()));
+        Optional<loginMangerInfo> mangerCheck = Optional.ofNullable(checkInfoExist.checkManger(mangerinfo.getId(), mangerinfo.getPassword()));
 
         if(!mangerIdCheck.isEmpty()){
             if(!mangerPwCheck.isEmpty()){
