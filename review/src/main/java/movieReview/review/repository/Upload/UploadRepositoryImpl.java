@@ -2,6 +2,9 @@ package movieReview.review.repository.Upload;
 
 import lombok.extern.slf4j.Slf4j;
 import movieReview.review.dto.FileInfo.photoUriInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
@@ -19,8 +22,8 @@ public class UploadRepositoryImpl implements UploadRepository{
 
     private String driver="com.mysql.cj.jdbc.Driver";
     private String userid="root";
-    private String url="jdbc:mysql://localhost:3306/moviereview ?serverTimezone=UTC&characterEncoding=UTF-8";
-    private String userpw="1234";
+    private String url="jdbc:mysql://118.67.133.219:3306/moviereview?serverTimezone=UTC&characterEncoding=UTF-8";
+    private String userpw="1234wlstjddl";
 
     private DriverManagerDataSource dataSource;
     private JdbcTemplate template;

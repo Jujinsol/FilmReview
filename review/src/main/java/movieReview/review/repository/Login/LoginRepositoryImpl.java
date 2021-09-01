@@ -3,6 +3,9 @@ package movieReview.review.repository.Login;
 import lombok.extern.slf4j.Slf4j;
 import movieReview.review.dto.Login.loginMangerInfo;
 import movieReview.review.dto.Login.loginUserInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
@@ -18,14 +21,11 @@ import java.util.List;
 @Slf4j
 public class LoginRepositoryImpl implements LoginRepository{
 
-    //    @Value("${spring.datasource.driver-class-name}")
+
     private String driver="com.mysql.cj.jdbc.Driver";
-    //    @Value("${spring.datasource.username}")
     private String userid="root";
-    //    @Value("${spring.datasource.url}")
-    private String url="jdbc:mysql://localhost:3306/moviereview?serverTimezone=UTC&characterEncoding=UTF-8";
-    //    @Value("${spring.datasource.password}")
-    private String userpw="1234";
+    private String url="jdbc:mysql://118.67.133.219:3306/moviereview?serverTimezone=UTC&characterEncoding=UTF-8";
+    private String userpw="1234wlstjddl";
 
     private DriverManagerDataSource dataSource;
     private JdbcTemplate template;

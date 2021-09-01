@@ -10,6 +10,8 @@ import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -37,7 +39,12 @@ public class UploadController {
     }
 
     @PostMapping
-    public String uploadCompletion(movieInfo movieinfo,MultipartFile moviePoster, Model model,RedirectAttributes redirectAttributes) throws IOException {
+    public String uploadCompletion(@Validated movieInfo movieinfo, BindingResult bindingResult, MultipartFile moviePoster, Model model, RedirectAttributes redirectAttributes) throws IOException {
+        if(bindingResult.hasErrors() || moviePoster.isEmpty()){
+            bindingResult.rejectValue("moviePoster","moviePosterEmpty");
+            log.info("error={}",bindingResult);
+            return "MyPage/managerUpload";
+        }
         moviePoster = movieinfo.getMoviePoster();
         files= new File(environment.getProperty("FilePath")+moviePoster.getOriginalFilename());
 
@@ -55,9 +62,10 @@ public class UploadController {
         ClassPathResource resource = new ClassPathResource("/moviePhoto/"+photoUriInfo.getPhotoOriName());
 
         Path path1 = Paths.get(resource.getPath());
+        log.info("path1={}",path1);
 
-        model.addAttribute("photoUriInfo",path1);
-        return "/MyPage/managerUploadSuccess";
+        redirectAttributes.addAttribute("photoUriInfo",path1);
+        return "redirect:MyPage/managerUploadSuccess";
     }
 
 }

@@ -5,6 +5,12 @@
     <title>manager Movie Upload</title>
     <link rel="stylesheet" href="/css/managerUpload.css">
     <link rel="stylesheet" th:href="@{/css/managerUpload.css}">
+    <style>
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+    </style>
 </head>
 <body>
 <form th:action th:method="post" th:object="${movieInfo}" enctype="multipart/form-data">
@@ -14,21 +20,30 @@
             <td>영화 이름 : </td>
             <td>
                 <label>
-                    <input type="text" th:name="movieName" th:field="*{movieName}">
+                    <input type="text" th:name="movieName" th:field="*{movieName}"  th:errorclass="field-error">
+                    <div class = "field-error" th:errors="*{movieName}">
+                        영화 이름 오류
+                    </div>
                 </label>
             </td>
         </tr>
         <tr>
             <td>포스터 사진 : </td>
             <td>
-                <input type="file"  accept="image/*" th:name="moviePoster" >
+                <input type="file"  accept="image/*" th:name="moviePoster" th:field="*{moviePoster}" th:errorclass="field-error">
+                <div class = "field-error" th:errors="*{moviePoster}">
+                    포스터 사진 오류
+                </div>
             </td>
         </tr>
         <tr>
             <td>개봉연도 : </td>
             <td>
                 <label>
-                    <input type="text" th:name="openYear" th:field="*{openYear}">
+                    <input type="text" th:name="openYear" th:field="*{openYear}" th:errorclass="field-error">
+                    <div class = "field-error" th:errors="*{openYear}">
+                        개봉연도 오류
+                    </div>
                 </label>
             </td>
         </tr>
@@ -36,7 +51,10 @@
             <td>감독 이름 : </td>
             <td>
                 <label>
-                    <input type="text" th:name="directorName" th:field="*{directorName}">
+                    <input type="text" th:name="directorName" th:field="*{directorName}" th:errorclass="field-error">
+                    <div class = "field-error" th:errors="*{directorName}">
+                        감독 이름 오류
+                    </div>
                 </label>
             </td>
         </tr>
@@ -44,7 +62,10 @@
             <td>줄거리 : </td>
             <td>
                 <label>
-                    <input type="text" th:name="storyLine" th:field="*{storyLine}">
+                    <input type="text" th:name="storyLine" th:field="*{storyLine}" th:errorclass="field-error">
+                    <div class = "field-error" th:errors="*{storyLine}">
+                        줄거리 오류
+                    </div>
                 </label>
             </td>
         </tr>
