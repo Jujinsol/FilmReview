@@ -19,6 +19,8 @@ repositories {
 }
 
 dependencies {
+	implementation group: 'org.webjars', name: 'jquery', version: '3.6.0'
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'commons-io:commons-io:2.6'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'

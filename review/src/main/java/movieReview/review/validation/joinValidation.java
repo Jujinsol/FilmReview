@@ -10,7 +10,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.Validator;
 
 @Slf4j
-// @Component
+//@Component
 public class joinValidation implements Validator {
 
     @Override
