@@ -22,5 +22,5 @@ public class userInfo {
     private Integer password;
 
     @NotBlank(message = "인증코드는 필수로 작성해주세요.")
-    private String JoinCode;
+    private String joinCode;
 }

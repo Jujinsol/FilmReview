@@ -15,6 +15,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 @Controller
@@ -32,17 +34,18 @@ public class JoinController {
     }
 
     @PostMapping
-    public String joinUser(@Validated @ModelAttribute userInfo userinfo, BindingResult userError, @ModelAttribute mangerInfo mangerinfo, BindingResult managerError, HttpSession session, RedirectAttributes redirectAttributes) throws MessagingException {
+    public String joinUser(@Validated @ModelAttribute userInfo userinfo, BindingResult userError, @ModelAttribute mangerInfo mangerinfo, BindingResult managerError,RedirectAttributes redirectAttributes) throws MessagingException {
         if (managerError.hasErrors() || userError.hasErrors()) {
             log.info("errors={}", managerError);
             return "Join/signUp";
         }
+
+        // 이메일 인증 성공
         if (mangerinfo.getNumber() == null) {
             // 사용자일경우
             int join = joinService.join(userinfo.getEmail(), userinfo.getId(), userinfo.getPassword(), null);
 
             if (join == 1) {
-                Object joinCode = session.getAttribute("joinCode");
 
                 userInfo joinResult = joinService.myInfo(userinfo.getId());
                 redirectAttributes.addAttribute("id", joinResult.getId());
@@ -77,21 +80,39 @@ public class JoinController {
         }
     }
 
+
+    @PostMapping("/compare")
+    @ResponseBody
+    public Map<String, Object> compare(userInfo userinfo, HttpSession session) {
+        Map<String,Object> result = new HashMap<String,Object>();
+        Object joinCode = session.getAttribute("joinCode");
+
+        int CompareResult = mailService.JoinCodeComparison(joinCode.toString(), userinfo.getJoinCode());
+        result.put("code",CompareResult);
+        return result;
+    }
+
     @PostMapping("/emailCertification")
     @ResponseBody
-    public boolean emailSign(userInfo userinfo,HttpSession session){
+    public Map<String,Object> emailSign(userInfo userinfo, HttpSession session) {
+        Map<String,Object> result = new HashMap<String,Object>();
+
         String email = userinfo.getEmail();
-        int random = new Random().nextInt(1000000)+1000; // 1000 ~ 99999
+        int random = new Random().nextInt(1000000) + 1000; // 1000 ~ 99999 인증번호 난수생성
 
         String joinCode = String.valueOf(random);
 
-        // 세션 저장
+        // 세션 저장 - 나중에 사용자가 작성한 인증번호와 같은지 확인하기 위한 용도
         session.setAttribute("joinCode", joinCode);
 
         String subject = "회원가입 인증 코드 발급 안내 입니다.";
         StringBuilder sb = new StringBuilder();
         sb.append("귀하의 인증 코드는 " + joinCode + " 입니다.");
-        return mailService.send(subject, sb.toString(), "jjs04122002@gmail.com", email, null);
+
+        // 전송
+        boolean send = mailService.send(subject, sb.toString(), "jjs04122002@gmail.com", email, null);
+        result.put("sendResult",send);
+        return result;
     }
 
 
