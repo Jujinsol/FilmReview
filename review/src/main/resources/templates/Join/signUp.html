@@ -138,8 +138,8 @@
             url: "/Join/compare",
             async:false, // success로 받아온 값을 전역변수에 저장하기 위한 async:false; ajax는 기본적으로 비동기로 작동하지만, 동기식으로 작동하게끔 변환한것
             data: joinCompare,
-            success: function (result) {
-                if (result.code == 1) {
+            success: function (compareResult) {
+                if (compareResult.code == 1) {
                     gbl_data = 1;
                     alert("인증완료")
                 } else {
