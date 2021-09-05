@@ -2,6 +2,8 @@ package movieReview.review.repository.Upload;
 
 import lombok.extern.slf4j.Slf4j;
 import movieReview.review.dto.FileInfo.photoUriInfo;
+import movieReview.review.dto.MovieInfo.movieInfo;
+import movieReview.review.dto.userInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -42,12 +44,16 @@ public class UploadRepositoryImpl implements UploadRepository{
     }
 
     @Override
-    public int insert(photoUriInfo photoUriinfo) {
+    public int insert(movieInfo movieinfo) {
         int result = 0;
-        final String sql = "INSERT INTO photoinfo (photoOriName, photoUri) values (?,?)";
+        final String sql = "INSERT INTO photoinfo (photoOriName, photoUri, storyLine, movieName, openYear, directorName) values (?,?,?,?,?,?)";
         result = template.update(sql,
-                photoUriinfo.getPhotoOriName(),
-                photoUriinfo.getPhotoUri());
+                movieinfo.getPhotoOriName(),
+                movieinfo.getPhotoUri(),
+                movieinfo.getStoryLine(),
+                movieinfo.getMovieName(),
+                movieinfo.getOpenYear(),
+                movieinfo.getDirectorName());
 
         return result;
     }
@@ -79,4 +85,17 @@ public class UploadRepositoryImpl implements UploadRepository{
             return photoUriinfo;
         }
     }
+
+    @Override
+    public int movieDelete(movieInfo movieinfo) {
+        int result = 0;
+
+        final String sql = "DELETE FROM photoinfo WHERE photoOriName = ?";
+        result = template.update(sql,
+                movieinfo.getPhotoOriName()
+        );
+
+        return result;
+    }
+
 }

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<body>
+영화제목을 입력해 주세요
+<input type="text" id="movieName" name="movieName" th:field="${movieInfo.movieName}">
+<input type="button" id="movieView" value="영화조회">
+</br>
+</br>
+<img id="moviePoster" src="">
+<h3 th:type="hidden" name="poster" value=""></h3>
+<h3 th:type="hidden" name="movieName" value=""></h3>
+<h3 th:type="hidden" name="storyLine" value=""></h3>
+<h3 th:type="hidden" name="openYear" value=""></h3>
+<h3 th:type="hidden" name="directorName" value=""></h3>
+<input type="button" value="메인페이지로 나가기" th:onclick="|location.href='@{/MainPage}'|">
+<script>
+    $('#movieView').click(function () {
+        var data = $("#movieName");
+        $.ajax({
+            type: "POST",
+            url: "/oneMovie/viewOneMovie",
+            data: data,
+            success: function (movie) { // json형식파일 처리
+                document.getElementById("moviePoster").src = movie['photoUri'];
+
+                const elementsByTagName = document.getElementsByTagName("h3");
+                elementsByTagName[1].innerText = movie['movieName'];
+                elementsByTagName[2].innerText = movie['storyLine'];
+                elementsByTagName[3].innerText = movie['openYear'];
+                elementsByTagName[4].innerText = movie['directorName'];
+
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("통신 실패.")
+            }
+        });
+    });
+
+
+</script>
+</body>
+</html>
