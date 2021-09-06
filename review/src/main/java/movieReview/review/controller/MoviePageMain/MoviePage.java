@@ -3,6 +3,7 @@ package movieReview.review.controller.MoviePageMain;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import movieReview.review.dto.FileInfo.photoUriInfo;
+import movieReview.review.dto.MovieInfo.JpaMovieInfo;
 import movieReview.review.dto.MovieInfo.movieInfo;
 import movieReview.review.service.GetMovieInfo.getMovieInfoServiceImpl;
 import movieReview.review.service.Upload.UploadServiceImpl;
@@ -14,6 +15,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @Slf4j
@@ -33,9 +37,18 @@ public class MoviePage {
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/viewOneMovie")
     @ResponseBody
-    public movieInfo MovieView(movieInfo movieinfo, Model model){
-        movieInfo movie = getMovieInfoService.getMovie(movieinfo);
+    public List<JpaMovieInfo> MovieView(movieInfo movieinfo){
+        List<JpaMovieInfo> jpaMovieInfos = new ArrayList<>();
+        List<JpaMovieInfo> uri = new ArrayList<>();
+        List<JpaMovieInfo> movie = getMovieInfoService.getMovie(movieinfo);
+        for(int i = 0; i<movie.size(); i++){
+            uri.add(makeUri(movie.get(i)));
+            jpaMovieInfos.add(uri.get(i));
+        }
+        return jpaMovieInfos;
+    }
 
+    public JpaMovieInfo makeUri(JpaMovieInfo movie){
         photoUriinfo.setPhotoUri(movie.getPhotoUri());
         photoUriinfo.setPhotoOriName(movie.getPhotoOriName());
 

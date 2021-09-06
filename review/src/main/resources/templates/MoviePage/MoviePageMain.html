@@ -12,12 +12,9 @@
 <input type="button" id="movieView" value="영화조회">
 </br>
 </br>
-<img id="moviePoster" src="">
-<h3 th:type="hidden" name="poster" value=""></h3>
-<h3 th:type="hidden" name="movieName" value=""></h3>
-<h3 th:type="hidden" name="storyLine" value=""></h3>
-<h3 th:type="hidden" name="openYear" value=""></h3>
-<h3 th:type="hidden" name="directorName" value=""></h3>
+<div>
+ <!-- 요소들 들어갈 부분 -->
+</div>
 <input type="button" value="메인페이지로 나가기" th:onclick="|location.href='@{/MainPage}'|">
 <script>
     $('#movieView').click(function () {
@@ -26,23 +23,24 @@
             type: "POST",
             url: "/oneMovie/viewOneMovie",
             data: data,
-            success: function (movie) { // json형식파일 처리
-                document.getElementById("moviePoster").src = movie['photoUri'];
+            success: function (jpaMovieInfos) {
+                $('div').empty(); // append결과 초기화
+                for (var i in jpaMovieInfos) {
 
-                const elementsByTagName = document.getElementsByTagName("h3");
-                elementsByTagName[1].innerText = movie['movieName'];
-                elementsByTagName[2].innerText = movie['storyLine'];
-                elementsByTagName[3].innerText = movie['openYear'];
-                elementsByTagName[4].innerText = movie['directorName'];
+                    $('div').append('<img id="moviePoster" src="'+jpaMovieInfos[i].photoUri+'">');
+                    $('div').append('<h3 th:type="hidden" name="movieName" >'+jpaMovieInfos[i].movieName+'</h3>');
+                    $('div').append('<h3 th:type="hidden" name="storyLine">'+jpaMovieInfos[i].storyLine+'</h3>');
+                    $('div').append('<h3 th:type="hidden" name="openYear" >'+jpaMovieInfos[i].openYear+'</h3>');
+                    $('div').append('<h3 th:type="hidden" name="directorName" >'+jpaMovieInfos[i].directorName+'</h3>');
 
+
+                }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("통신 실패.")
             }
         });
     });
-
-
 </script>
 </body>
 </html>
