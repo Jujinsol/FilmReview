@@ -117,7 +117,7 @@
             url: "/Join/emailCertification",      // 컨트롤러에서 대기중인 URL 주소이다.
             data: data,              // 데이터
             success: function (res) {
-                if (res.sendResult == true) {
+                if (res.sendResult === true) {
                     alert("메일함을 확인해 주세요")
                 }else{
                     alert("실패")

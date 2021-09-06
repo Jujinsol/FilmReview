@@ -28,7 +28,7 @@ import java.nio.file.Paths;
 @PropertySource("classpath:application.properties")
 public class UploadController {
     private File files;
-    private final photoUriInfo photoUri;
+    private final photoUriInfo photoUriinfo;
     private final Environment environment;
     private final UploadServiceImpl uploadService;
 
@@ -39,12 +39,13 @@ public class UploadController {
     }
 
     @PostMapping
-    public String uploadCompletion(@Validated movieInfo movieinfo, BindingResult bindingResult, MultipartFile moviePoster, Model model, RedirectAttributes redirectAttributes) throws IOException {
+    public String uploadCompletion(@Validated movieInfo movieinfo, BindingResult bindingResult, MultipartFile moviePoster, Model model) throws IOException {
         if(bindingResult.hasErrors() || moviePoster.isEmpty()){
             bindingResult.rejectValue("moviePoster","moviePosterEmpty");
             log.info("error={}",bindingResult);
             return "MyPage/managerUpload";
         }
+
         moviePoster = movieinfo.getMoviePoster();
         files= new File(environment.getProperty("FilePath")+moviePoster.getOriginalFilename());
 
@@ -52,20 +53,23 @@ public class UploadController {
         String path = files.getPath();
         moviePoster.transferTo(files);
 
-        photoUri.setPhotoOriName(moviePoster.getOriginalFilename());
-        photoUri.setPhotoUri(path);
+        movieinfo.setPhotoOriName(moviePoster.getOriginalFilename());
+        movieinfo.setPhotoUri(path);
 
         // db 저장
-        uploadService.create(photoUri);
+        uploadService.create(movieinfo);
 
-        photoUriInfo photoUriInfo = uploadService.showPhoto(photoUri);
+        photoUriinfo.setPhotoUri(movieinfo.getPhotoUri());
+        photoUriinfo.setPhotoOriName(movieinfo.getPhotoOriName());
+
+        photoUriInfo photoUriInfo = uploadService.showPhoto(photoUriinfo);
         ClassPathResource resource = new ClassPathResource("/moviePhoto/"+photoUriInfo.getPhotoOriName());
 
         Path path1 = Paths.get(resource.getPath());
         log.info("path1={}",path1);
 
-        redirectAttributes.addAttribute("photoUriInfo",path1);
-        return "redirect:MyPage/managerUploadSuccess";
+        model.addAttribute("photoUriInfo",path1);
+        return "MyPage/managerUploadSuccess";
     }
 
 }
