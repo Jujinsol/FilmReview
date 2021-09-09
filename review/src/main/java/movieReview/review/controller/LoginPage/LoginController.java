@@ -2,9 +2,11 @@ package movieReview.review.controller.LoginPage;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import movieReview.review.Session.SessionConst;
 import movieReview.review.dto.Login.loginMangerInfo;
 import movieReview.review.dto.Login.loginUserInfo;
 import movieReview.review.service.Login.LoginServiceImpl;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,7 +14,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 
@@ -31,7 +35,10 @@ public class LoginController {
     }
 
     @PostMapping
-    public String doLogin(@Validated @ModelAttribute loginUserInfo userinfo, BindingResult bindingResult, HttpServletResponse response) {
+    public String doLogin(@Validated @ModelAttribute loginUserInfo form,
+                          BindingResult bindingResult,
+                          HttpServletResponse response,
+                          HttpServletRequest request) {
         if (bindingResult.hasErrors() ) {
             log.info("errors={}", bindingResult);
             return "LogIn/LogIn";
@@ -39,37 +46,33 @@ public class LoginController {
 
         loginMangerInfo mangerinfo = new loginMangerInfo();
 
-        int result = loginServiceImpl.FirstCheck(userinfo.getId());
-        log.info("result={}",result);
-
-        if (result == 1) {
+        if (loginServiceImpl.FirstCheck(form.getId()) == 1) {
             //사용자
-            Optional<loginUserInfo> userLoginResult = Optional.ofNullable(loginServiceImpl.userLogin(userinfo));
+            Optional<loginUserInfo> userLoginResult = Optional.ofNullable(loginServiceImpl.userLogin(form));
             if (userLoginResult.isEmpty()) {
                 bindingResult.reject("GlobalUserLoginWorn");
                 log.info("user.errors={}", bindingResult);
-                log.info("사용자 둘중에하나 틀렸음");
                 return "LogIn/LogIn";
             } else {
-                Cookie userCookie = new Cookie("id", String.valueOf(userinfo.getId()));
-                response.addCookie(userCookie);
-                return "MainPage/MainPage";
+                HttpSession loginSession = request.getSession(true);
+                loginSession.setAttribute(SessionConst.LoginId,form.getId());
+                return "redirect:/MainPage";
             }
-        } else if (result == 2) {
+
+        } else if (loginServiceImpl.FirstCheck(form.getId()) == 2) {
             //관리자
-            mangerinfo.setId(userinfo.getId());
-            mangerinfo.setPassword(userinfo.getPassword());
+            mangerinfo.setId(form.getId());
+            mangerinfo.setPassword(form.getPassword());
             Optional<loginMangerInfo> mangerLoginResult = Optional.ofNullable(loginServiceImpl.mangerLogin(mangerinfo));
 
             if (mangerLoginResult.isEmpty()) {
                 bindingResult.reject( "GlobalMangerLoginWorn");
                 log.info("manger.errors={}", bindingResult);
-                log.info("관리자 둘중에하나 틀렸음");
                 return "LogIn/LogIn";
             } else {
-                Cookie mangerCookie = new Cookie("id", String.valueOf(mangerinfo.getId()));
-                response.addCookie(mangerCookie);
-                return "MainPage/MainPage";
+                HttpSession loginSession = request.getSession(true);
+                loginSession.setAttribute(SessionConst.LoginId,form.getId());
+                return "redirect:/MainPage";
             }
         } else {
             //없는 회원 id

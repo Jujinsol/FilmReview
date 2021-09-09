@@ -14,7 +14,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,7 +38,7 @@ public class UploadController {
     }
 
     @PostMapping
-    public String uploadCompletion(@Validated movieInfo movieinfo, BindingResult bindingResult, MultipartFile moviePoster, Model model) throws IOException {
+    public String uploadCompletion(@Validated movieInfo movieinfo, BindingResult bindingResult, MultipartFile moviePoster) throws IOException {
         if(bindingResult.hasErrors() || moviePoster.isEmpty()){
             bindingResult.rejectValue("moviePoster","moviePosterEmpty");
             log.info("error={}",bindingResult);
@@ -58,18 +57,12 @@ public class UploadController {
 
         // db 저장
         uploadService.create(movieinfo);
+        return "redirect:/Upload/managerUploadSuccess";
+    }
 
-        photoUriinfo.setPhotoUri(movieinfo.getPhotoUri());
-        photoUriinfo.setPhotoOriName(movieinfo.getPhotoOriName());
-
-        photoUriInfo photoUriInfo = uploadService.showPhoto(photoUriinfo);
-        ClassPathResource resource = new ClassPathResource("/moviePhoto/"+photoUriInfo.getPhotoOriName());
-
-        Path path1 = Paths.get(resource.getPath());
-        log.info("path1={}",path1);
-
-        model.addAttribute("photoUriInfo",path1);
-        return "MyPage/managerUploadSuccess";
+    @GetMapping("/managerUploadSuccess")
+    public String SuccessPage(){
+        return "/MyPage/managerUploadSuccess";
     }
 
 }

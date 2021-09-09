@@ -48,6 +48,14 @@ public class MoviePage {
         return jpaMovieInfos;
     }
 
+    @PostMapping("/reviewUpload")
+    @ResponseBody
+    public String reviewUpload(){
+        // 로그인검증 필요함 추후 개발 예정
+        String result = "ok";
+        return result;
+    }
+
     public JpaMovieInfo makeUri(JpaMovieInfo movie){
         photoUriinfo.setPhotoUri(movie.getPhotoUri());
         photoUriinfo.setPhotoOriName(movie.getPhotoOriName());
@@ -57,6 +65,7 @@ public class MoviePage {
 
         Path path1 = Paths.get(resource.getPath());
 
+        log.info("path ={}",path1);
         movie.setPhotoUri(path1.toString());
         return movie;
     }

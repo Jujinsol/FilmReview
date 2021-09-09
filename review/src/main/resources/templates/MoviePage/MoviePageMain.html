@@ -13,12 +13,16 @@
 </br>
 </br>
 <div>
- <!-- 요소들 들어갈 부분 -->
+    <form th:action th:object="${movieInfo}" th:method="GET">
+        <input th:type="text" id = "myReview">
+        <input th:type="button" id="reviewUpload" value="리뷰 작성하기">
+    </form>
+ <!-- 요소들 append 들어갈 부분 -->
 </div>
 <input type="button" value="메인페이지로 나가기" th:onclick="|location.href='@{/MainPage}'|">
 <script>
     $('#movieView').click(function () {
-        var data = $("#movieName");
+        const data = $("#movieName");
         $.ajax({
             type: "POST",
             url: "/oneMovie/viewOneMovie",
@@ -32,9 +36,26 @@
                     $('div').append('<h3 th:type="hidden" name="storyLine">'+jpaMovieInfos[i].storyLine+'</h3>');
                     $('div').append('<h3 th:type="hidden" name="openYear" >'+jpaMovieInfos[i].openYear+'</h3>');
                     $('div').append('<h3 th:type="hidden" name="directorName" >'+jpaMovieInfos[i].directorName+'</h3>');
+                    $('div').append('<h3 th:type="hidden" name="moviePoint" >'+jpaMovieInfos[i].moviePoint+'</h3>');
+                    $('div').append('<h3 th:type="hidden" name="directorName" >'+jpaMovieInfos[i].movieReview+'</h3>');
 
 
                 }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("통신 실패.")
+            }
+        });
+    });
+
+    $('#reviewUpload').click(function () {
+        const data = $("#myReview");
+        $.ajax({
+            type:"POST",
+            url: "/oneMovie/reviewUpload",
+            data:data,
+            success: function (result) {
+                alert("업로드 완료" + result);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("통신 실패.")
