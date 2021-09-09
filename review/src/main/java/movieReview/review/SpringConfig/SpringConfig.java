@@ -1,20 +1,30 @@
 package movieReview.review.SpringConfig;
 
+import lombok.RequiredArgsConstructor;
+import movieReview.review.SpringInterceptor.LoginInterceptor;
 import movieReview.review.repository.GetMovieInfo.getMovieRepository;
 import movieReview.review.repository.GetMovieInfo.getMovieRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.persistence.EntityManager;
 
 @Configuration
-public class SpringConfig {
+@RequiredArgsConstructor
+public class SpringConfig implements WebMvcConfigurer {
     private final EntityManager em;
+    private final LoginInterceptor loginInterceptor;
 
-    @Autowired
-    public SpringConfig(EntityManager em) {
-        this.em = em;
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(loginInterceptor)
+                .order(1)
+                .addPathPatterns("/**")
+                .excludePathPatterns("/","/css/**","/js/**","/moviePhoto/**"
+                        ,"/Join/**","/MainPage/**","/Login/**","/oneMovie/**");
     }
 
     @Bean

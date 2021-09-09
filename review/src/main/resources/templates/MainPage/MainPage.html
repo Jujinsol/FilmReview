@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <body>
 메인페이지입니다.
 </br>
@@ -19,7 +21,25 @@
 </br>
 <a href="Upload">관리자 영화정보 업로드</a>
 </br>
-</br>
+<br>
 <a href="oneMovie">영화 하나 조회</a>
+</br>
+</br>
+<input type="button" id="logout" value="로그아웃">
+<script>
+    $('#logout').click(function () {
+        // ajax 통신
+        $.ajax({
+            type: "GET",
+            url: "/MainPage/logout",
+            success: function (logoutResult) {
+                alert(logoutResult)
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("통신 실패.")
+            }
+        });
+    });
+</script>
 </body>
 </html>

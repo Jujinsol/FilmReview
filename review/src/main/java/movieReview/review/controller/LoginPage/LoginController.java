@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import movieReview.review.Session.SessionConst;
 import movieReview.review.dto.Login.loginMangerInfo;
 import movieReview.review.dto.Login.loginUserInfo;
+import movieReview.review.service.Login.LoginService;
 import movieReview.review.service.Login.LoginServiceImpl;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
@@ -25,7 +26,7 @@ import java.util.Optional;
 @RequestMapping("/Login")
 @Slf4j
 public class LoginController {
-    private final LoginServiceImpl loginServiceImpl;
+    private final LoginService loginServiceImpl;
 
 
     @GetMapping
@@ -37,7 +38,6 @@ public class LoginController {
     @PostMapping
     public String doLogin(@Validated @ModelAttribute loginUserInfo form,
                           BindingResult bindingResult,
-                          HttpServletResponse response,
                           HttpServletRequest request) {
         if (bindingResult.hasErrors() ) {
             log.info("errors={}", bindingResult);

@@ -2,12 +2,12 @@ package movieReview.review.controller.managerUpload;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import movieReview.review.Session.SessionConst;
 import movieReview.review.dto.MovieInfo.movieInfo;
-import movieReview.review.dto.FileInfo.photoUriInfo;
+import movieReview.review.service.Login.LoginService;
 import movieReview.review.service.Upload.UploadServiceImpl;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,8 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 @Controller
 @RequestMapping("/Upload")
@@ -27,18 +25,27 @@ import java.nio.file.Paths;
 @PropertySource("classpath:application.properties")
 public class UploadController {
     private File files;
-    private final photoUriInfo photoUriinfo;
+    private final LoginService loginServiceImpl;
     private final Environment environment;
     private final UploadServiceImpl uploadService;
 
     @GetMapping
-    public String uploadPage(Model model){
+    public String uploadPage(@SessionAttribute(value = SessionConst.LoginId, required = false) String id,Model model){
+        if (loginServiceImpl.FirstCheck(id)==1){
+            log.info("사용자가 업로드에 접근");
+            return "MainPage/MainPage";
+        }
+
         model.addAttribute("movieInfo", new movieInfo());
         return "MyPage/managerUpload";
     }
 
     @PostMapping
-    public String uploadCompletion(@Validated movieInfo movieinfo, BindingResult bindingResult, MultipartFile moviePoster) throws IOException {
+    public String uploadCompletion(@Validated movieInfo movieinfo,
+                                   BindingResult bindingResult,
+                                   MultipartFile moviePoster)
+                                   throws IOException {
+
         if(bindingResult.hasErrors() || moviePoster.isEmpty()){
             bindingResult.rejectValue("moviePoster","moviePosterEmpty");
             log.info("error={}",bindingResult);

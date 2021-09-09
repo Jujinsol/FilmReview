@@ -26,35 +26,27 @@ public class MyPageController {
 
     @GetMapping
     public String userChagePage(@SessionAttribute(name = SessionConst.LoginId, required = false) String id, Model model) {
-        if (id == null) {
-            // 로그인 안했을때
-            return "/MainPage/MainPage";
-        }
-
         if (checkMangerOrUser.check(id) == 1) {
             // 사용자
             userInfo findInfo = joinService.myInfo(id);
 
             model.addAttribute("id", findInfo.getId());
             model.addAttribute("password", findInfo.getPassword());
-
             model.addAttribute("userInfo", findInfo);
+
             return "/MyPage/userPwChange";
 
-        } else if (checkMangerOrUser.check(id) == 2) {
-            // 관리자
-            mangerInfo mangerInfo = joinService.mangerInfo(id);
-            ;
-
-            model.addAttribute("id", mangerInfo.getId());
-            model.addAttribute("password", mangerInfo.getPassword());
-
-            model.addAttribute("mangerInfo", mangerInfo);
-            return "/MyPage/managerPwChange";
-        } else {
-            //로그인 정보가 없을때
-            return "/MainPage/MainPage";
         }
+
+        // 관리자
+        mangerInfo mangerInfo = joinService.mangerInfo(id);
+
+        model.addAttribute("id", mangerInfo.getId());
+        model.addAttribute("password", mangerInfo.getPassword());
+        model.addAttribute("mangerInfo", mangerInfo);
+
+        return "/MyPage/managerPwChange";
+
     }
 
     @PostMapping
