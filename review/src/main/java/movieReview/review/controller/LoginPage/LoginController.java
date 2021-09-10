@@ -56,7 +56,7 @@ public class LoginController {
             } else {
                 HttpSession loginSession = request.getSession(true);
                 loginSession.setAttribute(SessionConst.LoginId,form.getId());
-                return "redirect:/MainPage";
+                return "redirect:/";
             }
 
         } else if (loginServiceImpl.FirstCheck(form.getId()) == 2) {
@@ -72,7 +72,7 @@ public class LoginController {
             } else {
                 HttpSession loginSession = request.getSession(true);
                 loginSession.setAttribute(SessionConst.LoginId,form.getId());
-                return "redirect:/MainPage";
+                return "redirect:/";
             }
         } else {
             //없는 회원 id

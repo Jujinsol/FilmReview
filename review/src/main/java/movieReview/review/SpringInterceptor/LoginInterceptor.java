@@ -18,14 +18,14 @@ public class LoginInterceptor implements HandlerInterceptor {
         StringBuffer requestURL = request.getRequestURL();
         HttpSession session = request.getSession();
 
-        if(session == null || session.getAttribute(SessionConst.LoginId)==null){
+        if (session == null || session.getAttribute(SessionConst.LoginId) == null) {
             log.info("preHandle run 로그인 안해서 통과 x");
-            response.sendRedirect("/Login?redirectURL="+requestURL);
+
+            response.sendRedirect("/Login?redirectURL=" + requestURL);
             return false;
         }
 
         log.info("preHandle run 로그인 해서 통과");
         return true;
     }
-
 }

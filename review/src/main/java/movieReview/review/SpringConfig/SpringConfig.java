@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import movieReview.review.SpringInterceptor.LoginInterceptor;
 import movieReview.review.repository.GetMovieInfo.getMovieRepository;
 import movieReview.review.repository.GetMovieInfo.getMovieRepositoryImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

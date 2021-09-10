@@ -87,11 +87,11 @@ public class MyPageController {
         if (checkMangerOrUser.check(id) == 1) {
             // 유저 회원탈퇴
             joinService.delete(id);
-            return "redirect:/MainPage";
+            return "redirect:/";
         }
         // 관리자 회원탈퇴
         joinService.deleteManger(id);
-        return "redirect:/MainPage";
+        return "redirect:/";
 
     }
 }
