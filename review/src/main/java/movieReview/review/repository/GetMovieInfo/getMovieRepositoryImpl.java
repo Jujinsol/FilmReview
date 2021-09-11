@@ -28,4 +28,5 @@ public class getMovieRepositoryImpl implements getMovieRepository{
                 .setParameter("movieName",movieinfo.getMovieName())
                 .getResultList();
     }
+
 }

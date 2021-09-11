@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
+import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -35,7 +36,7 @@ public class JoinController {
     }
 
     @PostMapping
-    public String joinUser(@Validated @ModelAttribute userInfo userinfo, BindingResult userError, @ModelAttribute mangerInfo mangerinfo, BindingResult managerError,RedirectAttributes redirectAttributes) throws MessagingException {
+    public String joinUser(@Validated @ModelAttribute userInfo userinfo, BindingResult userError, @ModelAttribute mangerInfo mangerinfo, BindingResult managerError, RedirectAttributes redirectAttributes) throws MessagingException {
         if (managerError.hasErrors() || userError.hasErrors()) {
             log.info("errors={}", managerError);
             return "Join/signUp";
@@ -58,8 +59,6 @@ public class JoinController {
 
                         userInfo joinResult = joinService.myInfo(userinfo.getId());
                         redirectAttributes.addAttribute("id", joinResult.getId());
-                        redirectAttributes.addAttribute("password", joinResult.getPassword());
-                        redirectAttributes.addAttribute("email", joinResult.getEmail());
 
                         return "redirect:/Join/{id}";
                     } else {
@@ -74,9 +73,7 @@ public class JoinController {
                     if (mangerJoin == 1) {
                         mangerInfo joinMangerResult = joinService.mangerInfo(userinfo.getId());
                         redirectAttributes.addAttribute("id", joinMangerResult.getId());
-                        redirectAttributes.addAttribute("password", joinMangerResult.getPassword());
-                        redirectAttributes.addAttribute("number", joinMangerResult.getNumber());
-                        redirectAttributes.addAttribute("email", joinMangerResult.getEmail());
+
 
                         return "redirect:/Join/Man/{id}";
                     } else {

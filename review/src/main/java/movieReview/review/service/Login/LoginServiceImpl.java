@@ -18,6 +18,7 @@ public class LoginServiceImpl implements LoginService{
     private final CheckInfoExistImpl checkInfoExist;
 
     //사용자인지 관리자인지 아예없는회원인지 판단하는 메서드
+    @Override
     public int FirstCheck(String id){
         return checkMangerOrUser.check(id);
     }

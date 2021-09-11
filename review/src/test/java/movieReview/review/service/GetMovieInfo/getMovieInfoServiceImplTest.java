@@ -66,6 +66,6 @@ class getMovieInfoServiceImplTest {
         List<JpaMovieInfo> movie = getMovieInfoService.getMovie(movieinfo);
 
         //then
-        assertThat(movie.size()).isEqualTo(4);
+        assertThat(movie.size()).isEqualTo(2);
     }
 }

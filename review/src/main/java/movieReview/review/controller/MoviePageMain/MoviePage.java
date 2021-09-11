@@ -5,27 +5,29 @@ import lombok.extern.slf4j.Slf4j;
 import movieReview.review.dto.FileInfo.photoUriInfo;
 import movieReview.review.dto.MovieInfo.JpaMovieInfo;
 import movieReview.review.dto.MovieInfo.movieInfo;
+import movieReview.review.service.GetMovieInfo.getMovieInfoService;
 import movieReview.review.service.GetMovieInfo.getMovieInfoServiceImpl;
+import movieReview.review.service.Upload.UploadService;
 import movieReview.review.service.Upload.UploadServiceImpl;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import movieReview.review.service.GetMovieInfo.*;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/oneMovie")
 public class MoviePage {
-    private final UploadServiceImpl uploadService;
-    private final getMovieInfoServiceImpl getMovieInfoService;
+    private final UploadService uploadService;
+    private final getMovieInfoService getMovieInfoService;
     private final photoUriInfo photoUriinfo;
 
     @GetMapping
@@ -57,7 +59,16 @@ public class MoviePage {
 
         Path path1 = Paths.get(resource.getPath());
 
+        log.info("path ={}",path1);
         movie.setPhotoUri(path1.toString());
         return movie;
+    }
+
+    @PostMapping("/reviewUpload")
+    @ResponseBody
+    public String reviewUpload(){
+        // 로그인검증 필요함 추후 개발 예정 - 인터셉터로 개발 완료
+        String result = "ok";
+        return result;
     }
 }

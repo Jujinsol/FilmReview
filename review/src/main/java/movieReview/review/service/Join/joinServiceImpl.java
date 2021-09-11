@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import movieReview.review.dto.mangerInfo;
 import movieReview.review.dto.userInfo;
-import movieReview.review.repository.Join.joinRepositoryImpl;
+import movieReview.review.repository.Join.*;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -14,7 +14,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class joinServiceImpl implements joinService{
 
-    private final joinRepositoryImpl joinRepository;
+    private final joinRepository joinRepository;
     private final userInfo userinfo;
     private final mangerInfo mangerinfo;
 
@@ -76,10 +76,19 @@ public class joinServiceImpl implements joinService{
         return joinRepository.updateMangInfo(mangerinfo);
     }
 
+    // 유저 회원탈퇴
     @Override
-    public int delete(String id, int password) {
+    public int delete(String id) {
         userinfo.setId(id);
-        userinfo.setPassword(password);
         return joinRepository.delete(userinfo);
     }
+
+    // 관리자 회원탈퇴
+    @Override
+    public int deleteManger(String id) {
+        mangerinfo.setId(id);
+        return joinRepository.deleteManger(mangerinfo);
+
+    }
+
 }

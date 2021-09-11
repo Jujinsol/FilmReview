@@ -6,13 +6,14 @@ import movieReview.review.dto.MovieInfo.JpaMovieInfo;
 import movieReview.review.dto.MovieInfo.movieInfo;
 import movieReview.review.repository.GetMovieInfo.getMovieRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class getMovieInfoServiceImpl implements getMovieInfoService {
     private final getMovieRepository getMovieRepository;
 
@@ -20,4 +21,5 @@ public class getMovieInfoServiceImpl implements getMovieInfoService {
     public List<JpaMovieInfo> getMovie(movieInfo movieinfo) {
         return getMovieRepository.findMovie(movieinfo);
     }
+
 }

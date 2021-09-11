@@ -2,24 +2,21 @@ package movieReview.review.controller.managerUpload;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import movieReview.review.Session.SessionConst;
 import movieReview.review.dto.MovieInfo.movieInfo;
-import movieReview.review.dto.FileInfo.photoUriInfo;
+import movieReview.review.service.Login.LoginService;
 import movieReview.review.service.Upload.UploadServiceImpl;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 @Controller
 @RequestMapping("/Upload")
@@ -28,18 +25,27 @@ import java.nio.file.Paths;
 @PropertySource("classpath:application.properties")
 public class UploadController {
     private File files;
-    private final photoUriInfo photoUriinfo;
+    private final LoginService loginServiceImpl;
     private final Environment environment;
     private final UploadServiceImpl uploadService;
 
     @GetMapping
-    public String uploadPage(Model model){
+    public String uploadPage(@SessionAttribute(value = SessionConst.LoginId, required = false) String id,Model model){
+        if (loginServiceImpl.FirstCheck(id)==1){
+            log.info("사용자가 업로드에 접근");
+            return "MainPage/MainPage";
+        }
+
         model.addAttribute("movieInfo", new movieInfo());
         return "MyPage/managerUpload";
     }
 
     @PostMapping
-    public String uploadCompletion(@Validated movieInfo movieinfo, BindingResult bindingResult, MultipartFile moviePoster, Model model) throws IOException {
+    public String uploadCompletion(@Validated movieInfo movieinfo,
+                                   BindingResult bindingResult,
+                                   MultipartFile moviePoster)
+                                   throws IOException {
+
         if(bindingResult.hasErrors() || moviePoster.isEmpty()){
             bindingResult.rejectValue("moviePoster","moviePosterEmpty");
             log.info("error={}",bindingResult);
@@ -58,18 +64,12 @@ public class UploadController {
 
         // db 저장
         uploadService.create(movieinfo);
+        return "redirect:/Upload/managerUploadSuccess";
+    }
 
-        photoUriinfo.setPhotoUri(movieinfo.getPhotoUri());
-        photoUriinfo.setPhotoOriName(movieinfo.getPhotoOriName());
-
-        photoUriInfo photoUriInfo = uploadService.showPhoto(photoUriinfo);
-        ClassPathResource resource = new ClassPathResource("/moviePhoto/"+photoUriInfo.getPhotoOriName());
-
-        Path path1 = Paths.get(resource.getPath());
-        log.info("path1={}",path1);
-
-        model.addAttribute("photoUriInfo",path1);
-        return "MyPage/managerUploadSuccess";
+    @GetMapping("/managerUploadSuccess")
+    public String SuccessPage(){
+        return "/MyPage/managerUploadSuccess";
     }
 
 }
