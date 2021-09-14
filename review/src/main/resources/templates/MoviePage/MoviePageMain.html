@@ -13,12 +13,9 @@
 </br>
 </br>
 <div>
-    <form th:action th:object="${movieInfo}" th:method="GET">
-        <input th:type="text" id = "myReview">
-        <input th:type="button" id="reviewUpload" value="리뷰 작성하기">
-    </form>
  <!-- 요소들 append 들어갈 부분 -->
 </div>
+<input th:type="button" value="리뷰작성하기"  id="reviewUpload">
 <input type="button" value="메인페이지로 나가기" th:onclick="|location.href='@{/}'|">
 <script>
     $('#movieView').click(function () {
@@ -39,6 +36,9 @@
                     $('div').append('<h3 th:type="hidden" name="moviePoint" >'+jpaMovieInfos[i].moviePoint+'</h3>');
                     $('div').append('<h3 th:type="hidden" name="directorName" >'+jpaMovieInfos[i].movieReview+'</h3>');
 
+                    $('div').append('<input th:type="text" id = "movieReivew">리뷰작성칸');
+                    $('div').append('<input th:type="text" id = "moviePoint"> 평점');
+
 
                 }
             },
@@ -49,16 +49,24 @@
     });
 
     $('#reviewUpload').click(function () {
-        const data = $("#myReview");
+        // json 형식으로 데이터 set
+        var params = {
+            movieReivew : $("#movieReivew").val()
+            ,moviePoint : $("#moviePoint").val()
+        }
         $.ajax({
-            type:"POST",
+            type:"GET",
             url: "/oneMovie/reviewUpload",
-            data:data,
+            data:params,
             success: function (result) {
-                alert("업로드 완료" + result);
+                if(result ===  1){
+                    alert("리뷰업로드가 완료되었습니다.");
+                }else{
+                    alert("리뷰업로드가 실패했습니다.");
+                }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("통신 실패.")
+                alert("통신 실패.");
             }
         });
     });

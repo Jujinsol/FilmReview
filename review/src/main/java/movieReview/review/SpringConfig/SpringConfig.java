@@ -4,9 +4,8 @@ import lombok.RequiredArgsConstructor;
 import movieReview.review.SpringInterceptor.LoginInterceptor;
 import movieReview.review.repository.GetMovieInfo.getMovieRepository;
 import movieReview.review.repository.GetMovieInfo.getMovieRepositoryImpl;
-import movieReview.review.repository.reviewFunction.FindMovie.findMovieRepository;
-import movieReview.review.repository.reviewFunction.FindMovie.findMovieRepositoryImpl;
-import org.hibernate.sql.Template;
+import movieReview.review.repository.reviewFunction.FindMovie.ReviewFunctionRepository;
+import movieReview.review.repository.reviewFunction.FindMovie.ReviewFunctionRepositoryImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -37,7 +36,7 @@ public class SpringConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public findMovieRepository findMovieRepository(){
-        return new findMovieRepositoryImpl(JdbcTemplate, em);
+    public ReviewFunctionRepository findMovieRepository(){
+        return new ReviewFunctionRepositoryImpl(JdbcTemplate, em);
     }
 }

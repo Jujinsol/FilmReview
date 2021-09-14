@@ -2,11 +2,14 @@ package movieReview.review.controller.MoviePageMain;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import movieReview.review.Session.SessionConst;
 import movieReview.review.dto.FileInfo.photoUriInfo;
 import movieReview.review.dto.MovieInfo.JpaMovieInfo;
 import movieReview.review.dto.MovieInfo.movieInfo;
+import movieReview.review.dto.ReviewInfo.ReviewInfo;
 import movieReview.review.service.GetMovieInfo.getMovieInfoService;
 import movieReview.review.service.Upload.UploadService;
+import movieReview.review.service.reviewFunction.reviewUploadServie.ReviewUploadService;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -27,6 +30,7 @@ public class MoviePage {
     private final UploadService uploadService;
     private final getMovieInfoService getMovieInfoService;
     private final photoUriInfo photoUriinfo;
+    private final ReviewUploadService reviewUploadService;
 
     @GetMapping
     public String goMovie(Model model){
@@ -38,7 +42,6 @@ public class MoviePage {
     @PostMapping("/viewOneMovie")
     @ResponseBody
     public List<JpaMovieInfo> MovieView(movieInfo movieinfo, HttpServletRequest request){
-        request.setAttribute("photoOriName", movieinfo.getPhotoOriName());
         List<JpaMovieInfo> jpaMovieInfos = new ArrayList<>();
         List<JpaMovieInfo> uri = new ArrayList<>();
         List<JpaMovieInfo> movie = getMovieInfoService.getMovie(movieinfo);
@@ -46,7 +49,22 @@ public class MoviePage {
             uri.add(makeUri(movie.get(i)));
             jpaMovieInfos.add(uri.get(i));
         }
+
         return jpaMovieInfos;
+    }
+
+    @GetMapping("/reviewUpload")
+    @ResponseBody
+    public int reviewUpload(@SessionAttribute(value = SessionConst.LoginId, required = false) String id,ReviewInfo reviewInfo,HttpServletRequest request){
+
+
+        reviewInfo.setPhotoOriName(photoOriName.toString());
+        reviewInfo.setMovieReivew(reviewInfo.getMovieReivew());
+        reviewInfo.setMoviePoint(reviewInfo.getMoviePoint());
+        reviewInfo.setReviewUser(id);
+
+        int result = reviewUploadService.reviewUpload(reviewInfo);
+        return result;
     }
 
     public JpaMovieInfo makeUri(JpaMovieInfo movie){
@@ -61,10 +79,5 @@ public class MoviePage {
         log.info("path ={}",path1);
         movie.setPhotoUri(path1.toString());
         return movie;
-    }
-
-    @PostMapping("/reviewUpload")
-    public String reviewUpload(){
-        return null;
     }
 }

@@ -99,23 +99,13 @@ public class UploadRepositoryImpl implements UploadRepository{
     @Override
     public int movieDelete(movieInfo movieinfo) {
         int result = 0;
-        int result2 = 0;
 
         final String sql = "DELETE FROM photoinfo WHERE photoOriName = ?";
         result = template.update(sql,
                 movieinfo.getPhotoOriName()
         );
 
-        final String sql2 = "DELETE FROM reviewTab where photoOriName =?";
-        result2 = template.update(sql2,
-                movieinfo.getPhotoOriName()
-        );
-
-        if(result == 1 && result2 == 1){
-            return 1;
-        }else{
-            return 0;
-        }
+        return result;
     }
 
 }
