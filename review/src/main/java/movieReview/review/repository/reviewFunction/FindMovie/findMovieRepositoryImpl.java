@@ -1,25 +1,36 @@
 package movieReview.review.repository.reviewFunction.FindMovie;
 
-import movieReview.review.dto.MovieInfo.movieInfo;
 import movieReview.review.dto.ReviewInfo.ReviewInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.persistence.EntityManager;
 
 
 public class findMovieRepositoryImpl implements findMovieRepository {
 
+    @Autowired
+    private final JdbcTemplate template;
     private final EntityManager em;
 
     @Autowired
-    public findMovieRepositoryImpl(EntityManager em) {
+    public findMovieRepositoryImpl(JdbcTemplate template, EntityManager em) {
+        this.template = template;
         this.em = em;
     }
 
 
     @Override
     public int insertReview(ReviewInfo reviewinfo) {
-        em.persist(reviewinfo);
-
+        String sql = "Update reviewTab set moviePoint = ? , movieReview =?, reviewUser=? where photoOriName = ?";
+        return template.update(sql, reviewinfo.getMoviePoint(), reviewinfo.getMovieReivew(), reviewinfo.getReviewUser(), reviewinfo.getPhotoOriName());
     }
+
+    @Override
+    public int deleteReview(ReviewInfo reviewInfo) {
+        String sql = "delete from reviewTab where reviewUser = ?";
+        return template.update(sql,reviewInfo.getReviewUser());
+    }
+
+
 }
