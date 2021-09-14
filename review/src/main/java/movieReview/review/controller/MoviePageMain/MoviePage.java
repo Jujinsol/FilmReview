@@ -6,16 +6,14 @@ import movieReview.review.dto.FileInfo.photoUriInfo;
 import movieReview.review.dto.MovieInfo.JpaMovieInfo;
 import movieReview.review.dto.MovieInfo.movieInfo;
 import movieReview.review.service.GetMovieInfo.getMovieInfoService;
-import movieReview.review.service.GetMovieInfo.getMovieInfoServiceImpl;
 import movieReview.review.service.Upload.UploadService;
-import movieReview.review.service.Upload.UploadServiceImpl;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import movieReview.review.service.GetMovieInfo.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -39,7 +37,8 @@ public class MoviePage {
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/viewOneMovie")
     @ResponseBody
-    public List<JpaMovieInfo> MovieView(movieInfo movieinfo){
+    public List<JpaMovieInfo> MovieView(movieInfo movieinfo, HttpServletRequest request){
+        request.setAttribute("photoOriName", movieinfo.getPhotoOriName());
         List<JpaMovieInfo> jpaMovieInfos = new ArrayList<>();
         List<JpaMovieInfo> uri = new ArrayList<>();
         List<JpaMovieInfo> movie = getMovieInfoService.getMovie(movieinfo);
@@ -65,10 +64,7 @@ public class MoviePage {
     }
 
     @PostMapping("/reviewUpload")
-    @ResponseBody
     public String reviewUpload(){
-        // 로그인검증 필요함 추후 개발 예정 - 인터셉터로 개발 완료
-        String result = "ok";
-        return result;
+        return null;
     }
 }

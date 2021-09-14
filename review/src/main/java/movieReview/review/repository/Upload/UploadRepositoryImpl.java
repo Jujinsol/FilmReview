@@ -46,6 +46,8 @@ public class UploadRepositoryImpl implements UploadRepository{
     @Override
     public int insert(movieInfo movieinfo) {
         int result = 0;
+        int result2 = 0;
+
         final String sql = "INSERT INTO photoinfo (photoOriName, photoUri, storyLine, movieName, openYear, directorName) values (?,?,?,?,?,?)";
         result = template.update(sql,
                 movieinfo.getPhotoOriName(),
@@ -55,7 +57,15 @@ public class UploadRepositoryImpl implements UploadRepository{
                 movieinfo.getOpenYear(),
                 movieinfo.getDirectorName());
 
-        return result;
+        final String sql2 = "INSERT INTO reviewTab (photoOriName) values (?)";
+        result2 =  template.update(sql2,
+                movieinfo.getPhotoOriName());
+
+        if(result == 1 && result2 == 1){
+            return 1;
+        }else{
+            return 0;
+        }
     }
 
     @Override
@@ -89,13 +99,23 @@ public class UploadRepositoryImpl implements UploadRepository{
     @Override
     public int movieDelete(movieInfo movieinfo) {
         int result = 0;
+        int result2 = 0;
 
         final String sql = "DELETE FROM photoinfo WHERE photoOriName = ?";
         result = template.update(sql,
                 movieinfo.getPhotoOriName()
         );
 
-        return result;
+        final String sql2 = "DELETE FROM reviewTab where photoOriName =?";
+        result2 = template.update(sql2,
+                movieinfo.getPhotoOriName()
+        );
+
+        if(result == 1 && result2 == 1){
+            return 1;
+        }else{
+            return 0;
+        }
     }
 
 }

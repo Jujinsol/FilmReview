@@ -3,13 +3,14 @@ package movieReview.review.service.Upload;
 import lombok.RequiredArgsConstructor;
 import movieReview.review.dto.FileInfo.photoUriInfo;
 import movieReview.review.dto.MovieInfo.movieInfo;
+import movieReview.review.repository.Upload.UploadRepository;
 import movieReview.review.repository.Upload.UploadRepositoryImpl;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class UploadServiceImpl implements UploadService {
-    private final UploadRepositoryImpl uploadRepository;
+    private final UploadRepository uploadRepository;
 
     @Override
     public int create(movieInfo movieinfo) {
