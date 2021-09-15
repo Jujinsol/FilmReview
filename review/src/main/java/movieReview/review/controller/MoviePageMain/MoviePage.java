@@ -30,7 +30,6 @@ public class MoviePage {
     private final UploadService uploadService;
     private final getMovieInfoService getMovieInfoService;
     private final photoUriInfo photoUriinfo;
-    private final ReviewUploadService reviewUploadService;
 
     @GetMapping
     public String goMovie(Model model){
@@ -53,19 +52,6 @@ public class MoviePage {
         return jpaMovieInfos;
     }
 
-    @GetMapping("/reviewUpload")
-    @ResponseBody
-    public int reviewUpload(@SessionAttribute(value = SessionConst.LoginId, required = false) String id,ReviewInfo reviewInfo,HttpServletRequest request){
-
-
-        reviewInfo.setPhotoOriName(photoOriName.toString());
-        reviewInfo.setMovieReivew(reviewInfo.getMovieReivew());
-        reviewInfo.setMoviePoint(reviewInfo.getMoviePoint());
-        reviewInfo.setReviewUser(id);
-
-        int result = reviewUploadService.reviewUpload(reviewInfo);
-        return result;
-    }
 
     public JpaMovieInfo makeUri(JpaMovieInfo movie){
         photoUriinfo.setPhotoUri(movie.getPhotoUri());
@@ -80,4 +66,5 @@ public class MoviePage {
         movie.setPhotoUri(path1.toString());
         return movie;
     }
+
 }

@@ -17,19 +17,6 @@
 </div>
 <input type="button" value="메인페이지로 나가기" th:onclick="|location.href='@{/}'|">
 <script>
-    function goEachMovieInfo(movieName) {
-        $.ajax({
-            type: "GET",
-            url: "/EachMovie/getMovieInfo",
-            data: movieName,
-            success: function (result) {
-
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("통신 실패.");
-            }
-        });
-    }
 
     $('#movieView').click(function () {
         const data = $("#movieName");
@@ -41,10 +28,8 @@
                 $('div').empty(); // append결과 초기화
                 for (const i in jpaMovieInfos) {
 
-
-                    $('div').append('<img id="moviePoster" src="' + jpaMovieInfos[i].photoUri + '" onclick="goEachMovieInfo(' + jpaMovieInfos[i].photoOriName + ');">');
-                    $('div').append('<h3 th:type="hidden" name="movieName" onclick="goEachMovieInfo(' + jpaMovieInfos[i].photoOriName + ');" >' + jpaMovieInfos[i].movieName + '</h3>');
-
+                    $('div').append('<img id="moviePoster" src="' + jpaMovieInfos[i].photoUri + '" onclick="goEachMovieInfo(' + jpaMovieInfos[i].movieName + ');">');
+                    $('div').append('<h3 th:type="hidden" name="movieName" onclick="goEachMovieInfo(' + jpaMovieInfos[i].movieName + ');" >' + jpaMovieInfos[i].movieName + '</h3>');
 
 
                     // $('div').append('<h3 th:type="hidden" name="storyLine">'+jpaMovieInfos[i].storyLine+'</h3>');
