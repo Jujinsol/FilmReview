@@ -26,6 +26,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/oneMovie")
+// 모든영화 검색결과 조회
 public class MoviePage {
     private final UploadService uploadService;
     private final getMovieInfoService getMovieInfoService;
@@ -40,7 +41,7 @@ public class MoviePage {
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/viewOneMovie")
     @ResponseBody
-    public List<JpaMovieInfo> MovieView(movieInfo movieinfo, HttpServletRequest request){
+    public List<JpaMovieInfo> MovieView(movieInfo movieinfo){
         List<JpaMovieInfo> jpaMovieInfos = new ArrayList<>();
         List<JpaMovieInfo> uri = new ArrayList<>();
         List<JpaMovieInfo> movie = getMovieInfoService.getMovie(movieinfo);
@@ -62,7 +63,6 @@ public class MoviePage {
 
         Path path1 = Paths.get(resource.getPath());
 
-        log.info("path ={}",path1);
         movie.setPhotoUri(path1.toString());
         return movie;
     }
