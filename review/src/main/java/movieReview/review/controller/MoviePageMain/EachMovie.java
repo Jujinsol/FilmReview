@@ -32,10 +32,17 @@ public class EachMovie {
     private final ReviewUploadService reviewUploadService; // 리뷰업로드기능
 
     @GetMapping("/getMovieInfo")
-    public String EachMovieInfo(@RequestParam("photoOriName") String name, ReviewInfo reviewInfo, Model model){
-        model.addAttribute("movieInfo",new movieInfo());
-        reviewInfo.setPhotoOriName(name.substring(10));
-        return "MoviePage/EachMovieInfo";
+    public String EachMovieInfo(@RequestParam("photoOriName") String photoOriName,
+                                ReviewInfo reviewInfo,movieInfo movieinfo, Model model){
+        model.addAttribute("movieInfo",new movieInfo()); // 검색기능을 위한 movieInfo
+
+        // 1. getMovieInfoService를 통해 db에 저장된 영화 정보 전부다 갖고와야함
+        // 2. 등록한 리뷰들도 다 가지고 와야 함
+        // 3. 리뷰작성 할수 있어야 함함
+
+
+       reviewInfo.setPhotoOriName(photoOriName.substring(10)); // 원본사진이름 추출
+        return "MoviePage/EachMovie";
     }
 
     @ResponseStatus(HttpStatus.OK)

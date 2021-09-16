@@ -29,4 +29,8 @@ public class getMovieRepositoryImpl implements getMovieRepository{
                 .getResultList();
     }
 
+    @Override
+    public movieInfo EachMovieInfo(movieInfo movieInfo) {
+
+    }
 }
