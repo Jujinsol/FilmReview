@@ -12,29 +12,15 @@
 <input type="button" id="movieView" value="영화조회">
 </br>
 </br>
+
 <div>
     <!-- 요소들 append 들어갈 부분 -->
 </div>
 <input type="button" value="메인페이지로 나가기" th:onclick="|location.href='@{/}'|">
-<script charset="utf-8">
-    window.test = function(photoOriName){
-        const newWindow = window.open("about:blank");
-        newWindow.location.href="/EachMovie/getMovieInfo?photoOriName="+photoOriName;
-        // $.ajax({
-        //     type: "POST",
-        //     url: "/EachMovie/getMovieInfo",
-        //     data: photoOriName,
-        //     success: function () {
-        //
-        //     },
-        //     error: function (XMLHttpRequest, textStatus, errorThrown) {
-        //         alert("통신 실패.");
-        //     }
-        // });
-    };
+<script>
 
     $('#movieView').click(function () {
-        var data = $("#movieName");
+        const data = $("#movieName");
         $.ajax({
             type: "POST",
             url: "/oneMovie/viewOneMovie",
@@ -42,22 +28,22 @@
             success: function (jpaMovieInfos) {
                 $('div').empty(); // append결과 초기화
                 for (const i in jpaMovieInfos) {
-                    const value = jpaMovieInfos[i].photoUri;
-                    $('div').append('<img id="moviePoster" src="' + jpaMovieInfos[i].photoUri + '" >');
-                    $('div').append('<h3 onclick="test(\''+value+'\')" type="hidden" name="movieName" id="goEachMovieInfo" >' + jpaMovieInfos[i].movieName + '</h3>');
-                    // String 값을 전달해주기 위해 정규표현식 사용
-                    // \'' + value + '\'
 
-                    // $('div').append('<h3 th:type="hidden" name="storyLine">'+jpaMovieInfos[i].storyLine+'</h3>');
-                    // $('div').append('<h3 th:type="hidden" name="openYear" >'+jpaMovieInfos[i].openYear+'</h3>');
-                    // $('div').append('<h3 th:type="hidden" name="directorName" >'+jpaMovieInfos[i].directorName+'</h3>');
-                    // $('div').append('<h3 th:type="hidden" name="moviePoint" >'+jpaMovieInfos[i].moviePoint+'</h3>');
-                    // $('div').append('<h3 th:type="hidden" name="directorName" >'+jpaMovieInfos[i].movieReview+'</h3>');
+                    $('div').append('<img id="moviePoster" src="' + jpaMovieInfos[i].photoUri + '" onclick="goEachMovieInfo(' + jpaMovieInfos[i].movieName + ');">');
+                    $('div').append('<h3 th:type="hidden" name="movieName" onclick="goEachMovieInfo(' + jpaMovieInfos[i].movieName + ');" >' + jpaMovieInfos[i].movieName + '</h3>');
 
-                    // $('div').append('<input th:type="text" id = "movieReivew">리뷰작성칸');
-                    // $('div').append('<input th:type="text" id = "moviePoint"> 평점');
-                    // $('div').append('<input type="button" value="리뷰작성하기"  id="reviewUpload">')
 
+                    $('div').append('<h3 th:type="hidden" name="storyLine">'+jpaMovieInfos[i].storyLine+'</h3>');
+                    $('div').append('<h3 th:type="hidden" name="openYear" >'+jpaMovieInfos[i].openYear+'</h3>');
+                    $('div').append('<h3 th:type="hidden" name="directorName" >'+jpaMovieInfos[i].directorName+'</h3>');
+                    $('div').append('<h3 th:type="hidden" name="moviePoint" >'+jpaMovieInfos[i].moviePoint+'</h3>');
+                    $('div').append('<h3 th:type="hidden" name="directorName" >'+jpaMovieInfos[i].movieReview+'</h3>');
+
+                    $('div').append('<input th:type="text" id = "movieReivew">리뷰작성칸');
+                    $('div').append('<input th:type="text" id = "moviePoint"> 평점');
+                    $('div').append('<input type="button" value="리뷰작성하기"  id="reviewUpload">')
+
+                    // 리뷰업로드부분
                     // $('#reviewUpload').click(function () {
                     //     // json 형식으로 데이터 set
                     //     var params = {
@@ -84,7 +70,7 @@
                 }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("통신 실패.");
+                alert("통신 실패.")
             }
         });
     });

@@ -22,4 +22,9 @@ public class getMovieInfoServiceImpl implements getMovieInfoService {
         return getMovieRepository.findMovie(movieinfo);
     }
 
+    @Override
+    public movieInfo EachMovie(movieInfo movieinfo) {
+        return null;
+    }
+
 }

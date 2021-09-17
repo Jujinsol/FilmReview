@@ -1,9 +1,10 @@
-package movieReview.review.repository.reviewFunction.FindMovie;
+package movieReview.review.service.reviewFunction.reviewUploadServie;
 
 import movieReview.review.dto.MovieInfo.movieInfo;
 import movieReview.review.dto.ReviewInfo.ReviewInfo;
 import movieReview.review.repository.Upload.UploadRepository;
-import org.junit.jupiter.api.AfterEach;
+import movieReview.review.service.Upload.UploadService;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,17 +13,20 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-class findMovieRepositoryImplTest {
+class UploadServiceImplTest {
     @Autowired
-    ReviewFunctionRepository findMovieRepository;
+    ReviewUploadService reviewUpload;
+    @Autowired
+    UploadService uploadService;
     @Autowired
     UploadRepository uploadRepository;
 
-    ReviewInfo review = new ReviewInfo();
+    ReviewInfo reviewInfo = new ReviewInfo();
     movieInfo movieinfo = new movieInfo();
 
     @BeforeEach
-    void makeMovie(){
+    void createMovieInfo(){
+
         movieinfo.setPhotoOriName("test.png");
         movieinfo.setPhotoUri("static/---");
         movieinfo.setStoryLine("줄거리");
@@ -30,30 +34,26 @@ class findMovieRepositoryImplTest {
         movieinfo.setOpenYear(2010);
         movieinfo.setDirectorName("주진성");
 
-        review.setMovieReivew("abcd");
-        review.setReviewUser("jjsair0412");
-        review.setMoviePoint(1);
-        review.setPhotoOriName(movieinfo.getPhotoOriName());
-
-        uploadRepository.insert(movieinfo);
-
-
+        uploadService.create(movieinfo);
     }
 
     @Test
-    void insertReview() {
-        int i = findMovieRepository.insertReview(review);
+    void reviewUpload() {
+        //given
+        reviewInfo.setPhotoOriName("test.png");
+        reviewInfo.setReviewUser("jjsair0412");
+        reviewInfo.setMoviePoint(1);
+        reviewInfo.setMovieReivew("hello");
+        //when
+        int i = reviewUpload.reviewUpload(reviewInfo);
+        //then
         assertThat(i).isEqualTo(1);
 
-    }
-
-    @AfterEach
-    void deleteReview(){
-        int i = findMovieRepository.deleteReview(review);
-        assertThat(i).isEqualTo(1);
-
-        int i1 = uploadRepository.movieDelete(movieinfo);
+        int i1 = reviewUpload.deleteReview(reviewInfo);
         assertThat(i1).isEqualTo(1);
+
+        int i2 = uploadRepository.movieDelete(movieinfo);
+        assertThat(i2).isEqualTo(1);
     }
 
 }

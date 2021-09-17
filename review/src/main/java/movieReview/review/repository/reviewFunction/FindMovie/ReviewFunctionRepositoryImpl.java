@@ -7,18 +7,17 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import javax.persistence.EntityManager;
 
 
-public class findMovieRepositoryImpl implements findMovieRepository {
+public class ReviewFunctionRepositoryImpl implements ReviewFunctionRepository {
 
     @Autowired
     private final JdbcTemplate template;
     private final EntityManager em;
 
     @Autowired
-    public findMovieRepositoryImpl(JdbcTemplate template, EntityManager em) {
+    public ReviewFunctionRepositoryImpl(JdbcTemplate template, EntityManager em) {
         this.template = template;
         this.em = em;
     }
-
 
     @Override
     public int insertReview(ReviewInfo reviewinfo) {
@@ -31,6 +30,4 @@ public class findMovieRepositoryImpl implements findMovieRepository {
         String sql = "delete from reviewTab where reviewUser = ?";
         return template.update(sql,reviewInfo.getReviewUser());
     }
-
-
 }

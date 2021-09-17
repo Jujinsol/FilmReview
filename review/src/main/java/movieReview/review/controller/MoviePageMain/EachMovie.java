@@ -2,7 +2,6 @@ package movieReview.review.controller.MoviePageMain;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import movieReview.review.Session.SessionConst;
 import movieReview.review.dto.FileInfo.photoUriInfo;
 import movieReview.review.dto.MovieInfo.JpaMovieInfo;
 import movieReview.review.dto.MovieInfo.movieInfo;
@@ -16,26 +15,34 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@Slf4j
+@RequestMapping("/EachMovie")
 @RequiredArgsConstructor
-@RequestMapping("/oneMovie")
-// 모든영화 검색결과 조회
-public class MoviePage {
+@Slf4j
+// 각각의 영화 조회 ( 리뷰가능 )
+public class EachMovie {
     private final UploadService uploadService;
     private final getMovieInfoService getMovieInfoService;
     private final photoUriInfo photoUriinfo;
+    private final ReviewUploadService reviewUploadService; // 리뷰업로드기능
 
-    @GetMapping
-    public String goMovie(Model model){
-        model.addAttribute("movieInfo",new movieInfo());
-        return "MoviePage/MoviePageMain";
+    @GetMapping("/getMovieInfo")
+    public String EachMovieInfo(@RequestParam("photoOriName") String photoOriName,
+                                ReviewInfo reviewInfo,movieInfo movieinfo, Model model){
+        model.addAttribute("movieInfo",new movieInfo()); // 검색기능을 위한 movieInfo
+
+        // 1. getMovieInfoService를 통해 db에 저장된 영화 정보 전부다 갖고와야함
+        // 2. 등록한 리뷰들도 다 가지고 와야 함
+        // 3. 리뷰작성 할수 있어야 한다.
+
+
+       reviewInfo.setPhotoOriName(photoOriName.substring(10)); // 원본사진이름 추출
+        return "MoviePage/EachMovie";
     }
 
     @ResponseStatus(HttpStatus.OK)
@@ -66,5 +73,4 @@ public class MoviePage {
         movie.setPhotoUri(path1.toString());
         return movie;
     }
-
 }
