@@ -56,4 +56,15 @@ class getMovieRepositoryImplTest {
         assertThat(jpaMovieInfo.getDirectorName()).isEqualTo("주진성");
         assertThat(jpaMovieInfo.getStoryLine()).isEqualTo("줄거리");
     }
+
+    @Test
+    void photoName으로findMovie(){
+        JpaMovieInfo jpaMovieInfo = getMovieRepository.EachMovieInfo(movieinfo);
+        assertThat(jpaMovieInfo.getMovieName()).isEqualTo("제목");
+        assertThat(jpaMovieInfo.getOpenYear()).isEqualTo(2010);
+        assertThat(jpaMovieInfo.getPhotoUri()).isEqualTo("static/---");
+        assertThat(jpaMovieInfo.getPhotoOriName()).isEqualTo("test.png");
+        assertThat(jpaMovieInfo.getDirectorName()).isEqualTo("주진성");
+        assertThat(jpaMovieInfo.getStoryLine()).isEqualTo("줄거리");
+    }
 }

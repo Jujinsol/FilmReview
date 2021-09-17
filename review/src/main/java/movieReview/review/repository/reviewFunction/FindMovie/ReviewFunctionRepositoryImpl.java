@@ -1,15 +1,18 @@
 package movieReview.review.repository.reviewFunction.FindMovie;
 
+import movieReview.review.dto.ReviewInfo.JpaRevieTab;
 import movieReview.review.dto.ReviewInfo.ReviewInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 
 
+@Component
 public class ReviewFunctionRepositoryImpl implements ReviewFunctionRepository {
 
-    @Autowired
     private final JdbcTemplate template;
     private final EntityManager em;
 
@@ -29,5 +32,12 @@ public class ReviewFunctionRepositoryImpl implements ReviewFunctionRepository {
     public int deleteReview(ReviewInfo reviewInfo) {
         String sql = "delete from reviewTab where reviewUser = ?";
         return template.update(sql,reviewInfo.getReviewUser());
+    }
+
+    @Override
+    public List<JpaRevieTab> selectReview(ReviewInfo reviewInfo) {
+        return em.createQuery("select m from JpaRevieTab m where m.photoOriName= :photoOriName", JpaRevieTab.class)
+                .setParameter("photoOriName", reviewInfo.getPhotoOriName())
+                .getResultList();
     }
 }

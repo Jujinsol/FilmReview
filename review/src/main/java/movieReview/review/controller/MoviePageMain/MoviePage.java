@@ -62,6 +62,7 @@ public class MoviePage {
         ClassPathResource resource = new ClassPathResource("/moviePhoto/"+photoUriInfo.getPhotoOriName());
 
         Path path1 = Paths.get(resource.getPath());
+        log.info("잘작동하는사진경로={}",path1);
 
         movie.setPhotoUri(path1.toString());
         return movie;
