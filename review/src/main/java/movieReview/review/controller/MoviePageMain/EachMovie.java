@@ -35,7 +35,6 @@ public class EachMovie {
     @GetMapping("/getMovieInfo")
     public String EachMovieInfo(@RequestParam("photoOriName") String photoOriName,
                                 ReviewInfo reviewInfo, movieInfo movieinfo, Model model){
-
         model.addAttribute("movieInfo",new movieInfo()); // 검색기능을 위한 movieInfo
 
         // 1. getMovieInfoService를 통해 db에 저장된 영화 정보 전부다 갖고와야함
@@ -57,32 +56,10 @@ public class EachMovie {
         return "MoviePage/EachMovie";
     }
 
-    @ResponseStatus(HttpStatus.OK)
-    @PostMapping("/viewOneMovie")
-    @ResponseBody
-    public List<JpaMovieInfo> MovieView(movieInfo movieinfo){
-        List<JpaMovieInfo> jpaMovieInfos = new ArrayList<>();
-        List<JpaMovieInfo> uri = new ArrayList<>();
-        List<JpaMovieInfo> movie = getMovieInfoService.getMovie(movieinfo);
-        for(int i = 0; i<movie.size(); i++){
-            uri.add(makeUri(movie.get(i)));
-            jpaMovieInfos.add(uri.get(i));
-        }
-
-        return jpaMovieInfos;
-    }
-
-
-    public JpaMovieInfo makeUri(JpaMovieInfo movie){
-        photoUriinfo.setPhotoUri(movie.getPhotoUri());
-        photoUriinfo.setPhotoOriName(movie.getPhotoOriName());
-
-        photoUriInfo photoUriInfo = uploadService.showPhoto(photoUriinfo);
-        ClassPathResource resource = new ClassPathResource("/moviePhoto/"+photoUriInfo.getPhotoOriName());
-
-        Path path1 = Paths.get(resource.getPath());
-
-        movie.setPhotoUri(path1.toString());
-        return movie;
+    @GetMapping("/reviewUpload")
+    public String reviewUpload(ReviewInfo reviewInfo){
+        int i = reviewUploadService.reviewUpload(reviewInfo);
+        log.info("i={}",i);
+        return null;
     }
 }
