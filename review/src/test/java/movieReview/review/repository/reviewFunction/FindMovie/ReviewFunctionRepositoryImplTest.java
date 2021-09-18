@@ -1,5 +1,6 @@
 package movieReview.review.repository.reviewFunction.FindMovie;
 
+import lombok.extern.slf4j.Slf4j;
 import movieReview.review.dto.MovieInfo.movieInfo;
 import movieReview.review.dto.ReviewInfo.JpaRevieTab;
 import movieReview.review.dto.ReviewInfo.ReviewInfo;
@@ -19,6 +20,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
+@Slf4j
 @SpringBootTest
 class ReviewFunctionRepositoryImplTest {
     @Autowired
