@@ -8,7 +8,6 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 public class getMovieRepositoryImpl implements getMovieRepository{
-
     private final EntityManager em;
 
     @Autowired
@@ -30,7 +29,9 @@ public class getMovieRepositoryImpl implements getMovieRepository{
     }
 
     @Override
-    public movieInfo EachMovieInfo(movieInfo movieInfo) {
-
+    public JpaMovieInfo EachMovieInfo(movieInfo movieInfo) {
+        return em.createQuery("select m from JpaMovieInfo m where m.photoOriName= :photoOriName",JpaMovieInfo.class)
+                .setParameter("photoOriName",movieInfo.getPhotoOriName())
+                .getSingleResult();
     }
 }

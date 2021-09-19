@@ -20,17 +20,6 @@
     window.test = function(photoOriName){
         const newWindow = window.open("about:blank");
         newWindow.location.href="/EachMovie/getMovieInfo?photoOriName="+photoOriName;
-        // $.ajax({
-        //     type: "POST",
-        //     url: "/EachMovie/getMovieInfo",
-        //     data: photoOriName,
-        //     success: function () {
-        //
-        //     },
-        //     error: function (XMLHttpRequest, textStatus, errorThrown) {
-        //         alert("통신 실패.");
-        //     }
-        // });
     };
 
     $('#movieView').click(function () {
