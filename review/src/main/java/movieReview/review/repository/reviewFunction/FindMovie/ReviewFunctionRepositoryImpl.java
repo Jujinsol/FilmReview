@@ -5,7 +5,6 @@ import movieReview.review.dto.ReviewInfo.JpaRevieTab;
 import movieReview.review.dto.ReviewInfo.ReviewInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -26,9 +25,14 @@ public class ReviewFunctionRepositoryImpl implements ReviewFunctionRepository {
 
     @Override
     public int insertReview(ReviewInfo reviewinfo) {
-        String sql = "insert into reviewTab(photoOriName, moviePoint, movieReview, reviewUser) value (photoOriName=?,moviePoint=?,movieReview=?,reviewUser=?)";
+        String sql = "insert into reviewTab(photoOriName, moviePoint, movieReview, reviewUser) value (?,?,?,?)";
         log.info("photoOriName={},MovieReview={},ReviewPoint={},ReviewUser={}",reviewinfo.getPhotoOriName(),reviewinfo.getMoviePoint(),reviewinfo.getMovieReivew(),reviewinfo.getReviewUser());
-        return template.update(sql,reviewinfo.getPhotoOriName(), reviewinfo.getMoviePoint(), reviewinfo.getMovieReivew(), reviewinfo.getReviewUser());
+        return template.update(sql,
+                reviewinfo.getPhotoOriName(),
+                reviewinfo.getMoviePoint(),
+                reviewinfo.getMovieReivew(),
+                reviewinfo.getReviewUser()
+        );
     }
 
     @Override

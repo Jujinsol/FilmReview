@@ -6,6 +6,12 @@
 </head>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<style>
+    .field-error {
+        border-color: #dc3545;
+        color: #dc3545;
+    }
+</style>
 <body>
 영화제목을 입력해 주세요
 <input type="text" id="movieName" name="movieName" th:field="${movieInfo.movieName}">
@@ -17,12 +23,47 @@
 <h3 name="movieDirector" th:text="${oneMovieInfo.getDirectorName()}"></h3>
 <h3 name="openYear" th:text="${oneMovieInfo.getOpenYear()}"></h3>
 <h3 name="StoryLine" th:text="${oneMovieInfo.getStoryLine()}"></h3>
-<h3 name="point" th:text="${oneMovieInfo.getMoviePoint()}"></h3>
-<h3 name="review" th:text="${oneMovieInfo.getMovieReview()}"></h3>
+<!-- 모든리뷰 정보 -->
+<th:block th:each="reviews : ${AllReviewInfo}">
+    리뷰단사람 id : <span th:text="${reviews.reviewUser}"></span>
+    </br>
+    </br>
+    리뷰 본문     : <span th:text="${reviews.movieReivew}"></span>
+    </br>
+    </br>
+    영화 점수     : <span th:text="${reviews.moviePoint}"></span>
+    </br>
+    </br>
+</th:block>
 
-<input th:type="text" id = "movieReivew">리뷰작성칸
-<input th:type="text" id = "moviePoint"> 평점
-<input type="button" value="리뷰작성하기"  id="reviewUpload">
+
+<div>
+    <div class="field-error" th:field="${ReviewInfo.reviewUser}" th:errors="${ReviewInfo.reviewUser}">
+        로그인 오류
+    </div>
+    <td>리뷰작성</td>
+    <td>
+        <label>
+            <input th:type="text" th:field="${ReviewInfo.movieReivew}" th:name="movieReivew" id = "movieReivew" th:errorclass="field-error">
+            <div class="field-error" th:errors="${ReviewInfo.movieReivew}">
+                리뷰작성 오류
+            </div>
+        </label>
+    </td>
+
+    <td>점수작성</td>
+    <td>
+        <label>
+            <input th:type="text" th:field="${ReviewInfo.moviePoint}" th:name ="moviePoint" id = "moviePoint"  th:errorclass="field-error">
+            <div class="field-error" th:errors="${ReviewInfo.moviePoint}">
+                점수작성 오류
+            </div>
+        </label>
+    </td>
+
+    <input type="button" value="리뷰작성하기"  id="reviewUpload" onclick="window.location.reload()">
+</div>
+
 <div>
     <!-- 요소들 append 들어갈 부분 -->
 </div>

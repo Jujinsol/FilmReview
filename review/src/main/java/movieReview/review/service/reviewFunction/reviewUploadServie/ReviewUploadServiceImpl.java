@@ -26,7 +26,8 @@ public class ReviewUploadServiceImpl implements ReviewUploadService {
     }
 
     @Override
-    public List<JpaRevieTab> selectAllReview(ReviewInfo reviewInfo) {
+    public List<JpaRevieTab> selectAllReview(ReviewInfo reviewInfo) throws ClassNotFoundException {
         return reviewFunc.selectReview(reviewInfo);
     }
+
 }

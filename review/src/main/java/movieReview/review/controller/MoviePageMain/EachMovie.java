@@ -6,6 +6,7 @@ import movieReview.review.Session.SessionConst;
 import movieReview.review.dto.FileInfo.photoUriInfo;
 import movieReview.review.dto.MovieInfo.JpaMovieInfo;
 import movieReview.review.dto.MovieInfo.movieInfo;
+import movieReview.review.dto.ReviewInfo.JpaRevieTab;
 import movieReview.review.dto.ReviewInfo.ReviewInfo;
 import movieReview.review.service.GetMovieInfo.getMovieInfoService;
 import movieReview.review.service.Upload.UploadService;
@@ -14,6 +15,8 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
@@ -27,35 +30,33 @@ import java.util.List;
 @RequestMapping("/EachMovie")
 @RequiredArgsConstructor
 @Slf4j
-// 각각의 영화 조회 ( 리뷰가능 )
-// 3. 리뷰작성 할수 있어야 한다.
 public class EachMovie {
-    private final UploadService uploadService;
     private final getMovieInfoService getMovieInfoService;
     private final ReviewUploadService reviewUploadService; // 리뷰업로드기능
 
     @GetMapping("/getMovieInfo")
     public String EachMovieInfo(@RequestParam("photoOriName") String photoOriName,
-                                ReviewInfo reviewInfo, movieInfo movieinfo, Model model, HttpServletResponse response){
-        model.addAttribute("movieInfo",new movieInfo()); // 검색기능을 위한 movieInfo
+                                @ModelAttribute("movieInfo") movieInfo movieinfo, // 검색기능을 위한 movieInfo
+                                @ModelAttribute("ReviewInfo") ReviewInfo reviewInfo,// 에러처리용 ReviewInfo
+                                Model model, HttpServletResponse response) throws ClassNotFoundException {
 
-        // 1. getMovieInfoService를 통해 db에 저장된 영화 정보 전부다 갖고와야함
-        // 2. 등록한 리뷰들도 다 가지고 와야 함
+        String originPhotoUri = photoOriName.substring(10); // 원본사진이름 추출
+        movieinfo.setPhotoOriName(originPhotoUri); // 영화정보 가져오기위해서 set
+        reviewInfo.setPhotoOriName(originPhotoUri); // 영화별 리뷰 전부다 가져오기위해서 set
 
-        String originPhotoUri = photoOriName.substring(10);
-
-        movieinfo.setPhotoOriName(originPhotoUri); // 원본사진이름 가지고옴
         movieInfo oneMovieInfo = getMovieInfoService.EachMovie(movieinfo); // photoOriName으로 영화정보 하나 갖고옴
 
         Cookie idCookie = new Cookie("photoOriName",originPhotoUri);
-        response.addCookie(idCookie);
-
+        response.addCookie(idCookie); // reviewUplaod에서 사용하기 위해 쿠키에 원본사진이름 저장 .
 
         model.addAttribute("oneMovieInfo",oneMovieInfo); // 영화정보 모델에담아서 전송
 
         ClassPathResource resource = new ClassPathResource("/moviePhoto/"+originPhotoUri);
         Path photoPath = Paths.get(resource.getPath());
-        model.addAttribute("photoPath",photoPath);
+        model.addAttribute("photoPath",photoPath); // 사진경로 처리후 모델에 담아서 전송
+
+        List<JpaRevieTab> jpaRevieTabs = reviewUploadService.selectAllReview(reviewInfo);
+        model.addAttribute("AllReviewInfo",jpaRevieTabs); // 모든리뷰정보 가져와 모델에담아서 전송
 
         return "MoviePage/EachMovie";
     }
@@ -64,7 +65,18 @@ public class EachMovie {
     @ResponseBody
     public int reviewUpload(@SessionAttribute(value = SessionConst.LoginId, required = false) String id,
                                @CookieValue(name="photoOriName",required = false) String photoOriName,
-                               ReviewInfo reviewInfo){
+                               @Validated ReviewInfo reviewInfo, BindingResult reviewError){
+        if(reviewError.hasErrors()){
+            log.info("errors ={}",reviewError);
+            return 0;
+        }
+
+        if(id==null){
+            reviewError.rejectValue("reviewUser","noUser","먼저 로그인을 진행해 주세요.");
+            log.info("로그인 안함");
+            return 0;
+        }
+
         reviewInfo.setReviewUser(id);
         reviewInfo.setPhotoOriName(photoOriName);
         return reviewUploadService.reviewUpload(reviewInfo);
