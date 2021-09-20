@@ -18,12 +18,12 @@
 <input type="button" id="movieView" value="영화조회">
 </br>
 </br>
-<!--<img id="moviePoster" th:src="${photoPath}">-->
+<img id="moviePoster" th:src="${photoPath}">
 <h3 name="movieName" th:text="${oneMovieInfo.getMovieName()}"></h3>
 <h3 name="movieDirector" th:text="${oneMovieInfo.getDirectorName()}"></h3>
 <h3 name="openYear" th:text="${oneMovieInfo.getOpenYear()}"></h3>
 <h3 name="StoryLine" th:text="${oneMovieInfo.getStoryLine()}"></h3>
-<!-- 모든리뷰 정보 -->
+<h3 name="TrailerCode" th:utext="${oneMovieInfo.getTrailerCode()}"></h3>
 <th:block th:each="reviews : ${AllReviewInfo}">
     리뷰단사람 id : <span th:text="${reviews.reviewUser}"></span>
     </br>
@@ -44,7 +44,7 @@
     <td>리뷰작성</td>
     <td>
         <label>
-            <input th:type="text" th:field="${ReviewInfo.movieReivew}" th:name="movieReivew" id = "movieReivew" th:errorclass="field-error">
+            <input th:type="text" th:field="${ReviewInfo.movieReivew}" name="movieReivew" id = "movieReivew" th:errorclass="field-error">
             <div class="field-error" th:errors="${ReviewInfo.movieReivew}">
                 리뷰작성 오류
             </div>
@@ -54,7 +54,7 @@
     <td>점수작성</td>
     <td>
         <label>
-            <input th:type="text" th:field="${ReviewInfo.moviePoint}" th:name ="moviePoint" id = "moviePoint"  th:errorclass="field-error">
+            <input th:type="text" th:field="${ReviewInfo.moviePoint}" name ="moviePoint" id = "moviePoint"  th:errorclass="field-error">
             <div class="field-error" th:errors="${ReviewInfo.moviePoint}">
                 점수작성 오류
             </div>
@@ -64,11 +64,15 @@
     <input type="button" value="리뷰작성하기"  id="reviewUpload" onclick="window.location.reload()">
 </div>
 
-<div>
+<h4>
     <!-- 요소들 append 들어갈 부분 -->
-</div>
+</h4>
 <input type="button" value="메인페이지로 나가기" th:onclick="|location.href='@{/}'|">
 <script>
+    window.test = function(photoOriName){
+        const newWindow = window.open("about:blank");
+        newWindow.location.href="/EachMovie/getMovieInfo?photoOriName="+photoOriName;
+    };
 
     $('#movieView').click(function () {
         const data = $("#movieName");
@@ -80,19 +84,8 @@
                 $('div').empty(); // append결과 초기화
                 for (const i in jpaMovieInfos) {
 
-                    $('div').append('<img id="moviePoster" src="' + jpaMovieInfos[i].photoUri + '" onclick="goEachMovieInfo(' + jpaMovieInfos[i].movieName + ');">');
-                    $('div').append('<h3 th:type="hidden" name="movieName" onclick="goEachMovieInfo(' + jpaMovieInfos[i].movieName + ');" >' + jpaMovieInfos[i].movieName + '</h3>');
-
-
-                    // $('div').append('<h3 th:type="hidden" name="storyLine">' + jpaMovieInfos[i].storyLine + '</h3>');
-                    // $('div').append('<h3 th:type="hidden" name="openYear" >' + jpaMovieInfos[i].openYear + '</h3>');
-                    // $('div').append('<h3 th:type="hidden" name="directorName" >' + jpaMovieInfos[i].directorName + '</h3>');
-                    // $('div').append('<h3 th:type="hidden" name="moviePoint" >' + jpaMovieInfos[i].moviePoint + '</h3>');
-                    // $('div').append('<h3 th:type="hidden" name="directorName" >' + jpaMovieInfos[i].movieReview + '</h3>');
-                    //
-                    // $('div').append('<input th:type="text" id = "movieReivew">리뷰작성칸');
-                    // $('div').append('<input th:type="text" id = "moviePoint"> 평점');
-                    // $('div').append('<input type="button" value="리뷰작성하기"  id="reviewUpload">')
+                    $('h4').append('<img id="moviePoster" src="' + jpaMovieInfos[i].photoUri + '" onclick="test(' + jpaMovieInfos[i].movieName + ');">');
+                    $('h4').append('<h3 th:type="hidden" name="movieName" onclick="test(' + jpaMovieInfos[i].movieName + ');" >' + jpaMovieInfos[i].movieName + '</h3>');
 
                 }
             },

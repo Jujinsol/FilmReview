@@ -40,7 +40,10 @@
             <td>예고편 iframe 코드 : </td>
             <td>
                 <label>
-                    <input type="text">
+                    <input type="text" th:name="trailerCode" th:field="*{trailerCode}" th:errorclass="field-error">
+                    <div class ="field-error" th:errors="*{trailerCode}">
+                        예고편 오류
+                    </div>
                 </label>
             </td>
         </tr>

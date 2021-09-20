@@ -59,6 +59,5 @@ public class ReviewFunctionRepositoryImpl implements ReviewFunctionRepository {
                     }
                 }, reviewInfo.getPhotoOriName()
         );
-
     }
 }

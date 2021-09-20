@@ -31,14 +31,16 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class EachMovie {
-    private final getMovieInfoService getMovieInfoService;
+    private final getMovieInfoService getMovieInfoService; // 영화정보가져오기
     private final ReviewUploadService reviewUploadService; // 리뷰업로드기능
 
     @GetMapping("/getMovieInfo")
     public String EachMovieInfo(@RequestParam("photoOriName") String photoOriName,
                                 @ModelAttribute("movieInfo") movieInfo movieinfo, // 검색기능을 위한 movieInfo
                                 @ModelAttribute("ReviewInfo") ReviewInfo reviewInfo,// 에러처리용 ReviewInfo
-                                Model model, HttpServletResponse response) throws ClassNotFoundException {
+                                Model model,
+                                HttpServletResponse response) throws ClassNotFoundException {
+
 
         String originPhotoUri = photoOriName.substring(10); // 원본사진이름 추출
         movieinfo.setPhotoOriName(originPhotoUri); // 영화정보 가져오기위해서 set
@@ -64,16 +66,15 @@ public class EachMovie {
     @GetMapping("/reviewUpload")
     @ResponseBody
     public int reviewUpload(@SessionAttribute(value = SessionConst.LoginId, required = false) String id,
-                               @CookieValue(name="photoOriName",required = false) String photoOriName,
-                               @Validated ReviewInfo reviewInfo, BindingResult reviewError){
-        if(reviewError.hasErrors()){
-            log.info("errors ={}",reviewError);
-            return 0;
-        }
+                            @CookieValue(name="photoOriName",required = false) String photoOriName,
+                            @Validated ReviewInfo reviewInfo, BindingResult reviewError){
 
         if(id==null){
-            reviewError.rejectValue("reviewUser","noUser","먼저 로그인을 진행해 주세요.");
-            log.info("로그인 안함");
+            reviewError.rejectValue("reviewUser","noUser","로그인부터 진행해 주세요..");
+        }
+
+        if(reviewError.hasErrors()){
+            log.info("errors ={}",reviewError);
             return 0;
         }
 
