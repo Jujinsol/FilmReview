@@ -18,11 +18,12 @@
 <input type="button" id="movieView" value="영화조회">
 </br>
 </br>
-<img id="moviePoster" th:src="${photoPath}">
-<h3 name="movieName" th:text="${oneMovieInfo.getMovieName()}"></h3>
-<h3 name="movieDirector" th:text="${oneMovieInfo.getDirectorName()}"></h3>
-<h3 name="openYear" th:text="${oneMovieInfo.getOpenYear()}"></h3>
-<h3 name="StoryLine" th:text="${oneMovieInfo.getStoryLine()}"></h3>
+<img id="moviePoster" th:src="@{/moviePhoto/}+${photoPath}">
+</br>
+영화 제목 : <h3 name="movieName" th:text="${oneMovieInfo.getMovieName()}"></h3>
+감독 이름 :<h3 name="movieDirector" th:text="${oneMovieInfo.getDirectorName()}"></h3>
+개봉일 : <h3 name="openYear" th:text="${oneMovieInfo.getOpenYear()}"></h3>
+시놉시스 : <h3 name="StoryLine" th:text="${oneMovieInfo.getStoryLine()}"></h3>
 <h3 name="TrailerCode" th:utext="${oneMovieInfo.getTrailerCode()}"></h3>
 <th:block th:each="reviews : ${AllReviewInfo}">
     리뷰단사람 id : <span th:text="${reviews.reviewUser}"></span>
@@ -69,7 +70,7 @@
 </h4>
 <input type="button" value="메인페이지로 나가기" th:onclick="|location.href='@{/}'|">
 <script>
-    window.test = function(photoOriName){
+    window.goMoviePage = function(photoOriName){
         const newWindow = window.open("about:blank");
         newWindow.location.href="/EachMovie/getMovieInfo?photoOriName="+photoOriName;
     };
@@ -83,9 +84,11 @@
             success: function (jpaMovieInfos) {
                 $('div').empty(); // append결과 초기화
                 for (const i in jpaMovieInfos) {
-
-                    $('h4').append('<img id="moviePoster" src="' + jpaMovieInfos[i].photoUri + '" onclick="test(' + jpaMovieInfos[i].movieName + ');">');
-                    $('h4').append('<h3 th:type="hidden" name="movieName" onclick="test(' + jpaMovieInfos[i].movieName + ');" >' + jpaMovieInfos[i].movieName + '</h3>');
+                    const value = jpaMovieInfos[i].photoUri;
+                    $('div').append('<img id="moviePoster" src="' + jpaMovieInfos[i].photoUri + '" >');
+                    $('div').append('<h3 onclick="goMoviePage(\''+value+'\')" type="hidden" name="movieName" id="goEachMovieInfo" >' + jpaMovieInfos[i].movieName + '</h3>');
+                    // String 값을 전달해주기 위해 정규표현식 사용
+                    // \'' + value + '\'
 
                 }
             },

@@ -53,9 +53,9 @@ public class EachMovie {
 
         model.addAttribute("oneMovieInfo",oneMovieInfo); // 영화정보 모델에담아서 전송
 
-        ClassPathResource resource = new ClassPathResource("/moviePhoto/"+originPhotoUri);
-        Path photoPath = Paths.get(resource.getPath());
-        model.addAttribute("photoPath",photoPath); // 사진경로 처리후 모델에 담아서 전송
+//        ClassPathResource resource = new ClassPathResource("/moviePhoto/"+originPhotoUri);
+//        Path photoPath = Paths.get(resource.getPath());
+        model.addAttribute("photoPath",originPhotoUri); // 사진경로 처리후 모델에 담아서 전송
 
         List<JpaRevieTab> jpaRevieTabs = reviewUploadService.selectAllReview(reviewInfo);
         model.addAttribute("AllReviewInfo",jpaRevieTabs); // 모든리뷰정보 가져와 모델에담아서 전송
