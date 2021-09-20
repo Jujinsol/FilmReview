@@ -16,7 +16,7 @@ public class JpaRevieTab {
     private String photoOriName;
 
     @Column(name = "moviePoint")
-    private int moviePoint;
+    private Integer moviePoint;
 
     @Column(name ="movieReview")
     private String movieReivew;
