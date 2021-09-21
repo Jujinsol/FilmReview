@@ -5,10 +5,13 @@ import movieReview.review.dto.ReviewInfo.JpaRevieTab;
 import movieReview.review.dto.ReviewInfo.ReviewInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 @Slf4j
@@ -16,19 +19,21 @@ import java.util.List;
 public class ReviewFunctionRepositoryImpl implements ReviewFunctionRepository {
 
     private final JdbcTemplate template;
-    private final EntityManager em;
 
     @Autowired
-    public ReviewFunctionRepositoryImpl(JdbcTemplate template, EntityManager em) {
+    public ReviewFunctionRepositoryImpl(JdbcTemplate template) {
         this.template = template;
-        this.em = em;
     }
 
     @Override
     public int insertReview(ReviewInfo reviewinfo) {
-        String sql = "insert into reviewTab(photoOriName, moviePoint, movieReview, reviewUser) value (photoOriName=?,moviePoint=?,movieReview=?,reviewUser=?)";
-        log.info("photoOriName={},MovieReview={},ReviewPoint={},ReviewUser={}",reviewinfo.getPhotoOriName(),reviewinfo.getMoviePoint(),reviewinfo.getMovieReivew(),reviewinfo.getReviewUser());
-        return template.update(sql,reviewinfo.getPhotoOriName(), reviewinfo.getMoviePoint(), reviewinfo.getMovieReivew(), reviewinfo.getReviewUser());
+        String sql = "insert into reviewTab(photoOriName, moviePoint, movieReview, reviewUser) value (?,?,?,?)";
+        return template.update(sql,
+                reviewinfo.getPhotoOriName(),
+                reviewinfo.getMoviePoint(),
+                reviewinfo.getMovieReivew(),
+                reviewinfo.getReviewUser()
+        );
     }
 
     @Override
@@ -37,10 +42,22 @@ public class ReviewFunctionRepositoryImpl implements ReviewFunctionRepository {
         return template.update(sql,reviewInfo.getReviewUser());
     }
 
+    // 여러행 조회
     @Override
     public List<JpaRevieTab> selectReview(ReviewInfo reviewInfo) {
-        return em.createQuery("select m from JpaRevieTab m where m.photoOriName= :photoOriName", JpaRevieTab.class)
-                .setParameter("photoOriName", reviewInfo.getPhotoOriName())
-                .getResultList();
+        String sql = "select * from reviewTab where photoOriName = ?";
+        return template.query(
+                sql, new RowMapper<JpaRevieTab>() {
+                    @Override
+                    public JpaRevieTab mapRow(ResultSet rs, int rowNum) throws SQLException {
+                        JpaRevieTab reviews = new JpaRevieTab();
+                        reviews.setPhotoOriName(rs.getString("photoOriName"));
+                        reviews.setReviewUser(rs.getString("reviewUser"));
+                        reviews.setMovieReivew(rs.getString("movieReview"));
+                        reviews.setMoviePoint(rs.getInt("moviePoint"));
+                        return reviews;
+                    }
+                }, reviewInfo.getPhotoOriName()
+        );
     }
 }

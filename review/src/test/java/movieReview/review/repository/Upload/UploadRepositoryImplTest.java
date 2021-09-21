@@ -31,6 +31,7 @@ class UploadRepositoryImplTest {
         movieinfo.setMovieName("제목");
         movieinfo.setOpenYear(2010);
         movieinfo.setDirectorName("주진성");
+        movieinfo.setTrailerCode("asdfasdf");
         // when
         int insert = uploadRepository.insert(movieinfo);
         //then
@@ -51,6 +52,4 @@ class UploadRepositoryImplTest {
         assertThat(select.getPhotoUri()).isEqualTo("static/---");
         assertThat(select.getPhotoOriName()).isEqualTo("test.png");
     }
-
-
 }

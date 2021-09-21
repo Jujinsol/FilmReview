@@ -37,5 +37,7 @@ public class JpaMovieInfo {
     @Column(name = "photouri")
     private String photoUri; // 파일 저장 경로
 
+    @Column(name = "trailerCode")
+    private String trailerCode;
 
 }

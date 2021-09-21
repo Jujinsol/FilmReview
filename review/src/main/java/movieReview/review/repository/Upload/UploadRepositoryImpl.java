@@ -48,14 +48,16 @@ public class UploadRepositoryImpl implements UploadRepository{
         int result = 0;
         int result2 = 0;
 
-        final String sql = "INSERT INTO photoinfo (photoOriName, photoUri, storyLine, movieName, openYear, directorName) values (?,?,?,?,?,?)";
+        final String sql = "INSERT INTO photoinfo (photoOriName, photoUri, storyLine, movieName, openYear, directorName, trailerCode) values (?,?,?,?,?,?,?)";
         result = template.update(sql,
                 movieinfo.getPhotoOriName(),
                 movieinfo.getPhotoUri(),
                 movieinfo.getStoryLine(),
                 movieinfo.getMovieName(),
                 movieinfo.getOpenYear(),
-                movieinfo.getDirectorName());
+                movieinfo.getDirectorName(),
+                movieinfo.getTrailerCode()
+        );
 
         final String sql2 = "INSERT INTO reviewTab (photoOriName) values (?)";
         result2 =  template.update(sql2,

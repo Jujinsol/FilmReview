@@ -30,6 +30,7 @@ public class getMovieInfoServiceImpl implements getMovieInfoService {
         movieinfo.setOpenYear(jpaMovieInfo.getOpenYear());
         movieinfo.setStoryLine(jpaMovieInfo.getStoryLine());
         movieinfo.setDirectorName(jpaMovieInfo.getDirectorName());
+        movieinfo.setTrailerCode(jpaMovieInfo.getTrailerCode());
         return movieinfo;
     }
 

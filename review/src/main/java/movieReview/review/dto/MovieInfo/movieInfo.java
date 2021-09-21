@@ -28,6 +28,8 @@ public class movieInfo {
     private String directorName;
     @NotBlank
     private String storyLine;
+    @NotBlank(message = "예고편 코드를 입력해주세요.")
+    private String trailerCode;
 
     private int moviePoint;
     private String movieReview;

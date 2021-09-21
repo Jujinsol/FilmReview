@@ -30,8 +30,10 @@ class ReviewFunctionRepositoryImplTest {
     UploadRepository uploadRepository;
 
     ReviewInfo reviewInfo = new ReviewInfo();
+    ReviewInfo reviewInfo2 = new ReviewInfo();
 
-    movieInfo movieinfo = new movieInfo();
+    ReviewInfo findReview = new ReviewInfo();
+
 
     @BeforeEach
     void 리뷰만들기(){
@@ -40,46 +42,50 @@ class ReviewFunctionRepositoryImplTest {
         reviewInfo.setMoviePoint(10);
         reviewInfo.setPhotoOriName("test.png");
 
+        reviewInfo2.setReviewUser("imy123");
+        reviewInfo2.setMovieReivew("정말재밌어요증말");
+        reviewInfo2.setMoviePoint(12);
+        reviewInfo2.setPhotoOriName("test.png");
 
-        movieinfo.setPhotoOriName("test.png");
-        movieinfo.setPhotoUri("static/---");
-        movieinfo.setStoryLine("줄거리");
-        movieinfo.setMovieName("제목");
-        movieinfo.setOpenYear(2010);
-        movieinfo.setDirectorName("주진성");
-    }
+        findReview.setPhotoOriName("test.png");
 
-    @Before
-    void 테스트용더미영화정보등록(){
-        int insert = uploadRepository.insert(movieinfo);
-        assertThat(insert).isEqualTo(1);
 
-        //영화리뷰등록
         int i = reviewFunctionRepository.insertReview(reviewInfo);
+        int i2 = reviewFunctionRepository.insertReview(reviewInfo2);
         assertThat(i).isEqualTo(1);
+        assertThat(i2).isEqualTo(1);
     }
-
 
     @Test
-    void 영화별리뷰전체불러오기() {
-        List<JpaRevieTab> jpaRevieTabs = reviewFunctionRepository.selectReview(reviewInfo);
-        for (JpaRevieTab review : jpaRevieTabs){
-            assertThat(review.getReviewUser()).isEqualTo("jjsair0412");
-            assertThat(review.getPhotoOriName()).isEqualTo("test.png");
-            assertThat(review.getMoviePoint()).isEqualTo(10);
-            assertThat(review.getMovieReivew()).isEqualTo("정말재밌어요");
-        }
+    void 영화별리뷰전체불러오기() throws ClassNotFoundException {
+
+        List<JpaRevieTab> reviews = reviewFunctionRepository.selectReview(findReview);
+        JpaRevieTab jpaReviewOne = reviews.get(0);
+        assertThat(jpaReviewOne.getReviewUser()).isEqualTo("jjsair0412");
+        assertThat(jpaReviewOne.getMovieReivew()).isEqualTo("정말재밌어요");
+        assertThat(jpaReviewOne.getMoviePoint()).isEqualTo(10);
+        assertThat(jpaReviewOne.getPhotoOriName()).isEqualTo("test.png");
+
+        JpaRevieTab jpaReviewTwo = reviews.get(1);
+        assertThat(jpaReviewTwo.getReviewUser()).isEqualTo("imy123");
+        assertThat(jpaReviewTwo.getMovieReivew()).isEqualTo("정말재밌어요증말");
+        assertThat(jpaReviewTwo.getMoviePoint()).isEqualTo(12);
+        assertThat(jpaReviewTwo.getPhotoOriName()).isEqualTo("test.png");
     }
 
 
-    @After
+    @AfterEach
     void 테스트용더미정보삭제(){
+        ReviewInfo reviewInfo = new ReviewInfo();
+        reviewInfo.setReviewUser("imy123");
+        ReviewInfo reviewInfo1 = new ReviewInfo();
+        reviewInfo1.setReviewUser("jjsair0412");
         // 리뷰삭제
         int i = reviewFunctionRepository.deleteReview(reviewInfo);
         assertThat(i).isEqualTo(1);
 
-        // 영화정보 삭제
-        int i2 = uploadRepository.movieDelete(movieinfo);
+
+        int i2 = reviewFunctionRepository.deleteReview(reviewInfo1);
         assertThat(i2).isEqualTo(1);
     }
 
