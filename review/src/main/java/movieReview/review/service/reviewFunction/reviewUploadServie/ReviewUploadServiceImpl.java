@@ -2,8 +2,8 @@ package movieReview.review.service.reviewFunction.reviewUploadServie;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import movieReview.review.dto.ReviewInfo.JpaRevieTab;
-import movieReview.review.dto.ReviewInfo.ReviewInfo;
+import movieReview.review.Domain.ReviewInfo.JpaRevieTab;
+import movieReview.review.Domain.ReviewInfo.ReviewInfo;
 import movieReview.review.repository.reviewFunction.FindMovie.ReviewFunctionRepository;
 import org.springframework.stereotype.Service;
 

@@ -1,14 +1,9 @@
 package movieReview.review.repository.reviewFunction.FindMovie;
 
 import lombok.extern.slf4j.Slf4j;
-import movieReview.review.dto.MovieInfo.movieInfo;
-import movieReview.review.dto.ReviewInfo.JpaRevieTab;
-import movieReview.review.dto.ReviewInfo.ReviewInfo;
+import movieReview.review.Domain.ReviewInfo.JpaRevieTab;
+import movieReview.review.Domain.ReviewInfo.ReviewInfo;
 import movieReview.review.repository.Upload.UploadRepository;
-import movieReview.review.repository.Upload.UploadRepositoryImpl;
-import org.assertj.core.api.Assertions;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,7 +13,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @SpringBootTest

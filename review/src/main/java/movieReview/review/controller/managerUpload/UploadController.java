@@ -3,7 +3,7 @@ package movieReview.review.controller.managerUpload;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import movieReview.review.Session.SessionConst;
-import movieReview.review.dto.MovieInfo.movieInfo;
+import movieReview.review.Domain.MovieInfo.movieInfo;
 import movieReview.review.service.Login.LoginService;
 import movieReview.review.service.Upload.UploadServiceImpl;
 import org.springframework.context.annotation.PropertySource;

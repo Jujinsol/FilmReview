@@ -2,21 +2,17 @@ package movieReview.review.controller.MoviePageMain;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import movieReview.review.Session.SessionConst;
-import movieReview.review.dto.FileInfo.photoUriInfo;
-import movieReview.review.dto.MovieInfo.JpaMovieInfo;
-import movieReview.review.dto.MovieInfo.movieInfo;
-import movieReview.review.dto.ReviewInfo.ReviewInfo;
+import movieReview.review.Domain.FileInfo.photoUriInfo;
+import movieReview.review.Domain.MovieInfo.JpaMovieInfo;
+import movieReview.review.Domain.MovieInfo.movieInfo;
 import movieReview.review.service.GetMovieInfo.getMovieInfoService;
 import movieReview.review.service.Upload.UploadService;
-import movieReview.review.service.reviewFunction.reviewUploadServie.ReviewUploadService;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;

@@ -1,7 +1,7 @@
 package movieReview.review.service.Login.Check;
 import lombok.extern.slf4j.Slf4j;
-import movieReview.review.dto.Login.loginMangerInfo;
-import movieReview.review.dto.Login.loginUserInfo;
+import movieReview.review.Domain.Login.loginMangerInfo;
+import movieReview.review.Domain.Login.loginUserInfo;
 import movieReview.review.repository.Login.LoginRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

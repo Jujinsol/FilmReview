@@ -3,20 +3,16 @@ package movieReview.review.controller.LoginPage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import movieReview.review.Session.SessionConst;
-import movieReview.review.dto.Login.loginMangerInfo;
-import movieReview.review.dto.Login.loginUserInfo;
+import movieReview.review.Domain.Login.loginMangerInfo;
+import movieReview.review.Domain.Login.loginUserInfo;
 import movieReview.review.service.Login.LoginService;
-import movieReview.review.service.Login.LoginServiceImpl;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
 

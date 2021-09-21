@@ -1,25 +1,18 @@
 package movieReview.review.service.GetMovieInfo;
 
-import movieReview.review.dto.MovieInfo.JpaMovieInfo;
-import movieReview.review.dto.MovieInfo.movieInfo;
+import movieReview.review.Domain.MovieInfo.JpaMovieInfo;
+import movieReview.review.Domain.MovieInfo.movieInfo;
 import movieReview.review.repository.GetMovieInfo.getMovieRepository;
-import movieReview.review.repository.GetMovieInfo.getMovieRepositoryImpl;
 import movieReview.review.repository.Upload.UploadRepository;
-import movieReview.review.service.Upload.UploadService;
-import movieReview.review.service.Upload.UploadServiceImpl;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class getMovieInfoServiceImplTest {

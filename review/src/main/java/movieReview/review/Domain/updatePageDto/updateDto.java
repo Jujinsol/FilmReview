@@ -1,4 +1,4 @@
-package movieReview.review.dto.updatePageDto;
+package movieReview.review.Domain.updatePageDto;
 
 import lombok.Data;
 

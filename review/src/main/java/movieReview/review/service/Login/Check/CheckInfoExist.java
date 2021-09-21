@@ -1,8 +1,8 @@
 package movieReview.review.service.Login.Check;
 
 
-import movieReview.review.dto.Login.loginMangerInfo;
-import movieReview.review.dto.Login.loginUserInfo;
+import movieReview.review.Domain.Login.loginMangerInfo;
+import movieReview.review.Domain.Login.loginUserInfo;
 
 public interface CheckInfoExist {
     loginUserInfo checkUser(String id, Integer password); //유저로그인 전체 정보 확인

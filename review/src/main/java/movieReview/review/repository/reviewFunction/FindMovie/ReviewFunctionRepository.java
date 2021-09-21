@@ -1,8 +1,8 @@
 package movieReview.review.repository.reviewFunction.FindMovie;
 
 
-import movieReview.review.dto.ReviewInfo.JpaRevieTab;
-import movieReview.review.dto.ReviewInfo.ReviewInfo;
+import movieReview.review.Domain.ReviewInfo.JpaRevieTab;
+import movieReview.review.Domain.ReviewInfo.ReviewInfo;
 
 import java.util.List;
 

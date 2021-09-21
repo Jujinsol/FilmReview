@@ -2,8 +2,8 @@ package movieReview.review.service.Login;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import movieReview.review.dto.Login.loginMangerInfo;
-import movieReview.review.dto.Login.loginUserInfo;
+import movieReview.review.Domain.Login.loginMangerInfo;
+import movieReview.review.Domain.Login.loginUserInfo;
 import movieReview.review.service.Join.checkMangerOrUser;
 import movieReview.review.service.Login.Check.CheckInfoExistImpl;
 import org.springframework.stereotype.Service;

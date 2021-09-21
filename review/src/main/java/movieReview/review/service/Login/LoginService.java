@@ -1,7 +1,7 @@
 package movieReview.review.service.Login;
 
-import movieReview.review.dto.Login.loginMangerInfo;
-import movieReview.review.dto.Login.loginUserInfo;
+import movieReview.review.Domain.Login.loginMangerInfo;
+import movieReview.review.Domain.Login.loginUserInfo;
 
 public interface LoginService {
     loginUserInfo userLogin(loginUserInfo userinfo);

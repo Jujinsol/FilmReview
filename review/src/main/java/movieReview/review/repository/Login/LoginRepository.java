@@ -1,7 +1,7 @@
 package movieReview.review.repository.Login;
 
-import movieReview.review.dto.Login.loginMangerInfo;
-import movieReview.review.dto.Login.loginUserInfo;
+import movieReview.review.Domain.Login.loginMangerInfo;
+import movieReview.review.Domain.Login.loginUserInfo;
 
 public interface LoginRepository {
     loginUserInfo userLoginCheck(loginUserInfo userinfo, String sql); //유저로그인 전체 정보 확인
