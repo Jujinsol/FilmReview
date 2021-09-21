@@ -28,10 +28,18 @@
 </br>
 <input type="button" id="logout" value="로그아웃">
 <th:block th:each="borads : ${boardList}">
-    <span th:text="${borads.getMovieName()}"></span>
+    <img th:src="@{/moviePhoto/}+${borads.getPhotoOriName}" th:onclick="goMoviePage([[${borads.getPhotoOriName}]]);">
+    <span th:text="${borads.getMovieName()}" th:onclick="goMoviePage([[${borads.getPhotoOriName}]]);"></span>
+    </br>
+    </br>
 </th:block>
 
 <script>
+    window.goMoviePage = function(photoOriName){
+        const newWindow = window.open("about:blank");
+        newWindow.location.href="/EachMovie/getMovieInfo?photoOriName="+photoOriName;
+    };
+
     $('#logout').click(function () {
         // ajax 통신
         $.ajax({

@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 @Controller
@@ -31,18 +33,25 @@ public class EachMovie {
                                 @ModelAttribute("movieInfo") movieInfo movieinfo, // 검색기능을 위한 movieInfo
                                 @ModelAttribute("ReviewInfo") ReviewInfo reviewInfo,// 에러처리용 ReviewInfo
                                 Model model,
-                                HttpServletResponse response) throws ClassNotFoundException {
+                                HttpServletResponse response) throws ClassNotFoundException, UnsupportedEncodingException {
 
+        if(photoOriName.contains("movie")){ // 검색기능통해 들어왔을경우
+            String originPhotoUri = photoOriName.substring(10); // 원본사진이름 추출
+            movieinfo.setPhotoOriName(originPhotoUri); // 영화정보 가져오기위해서 set
+            reviewInfo.setPhotoOriName(originPhotoUri); // 영화별 리뷰 전부다 가져오기위해서 set
 
-        String originPhotoUri = photoOriName.substring(10); // 원본사진이름 추출
-        movieinfo.setPhotoOriName(originPhotoUri); // 영화정보 가져오기위해서 set
-        reviewInfo.setPhotoOriName(originPhotoUri); // 영화별 리뷰 전부다 가져오기위해서 set
+            model.addAttribute("photoPath",originPhotoUri); // 사진경로 처리후 모델에 담아서 전송
+
+            String cooke = URLEncoder.encode(originPhotoUri,"utf-8"); // 한글파일 쿠키저장위해 인코딩
+            response.addCookie(new Cookie("photoOriName",cooke)); // reviewUplaod에서 사용하기 위해 쿠키에 원본사진이름 저장 .
+        }else{ // 메인페이지를통해 들어왔을경우
+            model.addAttribute("photoPath",photoOriName); // 사진경로 처리후 모델에 담아서 전송
+
+            String cooke = URLEncoder.encode(photoOriName,"utf-8"); // 한글파일 쿠키저장위해 인코딩
+            response.addCookie(new Cookie("photoOriName",cooke)); // reviewUplaod에서 사용하기 위해 쿠키에 원본사진이름 저장 .
+        }
 
         movieInfo oneMovieInfo = getMovieInfoService.EachMovie(movieinfo); // photoOriName으로 영화정보 하나 갖고옴
-        model.addAttribute("photoPath",originPhotoUri); // 사진경로 처리후 모델에 담아서 전송
-
-        Cookie idCookie = new Cookie("photoOriName",originPhotoUri);
-        response.addCookie(idCookie); // reviewUplaod에서 사용하기 위해 쿠키에 원본사진이름 저장 .
 
         model.addAttribute("oneMovieInfo",oneMovieInfo); // 영화정보 모델에담아서 전송
 

@@ -24,8 +24,9 @@ public class MainPageController{
     private final MainPageService pageService;
 
     @GetMapping
-    public String goMainPage(Model model, @RequestParam(required = false, defaultValue = "0", value = "page") int page){
-        model.addAttribute("boardList",pageService.movieList(page));
+    // uri경로로 넘어오는 페이지번호를 받아서 출력
+    public String goMainPage(Model model ,@RequestParam(required = false, defaultValue = "0", value = "page") int page){
+        model.addAttribute("boardList",pageService.findAll(page));
         return "MainPage/MainPage";
     }
 

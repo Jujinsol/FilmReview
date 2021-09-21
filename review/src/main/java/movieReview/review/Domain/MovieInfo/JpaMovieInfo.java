@@ -1,6 +1,8 @@
 package movieReview.review.Domain.MovieInfo;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -8,7 +10,9 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name="photoInfo", schema = "moviereview")
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name="photoinfo", schema = "moviereview")
 public class JpaMovieInfo {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) // id값이 자동으로 증가하기때문에 GenerationType.IDENTITY로 생성
