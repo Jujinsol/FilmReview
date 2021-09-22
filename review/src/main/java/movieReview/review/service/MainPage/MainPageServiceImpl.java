@@ -19,7 +19,7 @@ public class MainPageServiceImpl implements MainPageService {
     @Override
     public Page<JpaMovieInfo> findAll(int page) {
         // 불러올페이지에서 , page부터 20개까지 정렬
-        PageRequest paging = PageRequest.of(page, 20);
+        PageRequest paging = PageRequest.of(page, 3);
         return repository.findAll(paging);
     }
 }

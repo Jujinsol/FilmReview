@@ -10,8 +10,8 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor // JPA 리포지토리의 메서드들을 사용하기 위해서 (findAll, findBy---...)
+@AllArgsConstructor // @NoArgsConstructor와 @AllArgsConstructor어노테이션을 달아줌으로서 get/set을 만들어주어야 한다.
 @Table(name="photoinfo", schema = "moviereview")
 public class JpaMovieInfo {
 

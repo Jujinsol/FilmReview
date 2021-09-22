@@ -33,6 +33,12 @@
     </br>
     </br>
 </th:block>
+<ul>
+    <!-- 전체 페이지수를 기준으로, 반복하며 page를 늘린다. -->
+    <li th:each="page : ${#numbers.sequence(0,totalPage -1)}">
+        <a th:href="@{/?page=}+${pageStat.index}" th:text="${pageStat.index+1}"></a>
+    </li>
+</ul>
 
 <script>
     window.goMoviePage = function(photoOriName){

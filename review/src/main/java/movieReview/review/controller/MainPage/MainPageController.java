@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Map;
-
 @Controller
 @RequestMapping("/")
 @Slf4j
@@ -26,7 +24,9 @@ public class MainPageController{
     @GetMapping
     // uri경로로 넘어오는 페이지번호를 받아서 출력
     public String goMainPage(Model model ,@RequestParam(required = false, defaultValue = "0", value = "page") int page){
-        model.addAttribute("boardList",pageService.findAll(page));
+        Page<JpaMovieInfo> movieList = pageService.findAll(page); // 페이지 가져오기
+        model.addAttribute("boardList",movieList);
+        model.addAttribute("totalPage",movieList.getTotalPages()); // 전체페이지 모델에담아 전송
         return "MainPage/MainPage";
     }
 
