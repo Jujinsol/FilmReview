@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel='stylesheet' th:href="@{/webjars/bootstrap/4.5.0/css/bootstrap.min.css}">
 </head>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -26,7 +27,25 @@
 </br>
 </br>
 <input type="button" id="logout" value="로그아웃">
+<th:block th:each="borads : ${boardList}">
+    <img th:src="@{/moviePhoto/}+${borads.getPhotoOriName}" th:onclick="goMoviePage([[${borads.getPhotoOriName}]]);">
+    <span th:text="${borads.getMovieName()}" th:onclick="goMoviePage([[${borads.getPhotoOriName}]]);"></span>
+    </br>
+    </br>
+</th:block>
+<ul>
+    <!-- 전체 페이지수를 기준으로, 반복하며 page를 늘린다. -->
+    <li th:each="page : ${#numbers.sequence(0,totalPage -1)}">
+        <a th:href="@{/?page=}+${pageStat.index}" th:text="${pageStat.index+1}"></a>
+    </li>
+</ul>
+
 <script>
+    window.goMoviePage = function(photoOriName){
+        const newWindow = window.open("about:blank");
+        newWindow.location.href="/EachMovie/getMovieInfo?photoOriName="+photoOriName;
+    };
+
     $('#logout').click(function () {
         // ajax 통신
         $.ajax({

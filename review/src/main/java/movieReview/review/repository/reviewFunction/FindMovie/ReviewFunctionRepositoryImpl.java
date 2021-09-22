@@ -1,15 +1,13 @@
 package movieReview.review.repository.reviewFunction.FindMovie;
 
 import lombok.extern.slf4j.Slf4j;
-import movieReview.review.dto.ReviewInfo.JpaRevieTab;
-import movieReview.review.dto.ReviewInfo.ReviewInfo;
+import movieReview.review.Domain.ReviewInfo.JpaRevieTab;
+import movieReview.review.Domain.ReviewInfo.ReviewInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;

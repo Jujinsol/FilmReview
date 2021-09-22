@@ -3,16 +3,11 @@ package movieReview.review.controller.MoviePageMain;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import movieReview.review.Session.SessionConst;
-import movieReview.review.dto.FileInfo.photoUriInfo;
-import movieReview.review.dto.MovieInfo.JpaMovieInfo;
-import movieReview.review.dto.MovieInfo.movieInfo;
-import movieReview.review.dto.ReviewInfo.JpaRevieTab;
-import movieReview.review.dto.ReviewInfo.ReviewInfo;
+import movieReview.review.Domain.MovieInfo.movieInfo;
+import movieReview.review.Domain.ReviewInfo.JpaRevieTab;
+import movieReview.review.Domain.ReviewInfo.ReviewInfo;
 import movieReview.review.service.GetMovieInfo.getMovieInfoService;
-import movieReview.review.service.Upload.UploadService;
 import movieReview.review.service.reviewFunction.reviewUploadServie.ReviewUploadService;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,9 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 @Controller
@@ -39,23 +33,27 @@ public class EachMovie {
                                 @ModelAttribute("movieInfo") movieInfo movieinfo, // 검색기능을 위한 movieInfo
                                 @ModelAttribute("ReviewInfo") ReviewInfo reviewInfo,// 에러처리용 ReviewInfo
                                 Model model,
-                                HttpServletResponse response) throws ClassNotFoundException {
+                                HttpServletResponse response) throws ClassNotFoundException, UnsupportedEncodingException {
 
+        if(photoOriName.contains("movie")){ // 검색기능통해 들어왔을경우
+            String originPhotoUri = photoOriName.substring(10); // 원본사진이름 추출
+            movieinfo.setPhotoOriName(originPhotoUri); // 영화정보 가져오기위해서 set
+            reviewInfo.setPhotoOriName(originPhotoUri); // 영화별 리뷰 전부다 가져오기위해서 set
 
-        String originPhotoUri = photoOriName.substring(10); // 원본사진이름 추출
-        movieinfo.setPhotoOriName(originPhotoUri); // 영화정보 가져오기위해서 set
-        reviewInfo.setPhotoOriName(originPhotoUri); // 영화별 리뷰 전부다 가져오기위해서 set
+            model.addAttribute("photoPath",originPhotoUri); // 사진경로 처리후 모델에 담아서 전송
+
+            String cooke = URLEncoder.encode(originPhotoUri,"utf-8"); // 한글파일 쿠키저장위해 인코딩
+            response.addCookie(new Cookie("photoOriName",cooke)); // reviewUplaod에서 사용하기 위해 쿠키에 원본사진이름 저장 .
+        }else{ // 메인페이지를통해 들어왔을경우
+            model.addAttribute("photoPath",photoOriName); // 사진경로 처리후 모델에 담아서 전송
+
+            String cooke = URLEncoder.encode(photoOriName,"utf-8"); // 한글파일 쿠키저장위해 인코딩
+            response.addCookie(new Cookie("photoOriName",cooke)); // reviewUplaod에서 사용하기 위해 쿠키에 원본사진이름 저장 .
+        }
 
         movieInfo oneMovieInfo = getMovieInfoService.EachMovie(movieinfo); // photoOriName으로 영화정보 하나 갖고옴
 
-        Cookie idCookie = new Cookie("photoOriName",originPhotoUri);
-        response.addCookie(idCookie); // reviewUplaod에서 사용하기 위해 쿠키에 원본사진이름 저장 .
-
         model.addAttribute("oneMovieInfo",oneMovieInfo); // 영화정보 모델에담아서 전송
-
-//        ClassPathResource resource = new ClassPathResource("/moviePhoto/"+originPhotoUri);
-//        Path photoPath = Paths.get(resource.getPath());
-        model.addAttribute("photoPath",originPhotoUri); // 사진경로 처리후 모델에 담아서 전송
 
         List<JpaRevieTab> jpaRevieTabs = reviewUploadService.selectAllReview(reviewInfo);
         model.addAttribute("AllReviewInfo",jpaRevieTabs); // 모든리뷰정보 가져와 모델에담아서 전송

@@ -1,4 +1,4 @@
-package movieReview.review.dto;
+package movieReview.review.Domain;
 
 import lombok.Getter;
 import lombok.Setter;

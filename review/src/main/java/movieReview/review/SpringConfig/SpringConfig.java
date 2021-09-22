@@ -22,8 +22,9 @@ public class SpringConfig implements WebMvcConfigurer {
         registry.addInterceptor(loginInterceptor)
                 .order(1)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/","/css/**","/js/**","/moviePhoto/**"
-                        ,"/Join/**","/MainPage/**","/Login/**","/oneMovie/**","/MoviePage/**","/EachMovie/**");
+                .excludePathPatterns("/","/css/**","/js/**","/moviePhoto/**",
+                        "/Join/**","/MainPage/**","/Login/**","/oneMovie/**",
+                        "/webjars/**","/MoviePage/**","/EachMovie/**");
     }
 
     @Bean

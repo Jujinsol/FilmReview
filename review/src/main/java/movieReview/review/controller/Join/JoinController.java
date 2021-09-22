@@ -2,8 +2,8 @@ package movieReview.review.controller.Join;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import movieReview.review.dto.mangerInfo;
-import movieReview.review.dto.userInfo;
+import movieReview.review.Domain.mangerInfo;
+import movieReview.review.Domain.userInfo;
 import movieReview.review.service.Join.Mail.MailServiceImpl;
 import movieReview.review.service.Join.joinServiceImpl;
 import org.springframework.stereotype.Controller;
@@ -15,7 +15,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
-import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;

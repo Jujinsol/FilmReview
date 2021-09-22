@@ -2,8 +2,8 @@ package movieReview.review.service.Join;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import movieReview.review.dto.mangerInfo;
-import movieReview.review.dto.userInfo;
+import movieReview.review.Domain.mangerInfo;
+import movieReview.review.Domain.userInfo;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;

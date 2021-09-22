@@ -1,8 +1,8 @@
 package movieReview.review.repository.Join;
 
 import lombok.extern.slf4j.Slf4j;
-import movieReview.review.dto.mangerInfo;
-import movieReview.review.dto.userInfo;
+import movieReview.review.Domain.mangerInfo;
+import movieReview.review.Domain.userInfo;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;

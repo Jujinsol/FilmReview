@@ -1,7 +1,7 @@
 package movieReview.review.repository;
 
-import movieReview.review.dto.mangerInfo;
-import movieReview.review.dto.userInfo;
+import movieReview.review.Domain.mangerInfo;
+import movieReview.review.Domain.userInfo;
 import movieReview.review.repository.Join.joinRepositoryImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,7 +1,7 @@
 package movieReview.review.repository.Join;
 
-import movieReview.review.dto.mangerInfo;
-import movieReview.review.dto.userInfo;
+import movieReview.review.Domain.mangerInfo;
+import movieReview.review.Domain.userInfo;
 
 public interface joinRepository {
     int createUser(userInfo userinfo); //사용자 회원가입

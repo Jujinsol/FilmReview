@@ -1,10 +1,9 @@
 package movieReview.review.service.Upload;
 
 import lombok.RequiredArgsConstructor;
-import movieReview.review.dto.FileInfo.photoUriInfo;
-import movieReview.review.dto.MovieInfo.movieInfo;
+import movieReview.review.Domain.FileInfo.photoUriInfo;
+import movieReview.review.Domain.MovieInfo.movieInfo;
 import movieReview.review.repository.Upload.UploadRepository;
-import movieReview.review.repository.Upload.UploadRepositoryImpl;
 import org.springframework.stereotype.Service;
 
 @Service

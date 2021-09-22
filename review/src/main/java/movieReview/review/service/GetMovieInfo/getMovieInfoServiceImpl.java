@@ -2,8 +2,8 @@ package movieReview.review.service.GetMovieInfo;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import movieReview.review.dto.MovieInfo.JpaMovieInfo;
-import movieReview.review.dto.MovieInfo.movieInfo;
+import movieReview.review.Domain.MovieInfo.JpaMovieInfo;
+import movieReview.review.Domain.MovieInfo.movieInfo;
 import movieReview.review.repository.GetMovieInfo.getMovieRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

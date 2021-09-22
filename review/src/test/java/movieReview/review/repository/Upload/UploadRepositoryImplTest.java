@@ -1,7 +1,6 @@
 package movieReview.review.repository.Upload;
-import movieReview.review.dto.FileInfo.photoUriInfo;
-import movieReview.review.dto.MovieInfo.movieInfo;
-import org.junit.After;
+import movieReview.review.Domain.FileInfo.photoUriInfo;
+import movieReview.review.Domain.MovieInfo.movieInfo;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

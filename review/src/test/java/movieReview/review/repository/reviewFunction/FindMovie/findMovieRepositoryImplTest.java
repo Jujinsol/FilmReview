@@ -1,7 +1,7 @@
 package movieReview.review.repository.reviewFunction.FindMovie;
 
-import movieReview.review.dto.MovieInfo.movieInfo;
-import movieReview.review.dto.ReviewInfo.ReviewInfo;
+import movieReview.review.Domain.MovieInfo.movieInfo;
+import movieReview.review.Domain.ReviewInfo.ReviewInfo;
 import movieReview.review.repository.Upload.UploadRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,7 +1,7 @@
 package movieReview.review.service.GetMovieInfo;
 
-import movieReview.review.dto.MovieInfo.JpaMovieInfo;
-import movieReview.review.dto.MovieInfo.movieInfo;
+import movieReview.review.Domain.MovieInfo.JpaMovieInfo;
+import movieReview.review.Domain.MovieInfo.movieInfo;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package movieReview.review.repository.GetMovieInfo;
 
-import movieReview.review.dto.MovieInfo.JpaMovieInfo;
-import movieReview.review.dto.MovieInfo.movieInfo;
+import movieReview.review.Domain.MovieInfo.JpaMovieInfo;
+import movieReview.review.Domain.MovieInfo.movieInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.EntityManager;
@@ -13,12 +13,6 @@ public class getMovieRepositoryImpl implements getMovieRepository{
     @Autowired
     public getMovieRepositoryImpl(EntityManager em) {
         this.em = em;
-    }
-
-    @Override
-    public List<JpaMovieInfo> findAll() {
-        return em.createQuery("select m from JpaMovieInfo m", JpaMovieInfo.class)
-                .getResultList();
     }
 
     @Override

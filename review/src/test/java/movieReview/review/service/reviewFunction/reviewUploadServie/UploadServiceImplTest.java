@@ -1,10 +1,9 @@
 package movieReview.review.service.reviewFunction.reviewUploadServie;
 
-import movieReview.review.dto.MovieInfo.movieInfo;
-import movieReview.review.dto.ReviewInfo.ReviewInfo;
+import movieReview.review.Domain.MovieInfo.movieInfo;
+import movieReview.review.Domain.ReviewInfo.ReviewInfo;
 import movieReview.review.repository.Upload.UploadRepository;
 import movieReview.review.service.Upload.UploadService;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

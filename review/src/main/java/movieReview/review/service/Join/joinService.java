@@ -1,7 +1,7 @@
 package movieReview.review.service.Join;
 
-import movieReview.review.dto.mangerInfo;
-import movieReview.review.dto.userInfo;
+import movieReview.review.Domain.mangerInfo;
+import movieReview.review.Domain.userInfo;
 
 public interface joinService {
     int join(String email, String id, int password, Integer mangerNum); //회원가입

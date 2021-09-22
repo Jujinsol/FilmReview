@@ -1,4 +1,4 @@
-package movieReview.review.dto.FileInfo;
+package movieReview.review.Domain.FileInfo;
 
 import lombok.Getter;
 import lombok.Setter;

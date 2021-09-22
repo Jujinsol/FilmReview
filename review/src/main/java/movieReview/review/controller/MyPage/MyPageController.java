@@ -3,12 +3,11 @@ package movieReview.review.controller.MyPage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import movieReview.review.Session.SessionConst;
-import movieReview.review.dto.mangerInfo;
-import movieReview.review.dto.updatePageDto.updateDto;
-import movieReview.review.dto.userInfo;
+import movieReview.review.Domain.mangerInfo;
+import movieReview.review.Domain.updatePageDto.updateDto;
+import movieReview.review.Domain.userInfo;
 import movieReview.review.service.Join.checkMangerOrUser;
 import movieReview.review.service.Join.joinService;
-import movieReview.review.service.Join.joinServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
