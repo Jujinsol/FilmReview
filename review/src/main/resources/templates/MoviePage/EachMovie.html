@@ -33,18 +33,23 @@
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="영화 제목을 검색해보세요!" id="movieName" name="movieName" th:field="${movieInfo.movieName}" aria-label="Recipient's username" aria-describedby="button-addon2">
             <button class="btn btn-outline-secondary" type="button"  id="movieView"><i class="fas fa-search"></i></button>
+            <!-- 여기도 메인페이지의 검색코드와 동일한 부분. -->
         </div>
         <div class="mypage"> <!-- 내정보 -->
             <a href="MyPage" style="color: #F17F42;"><i class="fas fa-user-circle fa-2x"></i></a>
         </div>
         <div class="logout"> <!-- 로그인/로그아웃 -->
-            <a href="Login" style="color: #F17F42;"><i class="fas fa-sign-out-alt fa-2x"></i></a>
+            <a href="Login" style="color: #F17F42;"><i class="fas fa-sign-out-alt fa-2x"></i></a> <!-- 로그인으로 가는 버튼 -->
         </div>
     </div>
 </header>
 
 <content>
     <div class="container">
+        <!--
+        아래 쭉 id값을 변경시키거나 name, th가 달려있는 서버에서 가져오는부분을 변경시키면 안댐.
+        피자모형부분은 아직 작업하지 않았기때문에 자유롭게 변경 가능
+         -->
         <div class="item"><img id="moviePoster" th:src="@{/moviePhoto/}+${photoPath}"></div>
         <div class="item" name="TrailerCode" th:utext="${oneMovieInfo.getTrailerCode()}"></div>
         <div class="item">평가</div> <!-- 피자모형 -->
@@ -53,6 +58,7 @@
         <div class="item" name="StoryLine" th:text="${oneMovieInfo.getStoryLine()}">줄거리</div>
         <div class="item">평점 몰아보기 <!-- 디자인작업 필요 -->
             <th:block th:each="reviews : ${AllReviewInfo}">
+                <!-- block 내부에서 태그를 변경하거나 테이블을 생성해 정렬하는것은 자유임. 근데 서버에서 받아오는 th:text="..." 얘네를 건들이면 안댐. -->
                 리뷰단사람 id : <span th:text="${reviews.reviewUser}"></span>
                 </br>
                 리뷰 본문     : <span th:text="${reviews.movieReivew}"></span>
@@ -63,6 +69,7 @@
         </div>
         <div class="item">내가 쓰는 평점
             <div>
+                <!-- th:errors가 붙어있는 태그들은 일단그냥 놔두기. 나중에 예쁘게 바꾸자. -->
                 <div class="field-error" th:field="${ReviewInfo.reviewUser}" th:errors="${ReviewInfo.reviewUser}">
                     로그인 오류
                 </div>
@@ -70,6 +77,7 @@
                 <td>
                     <label>
                         <input th:type="text" th:field="${ReviewInfo.movieReivew}" name="movieReivew" id = "movieReivew" th:errorclass="field-error">
+                        <!-- 위의 input태그안에 있는 모든코드는 변경하면 안됌. 얘는 어차피 text필드니까 디자인만 바꾸자. 물론 추가하는건 상관없음. 근데 위치를변경하거나 값을 바꾸면 에러터짐-->
                         <div class="field-error" th:errors="${ReviewInfo.movieReivew}">
                             리뷰작성 오류
                         </div>
@@ -80,12 +88,14 @@
                 <td>
                     <label>
                         <input th:type="text" th:field="${ReviewInfo.moviePoint}" name ="moviePoint" id = "moviePoint"  th:errorclass="field-error">
+                        <!-- 얘도 모든코드는 변경하면 안됌. 얘도물론 추가하는건 가능하지만, 위치를 변경하거나 값을바꾸면 에러터짐.-->
                         <div class="field-error" th:errors="${ReviewInfo.moviePoint}">
                             점수작성 오류
                         </div>
                     </label>
                 </td>
                 <input type="button" value="리뷰작성하기"  id="reviewUpload" onclick="window.location.reload()">
+                <!-- input태그안에 타입을 변경하거나 id, onclick정보를 바꾸면 에러터짐. 디자인만 변경하기. value안에 글자는 당연히 바꿔도 됨. 속성 추가도 당연히 됨. 변경이나 위치이동만 x -->
             </div>
         </div>
     </div>
