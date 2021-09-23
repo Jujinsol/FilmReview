@@ -1,0 +1,44 @@
+*{
+    margin: 0 auto;
+    overflow-x: hidden;
+}
+header{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    height: 250px;
+    background: #cff09e;
+}
+.title{
+    align-self: center;
+    width: 100%;
+    font-size: 3em;
+    /* margin: 10px; */
+}
+.title h1{
+    height: 70px;
+}
+.Info{
+    display: flex;
+}
+
+.input-group.mb-3{
+    width: 40%;
+    margin: 10px;
+}
+
+#columns{
+    margin-top: 150px;
+    column-width: 350px;
+    gap: 15px;
+}
+#columns figure{
+    display: inline-block;
+    margin: 0;
+    margin-bottom: 15px;
+    padding: 5px;
+}
+#columns figure img{
+    width: 100%;
+}

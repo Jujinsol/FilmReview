@@ -16,3 +16,7 @@ h1{
     text-align: center;
 }
 .box.on{color:#999;}
+.field-error {
+    border-color: #dc3545;
+    color: #dc3545;
+}
