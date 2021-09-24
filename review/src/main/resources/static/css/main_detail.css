@@ -8,6 +8,10 @@ body{
     background: black;
     color: #fff;
 }
+.field-error {
+    border-color: #dc3545;
+    color: #dc3545;
+}
 header .container{
     display: flex;
     align-items: center;

@@ -7,38 +7,45 @@ header{
     flex-direction: column;
     justify-content: center;
 
-    height: 250px;
+    height: 300px;
     background: #cff09e;
+    margin-bottom: 30px;
 }
 .title{
-    align-self: center;
+    text-align: center;
     width: 100%;
     font-size: 3em;
-    /* margin: 10px; */
+    margin-bottom: 30px;
 }
 .title h1{
     height: 70px;
 }
 .Info{
     display: flex;
+    width: 70%;
+    align-items: baseline;
 }
-
 .input-group.mb-3{
-    width: 40%;
+    width: 50%;
     margin: 10px;
 }
 
 #columns{
-    margin-top: 150px;
-    column-width: 350px;
-    gap: 15px;
+
 }
-#columns figure{
-    display: inline-block;
-    margin: 0;
-    margin-bottom: 15px;
-    padding: 5px;
-}
-#columns figure img{
+/*#columns figure{*/
+/*    display: inline-block;*/
+/*    margin: 0;*/
+/*    margin-bottom: 15px;*/
+/*    padding: 5px;*/
+/*}*/
+#columns img{
     width: 100%;
+}
+
+.page_move{
+    display: flex;
+}
+.page_move .pagination{
+    align-items: baseline;
 }
