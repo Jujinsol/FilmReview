@@ -31,16 +31,22 @@ header{
 }
 
 #columns{
-
-}
-/*#columns figure{*/
-/*    display: inline-block;*/
-/*    margin: 0;*/
-/*    margin-bottom: 15px;*/
-/*    padding: 5px;*/
-/*}*/
-#columns img{
+    float: left;
+    text-align: center;
     width: 100%;
+}
+
+.moviePoster{
+    width :30%;
+}
+.movieName{
+    width :30%;
+}
+#page_move_div{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+
 }
 
 .page_move{

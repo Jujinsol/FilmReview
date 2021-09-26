@@ -37,30 +37,32 @@
     th:block으로 묶인부분은 서버에서 받아온 list를 반복하며 처리하는 부분.
     통채로 움직여야 한다. 근데 리뷰를 받아와서 출력하는부분은 block 내부에서 태그위치나 태그추가정도는 해도 될듯 ? 고치기전에 원본코드부분은 주석처리 해놓고 만들자.
      -->
-    <th:block th:each="borads : ${boardList}" class="movie_poster">
-        <img th:src="@{/moviePhoto/}+${borads.getPhotoOriName}" th:onclick="goMoviePage([[${borads.getPhotoOriName}]]);">
-        <span th:text="${borads.getMovieName()}" th:onclick="goMoviePage([[${borads.getPhotoOriName}]]);"></span>
-        </br>
-        </br>
-    </th:block>
+        <th:block th:each="borads : ${boardList}" class="movie_poster">
+            <img class="moviePoster" th:src="@{/moviePhoto/}+${borads.getPhotoOriName}" th:onclick="goMoviePage([[${borads.getPhotoOriName}]]);">
+            <span class="movieName" th:text="${borads.getMovieName()}" th:onclick="goMoviePage([[${borads.getPhotoOriName}]]);"></span>
+        </th:block>
 </div>
 
-<!-- 메인페이지에 맨아래 페이지숫자 나오는부분. 얘네는 중앙에 모이는것만 고치고 색깔이나 디자인부분만 건들면 될듯. 다른건 건들 ㄴㄴ -->
-<nav aria-label="Page navigation example" class="page_move">
-    <ul class="pagination">
-        <li class="page-item">
-            <a class="page-link" th:href="@{/?page=}+${nowPage-1}" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
+<div id="page_move_div">
+    <nav aria-label="Page navigation example" class="page_move">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" th:href="@{/?page=}+${nowPage-1}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item" th:each="page : ${#numbers.sequence(0,totalPage -1)}">
+                <a th:href="@{/?page=}+${pageStat.index}" th:text="${pageStat.index+1}"></a>
+            </li>
+            <a class="page-link" th:href="@{/?page=}+${nowPage+1}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
             </a>
-        </li>
-        <li class="page-item" th:each="page : ${#numbers.sequence(0,totalPage -1)}">
-            <a th:href="@{/?page=}+${pageStat.index}" th:text="${pageStat.index+1}"></a>
-        </li>
-        <a class="page-link" th:href="@{/?page=}+${nowPage+1}" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-        </a>
-    </ul>
-</nav>
+        </ul>
+    </nav>
+
+</div>
+<!-- 메인페이지에 맨아래 페이지숫자 나오는부분. 얘네는 중앙에 모이는것만 고치고 색깔이나 디자인부분만 건들면 될듯. 다른건 건들 ㄴㄴ -->
+
 
 
 <script>
