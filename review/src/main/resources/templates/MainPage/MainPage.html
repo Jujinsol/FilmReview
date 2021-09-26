@@ -39,7 +39,7 @@
      -->
         <th:block th:each="borads : ${boardList}" class="movie_poster">
             <img class="moviePoster" th:src="@{/moviePhoto/}+${borads.getPhotoOriName}" th:onclick="goMoviePage([[${borads.getPhotoOriName}]]);">
-            <figcaption class="movieName" th:text="${borads.getMovieName()}" th:onclick="goMoviePage([[${borads.getPhotoOriName}]]);"></figcaption>
+            <div class="movieName" th:text="${borads.getMovieName()}" th:onclick="goMoviePage([[${borads.getPhotoOriName}]]);"></div>
         </th:block>
 </div>
 
@@ -63,8 +63,9 @@
 </div>
 <!-- 메인페이지에 맨아래 페이지숫자 나오는부분. 얘네는 중앙에 모이는것만 고치고 색깔이나 디자인부분만 건들면 될듯. 다른건 건들 ㄴㄴ -->
 
+<ol>
 
-
+</ol>
 <script>
     window.goMoviePage = function(photoOriName){
         const newWindow = window.open("about:blank");
@@ -97,11 +98,12 @@
             url: "/oneMovie/viewOneMovie",
             data: data,
             success: function (jpaMovieInfos) {
-                $('div').empty(); // append결과 초기화
+                $('ol').empty(); // append결과 초기화
+                $('ol').append('<h3>검색결과</h3>')
                 for (const i in jpaMovieInfos) {
                     const value = jpaMovieInfos[i].photoUri;
-                    $('div').append('<img id="moviePoster" src="' + jpaMovieInfos[i].photoUri + '" >');
-                    $('div').append('<h3 onclick="goMoviePage(\''+value+'\')" type="hidden" name="movieName" id="goEachMovieInfo" >' + jpaMovieInfos[i].movieName + '</h3>');
+                    $('ol').append('</div></div><img id="moviePoster" src="' + jpaMovieInfos[i].photoUri + '" >');
+                    $('ol').append('<li onclick="goMoviePage(\''+value+'\')" type="hidden" name="movieName" id="goEachMovieInfo" >' + jpaMovieInfos[i].movieName + '</li>');
                     // String 값을 전달해주기 위해 정규표현식 사용
                     // \'' + value + '\'
 

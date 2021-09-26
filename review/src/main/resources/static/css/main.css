@@ -38,14 +38,14 @@ header{
 }
 
 .moviePoster{
-    position:relative;
+    /*position:relative;*/
     width :30%;
 }
 
-.movieName{
-    position:absolute;
-    left: 10px;
-}
+/*.movieName{*/
+/*    !*position:absolute;*!*/
+/*    left: 10px;*/
+/*}*/
 
 #page_move_div{
     position: fixed;
