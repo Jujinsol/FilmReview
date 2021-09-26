@@ -25,23 +25,28 @@ header{
     width: 70%;
     align-items: baseline;
 }
+
 .input-group.mb-3{
     width: 50%;
     margin: 10px;
 }
 
 #columns{
-    float: left;
-    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
     width: 100%;
 }
 
 .moviePoster{
+    position:relative;
     width :30%;
 }
+
 .movieName{
-    width :30%;
+    position:absolute;
+    left: 10px;
 }
+
 #page_move_div{
     position: fixed;
     bottom: 0;

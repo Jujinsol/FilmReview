@@ -39,7 +39,7 @@
      -->
         <th:block th:each="borads : ${boardList}" class="movie_poster">
             <img class="moviePoster" th:src="@{/moviePhoto/}+${borads.getPhotoOriName}" th:onclick="goMoviePage([[${borads.getPhotoOriName}]]);">
-            <span class="movieName" th:text="${borads.getMovieName()}" th:onclick="goMoviePage([[${borads.getPhotoOriName}]]);"></span>
+            <figcaption class="movieName" th:text="${borads.getMovieName()}" th:onclick="goMoviePage([[${borads.getPhotoOriName}]]);"></figcaption>
         </th:block>
 </div>
 
