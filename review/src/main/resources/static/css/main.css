@@ -31,32 +31,33 @@ header{
     margin: 10px;
 }
 
-#columns{
+#container{
     display: flex;
     flex-wrap: wrap;
-    width: 100%;
+    flex-direction: row;
+}
+
+#columns{
+    width: 25%;
 }
 
 .moviePoster{
-    /*position:relative;*/
-    width :30%;
+    width :100%;
 }
 
-/*.movieName{*/
-/*    !*position:absolute;*!*/
-/*    left: 10px;*/
-/*}*/
+.movieName{
+    text-align: center;
+}
 
 #page_move_div{
-    position: fixed;
     bottom: 0;
     width: 100%;
-
 }
 
 .page_move{
     display: flex;
 }
+
 .page_move .pagination{
     align-items: baseline;
 }

@@ -27,19 +27,22 @@
         </div>
         <div class="logIn">
             <a href="Login">로그인</a> <!-- 로그인페이지로가는 경로에 들어가는 a href는 좌측코드 복붙 -->
-<!--            <a href="logout">로그아웃</a> 로그아웃페이지로 가는 경로에 들어가는 a href는 좌측코드 복붙. 얘는 지금은 페이지에 없어서 주석처리해놨다.-->
+            <a href="logout">로그아웃</a> <!-- 로그아웃페이지로 가는 경로에 들어가는 a href는 좌측코드 복붙. 얘는 지금은 페이지에 없어서 주석처리해놨다. -->
         </div>
     </div>
 </header>
 
-<div id="columns">
+
+<div id="container">
     <!--
     th:block으로 묶인부분은 서버에서 받아온 list를 반복하며 처리하는 부분.
     통채로 움직여야 한다. 근데 리뷰를 받아와서 출력하는부분은 block 내부에서 태그위치나 태그추가정도는 해도 될듯 ? 고치기전에 원본코드부분은 주석처리 해놓고 만들자.
      -->
-        <th:block th:each="borads : ${boardList}" class="movie_poster">
-            <img class="moviePoster" th:src="@{/moviePhoto/}+${borads.getPhotoOriName}" th:onclick="goMoviePage([[${borads.getPhotoOriName}]]);">
-            <div class="movieName" th:text="${borads.getMovieName()}" th:onclick="goMoviePage([[${borads.getPhotoOriName}]]);"></div>
+        <th:block th:each="borads : ${boardList}" >
+            <div id="columns">
+                  <img class="moviePoster" th:src="@{/moviePhoto/}+${borads.getPhotoOriName}" th:onclick="goMoviePage([[${borads.getPhotoOriName}]]);">
+                  <figure class="movieName" th:text="${borads.getMovieName()}" th:onclick="goMoviePage([[${borads.getPhotoOriName}]]);"></figure>
+            </div>
         </th:block>
 </div>
 
