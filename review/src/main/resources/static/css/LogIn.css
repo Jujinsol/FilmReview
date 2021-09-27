@@ -1,6 +1,6 @@
-/*body{*/
-/*    margin: 0 auto;*/
-/*}*/
+input:focus {
+    outline:none;
+}
 .field-error {
     border-color: #dc3545;
     color: #dc3545;
@@ -19,12 +19,12 @@ h1{
     margin: 15px 0 40px 0;
 }
 .text{
-    height: 22px;
+    /*height: 22px;*/
     border-radius: 20px;
 }
 .ID{
-    display: flex;
-    justify-content: center;
+    /*display: flex;*/
+    /*justify-content: center;*/
     margin-bottom: 15px;
 }
 .PW {
