@@ -7,28 +7,71 @@ header{
     flex-direction: column;
     justify-content: center;
 
-    height: 300px;
-    background: #cff09e;
+    height: 500px;
+    background: #755D68;
     margin-bottom: 30px;
 }
 .title{
     text-align: center;
+    color: white;
     width: 100%;
     font-size: 3em;
-    margin-bottom: 30px;
+    /*margin-bottom: 40px;*/
 }
 .title h1{
     height: 70px;
 }
-.Info{
-    display: flex;
-    width: 70%;
-    align-items: baseline;
+
+.base{
+    margin-top: 50px;
 }
 
 .input-group.mb-3{
-    width: 50%;
-    margin: 10px;
+    width: 500px;
+    margin: 0 auto;
+    border-radius: 20px 0 0 20px;
+}
+#movieView{
+    color: white;
+    border: 1px solid #ced4da;
+    border-radius: 0 20px 20px 0;
+}
+#movieView:hover{
+    background-color: #F2838F;
+    transition: all .5s ease;
+    border: 1px solid #F2838F;
+}
+.Info{
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+}
+.Info a{
+    color: white;
+    text-decoration:none !important;
+}
+.Info a:hover{
+    color: #F2838F;
+    transition: all 250ms ease;
+}
+.Info a:after{
+    display:block;
+    content: '';
+    width: 100%;
+    border-bottom: solid 4px #F2838F;
+    transform: scaleX(0);
+    transition: transform 250ms ease-in-out;
+}
+.Info a:hover:after{
+    transform: scaleX(1);
+}
+
+
+.mypage{
+    margin-bottom: 10px;
+}
+.logIn{
+    text-align: center;
 }
 
 #container{
@@ -38,15 +81,23 @@ header{
 }
 
 #columns{
-    width: 25%;
+    width: 22%;
 }
 
 .moviePoster{
     width :100%;
+    cursor: pointer;
+    border-radius: 15px;
 }
 
 .movieName{
-    text-align: center;
+    margin-top: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.movieName:hover{
+    color: #fa7683;
+    transition: all 250ms ease;
 }
 
 #page_move_div{

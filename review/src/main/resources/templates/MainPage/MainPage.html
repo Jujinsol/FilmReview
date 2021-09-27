@@ -5,6 +5,7 @@
     <title>Title</title>
     <link rel='stylesheet' th:href="@{/webjars/bootstrap/4.5.0/css/bootstrap.min.css}"> <!-- 부트스트랩 사용시 좌측코드 복붙 -->
     <link rel="stylesheet" th:href="@{/css/main.css}"> <!-- css폴더에 css파일 전부다 넣어놓고, 해당 css경로는 얘처럼 작성하기 -->
+    <script src="https://kit.fontawesome.com/cffe88607d.js" crossorigin="anonymous"></script>
 </head>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -13,21 +14,23 @@
     <div class="title">
         <b>Film Project</b>
     </div>
-    <div class="Info">
+    <div class="base">
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="영화 제목을 검색해보세요!" id="movieName" name="movieName" th:field="${movieInfo.movieName}" aria-label="Recipient's username" aria-describedby="button-addon2">
             <button class="btn btn-outline-secondary" type="button"  id="movieView"><i class="fas fa-search"></i></button>
             <!--
             input태그안에 id="movieName" name="movieName" th:field="${movieInfo.movieName}" 얘네들은건들지 말기. 서버에서 데이터 받아오는부분이다.
-            button태그안에 type을 변경하거나 id값 건들이면 안됌 !
+            button태그안에 type을 변경하거나 id값 건들이면 안됨 !
             -->
         </div>
-        <div class="mypage">
-            <a href="MyPage">마이페이지</a> <!-- 마이패이지로가는 경로에 들어가는 a href는 좌측코드 복붙 -->
-        </div>
-        <div class="logIn">
-            <a href="Login">로그인</a> <!-- 로그인페이지로가는 경로에 들어가는 a href는 좌측코드 복붙 -->
-            <a href="logout">로그아웃</a> <!-- 로그아웃페이지로 가는 경로에 들어가는 a href는 좌측코드 복붙. 얘는 지금은 페이지에 없어서 주석처리해놨다. -->
+        <div class="Info">
+            <div class="mypage">
+                <a href="MyPage">마이페이지</a> <!-- 마이패이지로가는 경로에 들어가는 a href는 좌측코드 복붙 -->
+            </div>
+            <div class="logIn">
+                <a href="Login">로그인</a> <!-- 로그인페이지로가는 경로에 들어가는 a href는 좌측코드 복붙 -->
+                <a href="logout">로그아웃</a> <!-- 로그아웃페이지로 가는 경로에 들어가는 a href는 좌측코드 복붙. 얘는 지금은 페이지에 없어서 주석처리해놨다. -->
+            </div>
         </div>
     </div>
 </header>
@@ -45,6 +48,9 @@
             </div>
         </th:block>
 </div>
+<ol>
+
+</ol>
 
 <div id="page_move_div">
     <nav aria-label="Page navigation example" class="page_move">
@@ -66,9 +72,7 @@
 </div>
 <!-- 메인페이지에 맨아래 페이지숫자 나오는부분. 얘네는 중앙에 모이는것만 고치고 색깔이나 디자인부분만 건들면 될듯. 다른건 건들 ㄴㄴ -->
 
-<ol>
 
-</ol>
 <script>
     window.goMoviePage = function(photoOriName){
         const newWindow = window.open("about:blank");
