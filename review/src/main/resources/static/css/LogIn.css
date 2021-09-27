@@ -1,14 +1,42 @@
-*{
-    margin: 0 auto;
-}
-h1{
-    text-align: center;
+/*body{*/
+/*    margin: 0 auto;*/
+/*}*/
+.field-error {
+    border-color: #dc3545;
+    color: #dc3545;
 }
 body{
-
     width: 400px;
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    border: 1px solid gray;
+    box-shadow: 5px 5px 3px rgba(117, 93, 104, 0.5);
+}
+h1{
+    text-align: center;
+    margin: 15px 0 40px 0;
+}
+.text{
+    height: 22px;
+    border-radius: 20px;
+}
+.ID{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+.PW {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 60px;
+}
+.answer{
+    display: flex;
+    flex-direction: column;
+}
+.answer input{
+    width: 200px;
+    margin-bottom: 15px;
 }

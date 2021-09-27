@@ -5,53 +5,33 @@
     <title>Log In</title>
     <link rel="stylesheet" href="/css/LogIn.css">
     <link rel="stylesheet" th:href="@{/css/LogIn.css}">
-    <style>
-        .field-error {
-            border-color: #dc3545;
-            color: #dc3545;
-        }
-    </style>
 </head>
 <body>
-<form th:action th:object="${loginUserInfo}" method="post">
-    <h1>로그인 창</h1>
-    <table>
-        <tr>
-            <div th:if="${#fields.hasGlobalErrors()}" th:each="err : ${#fields.globalErrors()}">
-                <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>
+    <form th:action th:object="${loginUserInfo}" method="post">
+        <h1>로그인</h1>
+
+        <div th:if="${#fields.hasGlobalErrors()}" th:each="err : ${#fields.globalErrors()}">
+            <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>
+        </div>
+
+        <div class="ID">
+            <p>아이디</p>
+            <input type="text" th:name="id" th:field="*{id}" th:errorclass="field-error" class="text">
+            <div class = "field-error" th:errors="*{id}">
+                id 오류
             </div>
+        </div>
+        <div class="PW">
+            <p>비밀번호</p>
+                <input type="password" th:name="password" th:field="*{password}" th:errorclass="field-error" class="text">
+                <div class="field-error" th:errors="*{password}">
+                </div>
+        </div>
 
-            <td>ID</td>
-            <td>
-                <label>
-                    <input type="text" th:name="id" th:field="*{id}" th:errorclass="field-error">
-                    <div class = "field-error" th:errors="*{id}">
-                        id 오류
-                    </div>
-                </label>
-            </td>
-        </tr>
-        <tr>
-            <td>비밀번호</td>
-            <td>
-                <label>
-                    <input type="password"
-                    th:name="password"
-                    th:field="*{password}"
-                    th:errorclass="field-error">
-                    <div class="field-error" th:errors="*{password}">
-
-                    </div>
-                </label>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" class="answer">
-                <input type="button" value="메인페이지로 나가기" th:onclick="|location.href='@{/}'|">
-                <input type="submit" value="로그인하기">
-            </td>
-        </tr>
-    </table>
-</form>
+        <div class="answer">
+            <input type="submit" value="로그인하기">
+            <input type="button" value="메인페이지로 나가기" th:onclick="|location.href='@{/}'|">
+        </div>
+    </form>
 </body>
 </html>
