@@ -104,11 +104,23 @@ header{
     bottom: 0;
     width: 100%;
 }
-
+.pagination{
+    align-self: center;
+}
 .page_move{
     display: flex;
 }
-
-.page_move .pagination{
-    align-items: baseline;
+.page-item a{
+    color: #755D68;
+    text-decoration: none;
+}
+.page-link{
+    font-weight: bold;
+    color: #755D68;
+    border: 1px solid #755D68;
+}
+.page-link:hover{
+    color: #fff;
+    background-color: #755D68;
+    transition: all .3s ease;
 }
