@@ -6,7 +6,7 @@ input:focus {
     color: #dc3545;
 }
 body{
-    width: 400px;
+    width: 400px; height: 380px;
     position: absolute;
     left: 50%;
     top: 50%;
@@ -16,27 +16,49 @@ body{
 }
 h1{
     text-align: center;
-    margin: 15px 0 40px 0;
+    margin: 20px 0 40px 0;
 }
 .text{
-    /*height: 22px;*/
+    height: 22px;
     border-radius: 20px;
 }
+.text:focus{
+    box-shadow: 0 0 10px 2px rgba(117, 93, 104, 0.4);
+}
 .ID{
-    /*display: flex;*/
-    /*justify-content: center;*/
-    margin-bottom: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+.ID p{
+    margin-right: 26px;
 }
 .PW {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    margin-bottom: 60px;
+    align-items: center;
+    margin-bottom: 50px;
+}
+.PW p{
+    margin-right: 10px;
 }
 .answer{
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
 }
 .answer input{
-    width: 200px;
-    margin-bottom: 15px;
+    width: 150px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: none;
+    cursor: pointer;
+}
+.answer input:hover{
+    color: #F2838F;
+    border-bottom: 3px solid #F2838F;
+    transition: all 250ms ease;
 }
