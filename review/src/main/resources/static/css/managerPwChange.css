@@ -1,19 +1,76 @@
-*{
-    margin: 0 auto;
+input:focus {
+    outline:none;
 }
 body{
-    width: 430px; height: 230px;
+    width: 430px;
     box-sizing: border-box;
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    border: 1px solid gray;
+    box-shadow: 5px 5px 3px rgba(140, 112, 124, 0.5);
 }
-input[type="submit"]{
-    width: 430px;
-    margin-top: 10px;
+h1{
+    text-align: center;
+    margin: 20px 0 30px 0;
 }
-input[type="button"]{
-    width: 430px;
-    margin-top: 5px;
+
+.content{
+    font-size: 1.1em;
+    margin-bottom: 30px;
+    display: grid;
+    grid-template-columns: 180px 230px;
+    grid-gap: 5px;
+    align-items: center !important;
+    justify-items: center !important;
+}
+.ID, .PW, .NewPW, .NewPWAgain{
+    /*height: 40px;*/
+    grid-column: 1/2;
+}
+.IDWrote, .PWWrote, input[type="password"]{
+    grid-column: 2/3;
+}
+.ID, .IDWrote{
+    grid-row: 1/2;
+}
+.PW, .PWWrote{
+    grid-row: 2/3;
+}
+.NewPW, .NewPWWrote{
+    grid-row: 3/4;
+}
+.NewPWAgain, .NewPWAgainWrote{
+    grid-row: 4/5;
+}
+
+.IDWrote, .PWWrote{
+    width: auto; height: 22px;
+    border-bottom: 3px solid #F2838F;
+}
+input[type="password"]{
+    height: 22px;
+    border-radius: 20px;
+}
+input[type="password"]:focus{
+    box-shadow: 0 0 10px 2px rgba(117, 93, 104, 0.4);
+}
+
+.answer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.answer input{
+    width: 150px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    border: none;
+    cursor: pointer;
+}
+.answer input:hover{
+    color: #F2838F;
+    border-bottom: 3px solid #F2838F;
+    transition: all 250ms ease;
 }

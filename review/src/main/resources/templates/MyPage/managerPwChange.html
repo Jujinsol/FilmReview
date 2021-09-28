@@ -7,36 +7,29 @@
     <link rel="stylesheet" th:href="@{/css/managerPwChange.css}">
 </head>
 <body>
-<h>관리자 비밀번호 변경 페이지</h>
+<h1>관리자 마이페이지</h1>
 <form th:action method="post" th:object="${mangerInfo}" name="form">
-    <table>
-        <tr>
-            <td th:name="id" th:text="*{id}" >ID</td><!--관리자의 아이디가 보여야함-->
-        </tr>
-        <tr>
-            <td>기존 비밀번호</td>
-            <td><label>
-                <text th:text="*{password}"></text>
-            </label></td>
-        </tr>
-        <tr>
-            <td>바꿀 비밀번호</td>
-            <td><label>
-            <input type="password" th:field="*{password}"><!--새로운 비밀번호 입력창-->
-            </label></td>
-        </tr>
-        <tr>
-            <td>바꿀 비밀번호 확인</td>
-            <td><label>
-            <input type="password">
-            </label></td>
-        </tr>
-    </table>
-    <input type="submit" value="비밀번호 변경하기">
-    <input type="button" value="영화 등록하기" th:onclick="|location.href='@{/Upload}'|">
-    <input type="button" value="나가기" th:onclick="|location.href='@{/}'|">
+    <div class="content">
+        <div class="ID">아이디</div>
+        <div th:name="id" th:text="*{id}" class="IDWrote">ID</div><!--관리자의 아이디가 보여야함-->
+
+        <div class="PW">기존 비밀번호</div>
+        <text th:text="*{password}" class="PWWrote"></text>
+
+        <div class="NewPW">바꿀 비밀번호</div>
+        <input type="password" th:field="*{password}" class="NewPWWrote"><!--새로운 비밀번호 입력창-->
+
+        <div class="NewPWAgain">바꿀 비밀번호 확인</div>
+        <input type="password" class="NewPWAgainWrote">
+
+    </div>
+    <div class="answer">
+        <input type="submit" value="비밀번호 변경하기">
+        <input type="button" value="영화 등록하기" th:onclick="|location.href='@{/Upload}'|">
+        <input type="button" value="나가기" th:onclick="|location.href='@{/}'|">
+    </div>
 </form>
-<form th:action="@{/MyPage/delete}" th:method="post">
+<form th:action="@{/MyPage/delete}" th:method="post" class="answer">
     <input type="submit" value="회원 탈퇴하기">
 </form>
 </body>

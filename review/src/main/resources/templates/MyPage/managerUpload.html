@@ -5,88 +5,52 @@
     <title>manager Movie Upload</title>
     <link rel="stylesheet" href="/css/managerUpload.css">
     <link rel="stylesheet" th:href="@{/css/managerUpload.css}">
-    <style>
-        .field-error {
-            border-color: #dc3545;
-            color: #dc3545;
-        }
-    </style>
 </head>
 <body>
 <form th:action th:method="post" th:object="${movieInfo}" enctype="multipart/form-data">
-    <h1>관리자 영화 등록 페이지</h1>
-    <table>
-        <tr>
-            <td>영화 이름 : </td>
-            <td>
-                <label>
-                    <input type="text" th:name="movieName" th:field="*{movieName}"  th:errorclass="field-error">
-                    <div class = "field-error" th:errors="*{movieName}">
-                        영화 이름 오류
-                    </div>
-                </label>
-            </td>
-        </tr>
-        <tr>
-            <td>포스터 사진 : </td>
-            <td>
-                <input type="file"  accept="image/*" th:name="moviePoster" th:field="*{moviePoster}" th:errorclass="field-error">
-                <div class = "field-error" th:errors="*{moviePoster}">
-                    포스터 사진 오류
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>예고편 iframe 코드 : </td>
-            <td>
-                <label>
-                    <input type="text" th:name="trailerCode" th:field="*{trailerCode}" th:errorclass="field-error">
-                    <div class ="field-error" th:errors="*{trailerCode}">
-                        예고편 오류
-                    </div>
-                </label>
-            </td>
-        </tr>
-        <tr>
-            <td>개봉연도 : </td>
-            <td>
-                <label>
-                    <input type="text" th:name="openYear" th:field="*{openYear}" th:errorclass="field-error">
-                    <div class = "field-error" th:errors="*{openYear}">
-                        개봉연도 오류
-                    </div>
-                </label>
-            </td>
-        </tr>
-        <tr>
-            <td>감독 이름 : </td>
-            <td>
-                <label>
-                    <input type="text" th:name="directorName" th:field="*{directorName}" th:errorclass="field-error">
-                    <div class = "field-error" th:errors="*{directorName}">
-                        감독 이름 오류
-                    </div>
-                </label>
-            </td>
-        </tr>
-        <tr>
-            <td>줄거리 : </td>
-            <td>
-                <label>
-                    <input type="text" th:name="storyLine" th:field="*{storyLine}" th:errorclass="field-error">
-                    <div class = "field-error" th:errors="*{storyLine}">
-                        줄거리 오류
-                    </div>
-                </label>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <input type="button" value="메인페이지로 나가기" th:onclick="|location.href='@{/}'|">
-                <input type="submit" value="등록하기">
-            </td>
-        </tr>
-    </table>
+<h1>관리자 영화 등록 페이지</h1>
+    <div class="content">
+        <div class="movieName">영화 이름</div>
+        <input type="text" th:name="movieName" th:field="*{movieName}"  th:errorclass="field-error" class="movieNameWrite">
+        <div class = "field-error Emovie" th:errors="*{movieName}">
+            영화 이름 오류
+        </div>
+
+        <div class="Poster">포스터</div>
+        <input type="file"  accept="image/*" th:name="moviePoster" th:field="*{moviePoster}" th:errorclass="field-error" class="PosterFile">
+        <div class = "field-error Eposter" th:errors="*{moviePoster}">
+            포스터 사진 오류
+        </div>
+
+        <div class="iframe">예고편 iframe</div>
+        <input type="text" th:name="trailerCode" th:field="*{trailerCode}" th:errorclass="field-error" class="iframeWrite">
+        <div class ="field-error Eiframe" th:errors="*{trailerCode}">
+            예고편 오류
+        </div>
+
+        <div class="year">개봉 연도</div>
+        <input type="text" th:name="openYear" th:field="*{openYear}" th:errorclass="field-error" class="yearWrite">
+        <div class = "field-error Eyear" th:errors="*{openYear}">
+            개봉 연도 오류
+        </div>
+
+        <div class="director">감독 이름</div>
+        <input type="text" th:name="directorName" th:field="*{directorName}" th:errorclass="field-error" class="directorWrite">
+        <div class = "field-error Edirector" th:errors="*{directorName}">
+            감독 이름 오류
+        </div>
+
+        <div class="story">줄거리</div>
+        <input type="text" th:name="storyLine" th:field="*{storyLine}" th:errorclass="field-error" class="storyWrite">
+        <div class = "field-error Estory" th:errors="*{storyLine}">
+            줄거리 오류
+        </div>
+    </div>
+
+    <div class="answer">
+        <input type="button" value="메인페이지로 나가기" th:onclick="|location.href='@{/}'|">
+        <input type="submit" value="등록하기">
+    </div>
 </form>
 </body>
 </html>
