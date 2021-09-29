@@ -55,11 +55,9 @@
 <div id="page_move_div">
     <nav aria-label="Page navigation example" class="page_move">
         <ul class="pagination">
-            <li class="page-item">
-                <a class="page-link" th:href="@{/?page=}+${nowPage-1}" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
+            <a class="page-link" th:href="@{/?page=}+${nowPage-1}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
             <li class="page-item" th:each="page : ${#numbers.sequence(0,totalPage -1)}">
                 <a th:href="@{/?page=}+${pageStat.index}" th:text="${pageStat.index+1}"></a>
             </li>

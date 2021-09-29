@@ -105,10 +105,13 @@ header{
     width: 100%;
 }
 .pagination{
-    align-self: center;
+    align-items: center;
 }
 .page_move{
     display: flex;
+}
+.page-item{
+    margin: 0 10px 0 10px;
 }
 .page-item a{
     color: #755D68;
@@ -118,6 +121,7 @@ header{
     font-weight: bold;
     color: #755D68;
     border: 1px solid #755D68;
+    margin: 0;
 }
 .page-link:hover{
     color: #fff;
