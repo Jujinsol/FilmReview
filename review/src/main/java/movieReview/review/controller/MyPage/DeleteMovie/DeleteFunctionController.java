@@ -7,10 +7,10 @@ import movieReview.review.Domain.MovieInfo.movieInfo;
 import movieReview.review.service.Upload.UploadService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @Slf4j
@@ -22,8 +22,15 @@ public class DeleteFunctionController {
 
     @GetMapping
     @ResponseBody
-    public List<String> movieDelete(@RequestParam("deleteName") String movieName, RedirectAttributes redirectAttributes){
+    public List<String> movieDelete(@RequestParam("deleteName") String movieName){
         return deletePhotoInfo(movieName, new movieInfo(), new ArrayList<>());
+    }
+
+    @GetMapping("/DeleteCheck")
+    @ResponseBody
+    public Map<String, Object> DeleteCheckFunc(@RequestParam Map<String, Object> movies){
+        log.info("첫번째 삭제확인영화 ={}, 두번째 삭제확인영화={}",movies.get("0"),movies.get("1"));
+        return movies;
     }
 
     private List<String> deletePhotoInfo(String movieName,
@@ -39,6 +46,4 @@ public class DeleteFunctionController {
 
         return photoOriNames;
     }
-
-
 }

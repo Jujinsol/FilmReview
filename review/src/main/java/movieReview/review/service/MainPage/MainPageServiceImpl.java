@@ -19,4 +19,5 @@ public class MainPageServiceImpl implements MainPageService {
         PageRequest paging = PageRequest.of(page, 20);
         return repository.findAll(paging);
     }
+
 }
