@@ -30,6 +30,7 @@ public class DeleteFunctionController {
     @ResponseBody
     public Map<String, Object> DeleteCheckFunc(@RequestParam Map<String, Object> movies){
         log.info("첫번째 삭제확인영화 ={}, 두번째 삭제확인영화={}",movies.get("0"),movies.get("1"));
+        // 여기서 DeletePage.html view를 반환시킬수있으면 참좋을탠데 이거왜안대지?
         return movies;
     }
 
