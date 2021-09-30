@@ -5,7 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import movieReview.review.Domain.FileInfo.photoUriInfo;
 import movieReview.review.Domain.MovieInfo.movieInfo;
 import movieReview.review.service.Upload.UploadService;
+import org.dom4j.rule.Mode;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -27,11 +29,18 @@ public class DeleteFunctionController {
     }
 
     @GetMapping("/DeleteCheck")
+    public String DeleteCheckFunc(@RequestParam Map<String, Object> movies,
+                                  Model model){
+        model.addAttribute("movies",movies);
+        return "/MyPage/DeletePage";
+    }
+
+    @GetMapping("/DeleteFunc")
     @ResponseBody
-    public Map<String, Object> DeleteCheckFunc(@RequestParam Map<String, Object> movies){
-        log.info("첫번째 삭제확인영화 ={}, 두번째 삭제확인영화={}",movies.get("0"),movies.get("1"));
-        // 여기서 DeletePage.html view를 반환시킬수있으면 참좋을탠데 이거왜안대지?
-        return movies;
+    public int DeleteFunc(@RequestParam("deleteName") String DropOriName){
+        movieInfo movieInfo = new movieInfo();
+        movieInfo.setPhotoOriName(DropOriName);
+        return uploadService.movieDelete(movieInfo);
     }
 
     private List<String> deletePhotoInfo(String movieName,

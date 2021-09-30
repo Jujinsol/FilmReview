@@ -1,6 +1,7 @@
 package movieReview.review.service.Upload;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import movieReview.review.Domain.FileInfo.photoUriInfo;
 import movieReview.review.Domain.MovieInfo.movieInfo;
 import movieReview.review.repository.Upload.UploadRepository;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UploadServiceImpl implements UploadService {
     private final UploadRepository uploadRepository;
 

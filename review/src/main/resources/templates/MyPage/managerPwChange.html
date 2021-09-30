@@ -39,9 +39,12 @@
 </form>
 <script>
     $('#deleteMovie').click(function () {
+        const checkData = new Object();
+
         const sendData = {
             'deleteName': $("#movieName").val()
         }
+
         // ajax 통신
         $.ajax({
             type: "GET",
@@ -49,28 +52,14 @@
             url: "/DeleteMovie",
             data: sendData,
             success: function (movieOriName) {
-                console.log("첫번째"+movieOriName);
-                var checkData = new Object();
                 const splitResult = movieOriName.toString().split(",");
-                for(let i = 0; i < splitResult.length; i++){
+                for (let i = 0; i < splitResult.length; i++) {
                     checkData[i] = splitResult[i];
-                    console.log("i 추가중"+splitResult[i]);
                 }
-                console.log("객체생성완료"+checkData[0]+checkData[1])
 
-                // ajax 통신
-                $.ajax({
-                    type: "GET",
-                    dataType: 'json',
-                    url: "/DeleteMovie/DeleteCheck",
-                    data: checkData,
-                    success: function (movies) {
-                        alert("여기까지" + movies[0]+movies[1])
-                    },
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        alert("통신 실패." + XMLHttpRequest + textStatus + errorThrown);
-                    }
-                });
+                console.log("객체생성완료" + checkData[0] + checkData[1])
+
+                location.href='/DeleteMovie/DeleteCheck?'+$.param(checkData);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("통신 실패." + XMLHttpRequest + textStatus + errorThrown);

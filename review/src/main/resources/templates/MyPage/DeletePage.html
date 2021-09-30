@@ -4,11 +4,39 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <body>
 어떤 영화를 삭제하시겠습니까?
-    <div id="columns">
-        <img class="moviePoster" th:src="@{/moviePhoto/}+${board}">
-        <img class="moviePoster" th:src="@{/moviePhoto/}+${board2}">
-    </div>
+<div id="columns">
+    <th:block th:each="deletePhoster : ${movies}">
+        <div>
+            <img class="moviePoster" th:onclick="DropFunc([[${deletePhoster.value}]]);" th:src="@{/moviePhoto/}+${deletePhoster.value}">
+        </div>
+    </th:block>
+</div>
+<script>
+    window.DropFunc = function (OriName) {
+        const sendData = {
+            'deleteName': OriName
+        }
+        $.ajax({
+            type: "GET",
+            url: "/DeleteMovie/DeleteFunc",
+            data: sendData,
+            success: function (result) {
+                if(result>=1){
+                    alert("삭제 성공")
+                    location.href='/';
+                }else{
+                    alert("삭제 실패")
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("통신 실패." + XMLHttpRequest + textStatus + errorThrown);
+            }
+        });
+    };
+</script>
 </body>
 </html>

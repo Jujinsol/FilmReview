@@ -11,6 +11,8 @@ import movieReview.review.service.Join.joinService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -49,9 +51,15 @@ public class MyPageController {
     }
 
     @PostMapping
-    public String userChangePassword(updateDto updatedto,
+    public String userChangePassword(@Validated updateDto updatedto,
+                                     BindingResult bindingResult,
                                      @SessionAttribute(name = SessionConst.LoginId, required = false) String id,
                                      RedirectAttributes redirectAttributes) {
+
+        if(bindingResult.hasErrors()){
+            log.info("errors={}", bindingResult);
+            return "redirect:/MyPage";
+        }
         int userUpdate = joinService.update(id, updatedto.getPassword());
 
         if (userUpdate == 1) {
