@@ -6,6 +6,8 @@ import movieReview.review.Domain.MovieInfo.movieInfo;
 import movieReview.review.repository.Upload.UploadRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UploadServiceImpl implements UploadService {
@@ -17,7 +19,19 @@ public class UploadServiceImpl implements UploadService {
     }
 
     @Override
+    public int movieDelete(movieInfo movieInfo) {
+        return uploadRepository.movieDelete(movieInfo);
+    }
+
+    @Override
+    public List<photoUriInfo> findMoviePhotoOriName(movieInfo movieInfo) {
+        return uploadRepository.findMyPhotoOriName(movieInfo);
+    }
+
+
+    @Override
     public photoUriInfo showPhoto(photoUriInfo photoUriinfo) {
         return uploadRepository.select(photoUriinfo);
     }
+
 }

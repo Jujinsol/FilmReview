@@ -108,7 +108,6 @@ public class LoginRepositoryImpl implements LoginRepository{
         List<loginUserInfo> stocks = null;
 
         stocks = template.query(sql, new PreparedStatementSetter() {
-
             @Override
             public void setValues(PreparedStatement pstmt) throws SQLException {
                 pstmt.setString(1, userinfo.getId());

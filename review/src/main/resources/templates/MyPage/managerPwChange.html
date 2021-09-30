@@ -7,6 +7,8 @@
     <link rel="stylesheet" th:href="@{/css/managerPwChange.css}">
 </head>
 <body>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <h1>관리자 마이페이지</h1>
 <form th:action method="post" th:object="${mangerInfo}" name="form">
     <div class="content">
@@ -22,6 +24,9 @@
         <div class="NewPWAgain">바꿀 비밀번호 확인</div>
         <input type="password" class="NewPWAgainWrote">
 
+        <div class="movieDelete">삭제할 영화이름 입력</div>
+        <input type="text" id="movieName">
+        <input type="button" id="deleteMovie" value="영화 삭제">
     </div>
     <div class="answer">
         <input type="submit" value="비밀번호 변경하기">
@@ -32,5 +37,46 @@
 <form th:action="@{/MyPage/delete}" th:method="post" class="answer">
     <input type="submit" value="회원 탈퇴하기">
 </form>
+<script>
+    $('#deleteMovie').click(function () {
+        const sendData = {
+            'deleteName': $("#movieName").val()
+        }
+        // ajax 통신
+        $.ajax({
+            type: "GET",
+            dataType: 'json',
+            url: "/DeleteMovie",
+            data: sendData,
+            success: function (movieOriName) {
+                console.log("첫번째"+movieOriName);
+                var checkData = new Object();
+                const splitResult = movieOriName.toString().split(",");
+                for(let i = 0; i < splitResult.length; i++){
+                    checkData[i] = splitResult[i];
+                    console.log("i 추가중"+splitResult[i]);
+                }
+                console.log("객체생성완료"+checkData[0]+checkData[1])
+
+                // ajax 통신
+                $.ajax({
+                    type: "GET",
+                    dataType: 'json',
+                    url: "/DeleteMovie/DeleteCheck",
+                    data: checkData,
+                    success: function (movies) {
+                        alert("여기까지" + movies[0]+movies[1])
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert("통신 실패." + XMLHttpRequest + textStatus + errorThrown);
+                    }
+                });
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("통신 실패." + XMLHttpRequest + textStatus + errorThrown);
+            }
+        });
+    });
+</script>
 </body>
 </html>

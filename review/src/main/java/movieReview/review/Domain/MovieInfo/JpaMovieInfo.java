@@ -15,7 +15,7 @@ import javax.persistence.*;
 @Table(name="photoinfo", schema = "moviereview")
 public class JpaMovieInfo {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) // id값이 자동으로 증가하기때문에 GenerationType.IDENTITY로 생성
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "photoOriName")
     private String photoOriName; // 원본 파일명
 

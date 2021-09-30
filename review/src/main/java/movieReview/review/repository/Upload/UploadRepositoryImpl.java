@@ -3,6 +3,7 @@ package movieReview.review.repository.Upload;
 import lombok.extern.slf4j.Slf4j;
 import movieReview.review.Domain.FileInfo.photoUriInfo;
 import movieReview.review.Domain.MovieInfo.movieInfo;
+import movieReview.review.Domain.ReviewInfo.JpaRevieTab;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
@@ -104,6 +105,21 @@ public class UploadRepositoryImpl implements UploadRepository{
         );
 
         return result;
+    }
+
+    @Override
+    public List<photoUriInfo> findMyPhotoOriName(movieInfo movieInfo) {
+        String sql = "select photoOriName from photoinfo where movieName=?";
+        return template.query(
+                sql, new RowMapper<photoUriInfo>() {
+                    @Override
+                    public photoUriInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
+                        photoUriInfo photoUriInfos = new photoUriInfo();
+                        photoUriInfos.setPhotoOriName(rs.getString("photoOriName"));
+                        return photoUriInfos;
+                    }
+                }, movieInfo.getMovieName()
+        );
     }
 
 }
