@@ -1,9 +1,14 @@
 package movieReview.review.repository.Upload;
 import movieReview.review.Domain.FileInfo.photoUriInfo;
 import movieReview.review.Domain.MovieInfo.movieInfo;
+import movieReview.review.Domain.ReviewInfo.ReviewInfo;
+import movieReview.review.repository.reviewFunction.FindMovie.ReviewFunctionRepository;
+import movieReview.review.repository.reviewFunction.FindMovie.ReviewFunctionRepositoryImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -12,9 +17,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @Transactional
 class UploadRepositoryImplTest {
-
-    UploadRepositoryImpl uploadRepository = new UploadRepositoryImpl();
+//    JdbcTemplate template = new JdbcTemplate();
+//    ReviewFunctionRepositoryImpl reviewRepository = new ReviewFunctionRepositoryImpl(template);
+    UploadRepositoryImpl uploadRepository= new UploadRepositoryImpl();
     movieInfo movieinfo = new movieInfo();
+    ReviewInfo reviewInfo = new ReviewInfo();
 
     @AfterEach
     void delete(){
@@ -25,6 +32,10 @@ class UploadRepositoryImplTest {
     @BeforeEach
     void insert() {
         // given
+//        reviewInfo.setPhotoOriName("test.png");
+//        reviewInfo.setReviewUser("jjs");
+//        reviewInfo.setMoviePoint(10);
+//        reviewInfo.setMovieReivew("꿀잼");
 
         movieinfo.setPhotoOriName("test.png");
         movieinfo.setPhotoUri("static/---");
@@ -35,8 +46,10 @@ class UploadRepositoryImplTest {
         movieinfo.setTrailerCode("asdfasdf");
         // when
         int insert = uploadRepository.insert(movieinfo);
+//        int reviewInsert = reviewRepository.insertReview(reviewInfo);
         //then
         assertThat(insert).isEqualTo(1);
+//        assertThat(reviewInsert).isEqualTo(1);
     }
 
     @Test

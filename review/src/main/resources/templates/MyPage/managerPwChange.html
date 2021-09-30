@@ -39,11 +39,11 @@
 </form>
 <script>
     $('#deleteMovie').click(function () {
+        const checkData = new Object();
+
         const sendData = {
             'deleteName': $("#movieName").val()
         }
-
-        const checkData = new Object();
 
         // ajax 통신
         $.ajax({
@@ -66,9 +66,6 @@
             }
         });
     });
-
-
-
 </script>
 </body>
 </html>

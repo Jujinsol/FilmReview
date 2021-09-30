@@ -31,10 +31,18 @@ public class DeleteFunctionController {
     @GetMapping("/DeleteCheck")
     public String DeleteCheckFunc(@RequestParam Map<String, Object> movies,
                                   Model model){
-
-
         model.addAttribute("movies",movies);
         return "/MyPage/DeletePage";
+    }
+
+    @GetMapping("/DeleteFunc")
+    @ResponseBody
+    public int DeleteFunc(@RequestParam("deleteName") String DropOriName){
+        log.info("DropOriName={}",DropOriName);
+        movieInfo movieInfo = new movieInfo();
+        movieInfo.setPhotoOriName(DropOriName);
+        log.info("movieInfo.getPhotoOriName={}",movieInfo.getPhotoOriName());
+        return uploadService.movieDelete(movieInfo);
     }
 
     private List<String> deletePhotoInfo(String movieName,
