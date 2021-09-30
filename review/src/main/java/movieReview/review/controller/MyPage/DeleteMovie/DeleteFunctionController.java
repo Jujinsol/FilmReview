@@ -38,10 +38,8 @@ public class DeleteFunctionController {
     @GetMapping("/DeleteFunc")
     @ResponseBody
     public int DeleteFunc(@RequestParam("deleteName") String DropOriName){
-        log.info("DropOriName={}",DropOriName);
         movieInfo movieInfo = new movieInfo();
         movieInfo.setPhotoOriName(DropOriName);
-        log.info("movieInfo.getPhotoOriName={}",movieInfo.getPhotoOriName());
         return uploadService.movieDelete(movieInfo);
     }
 

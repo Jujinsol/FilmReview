@@ -22,7 +22,6 @@ public class UploadServiceImpl implements UploadService {
 
     @Override
     public int movieDelete(movieInfo movieInfo) {
-        log.info("movieInfo.getPhotoOriName={}",movieInfo.getPhotoOriName());
         return uploadRepository.movieDelete(movieInfo);
     }
 

@@ -106,14 +106,11 @@ public class UploadRepositoryImpl implements UploadRepository{
         sql.put(1,"DELETE FROM reviewTab WHERE photoOriName=?");
 
         for(int i = 0; i<sql.size(); i++){
-            log.info("i의 개수 ={}",i);
             result = template.update(
                     sql.get(i),
                     movieinfo.getPhotoOriName()
             );
-            log.info("sql.get(i)={}",sql.get(i));
         }
-        log.info("삭제결과 result = {}",result);
         return result;
     }
 
