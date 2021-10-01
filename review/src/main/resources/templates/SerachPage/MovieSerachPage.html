@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>검색결과</title>
+</head>
+<body>
+검색결과
+<th:block th:each="searchMovies : ${SerachResult}">
+    <div>
+        <img class="moviePoster" th:src="@{/moviePhoto/}+${searchMovies.photoOriName}">
+        <h3 th:text="${searchMovies.movieName}"></h3>
+    </div>
+</th:block>
+</body>
+</html>
