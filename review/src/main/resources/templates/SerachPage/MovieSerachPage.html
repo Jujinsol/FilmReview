@@ -8,9 +8,12 @@
 검색결과
 <th:block th:each="searchMovies : ${SerachResult}">
     <div>
-        <img class="moviePoster" th:src="@{/moviePhoto/}+${searchMovies.photoOriName}">
-        <h3 th:text="${searchMovies.movieName}"></h3>
+        <img class="moviePoster" th:onclick="goMoviePage([[${searchMovies.photoOriName}]])" th:src="@{/moviePhoto/}+${searchMovies.photoOriName}">
+        <h3 th:text="${searchMovies.movieName}" th:onclick="goMoviePage([[${searchMovies.photoOriName}]])"></h3>
     </div>
 </th:block>
+
+<a href="/">메인페이지로 나가기</a>
+<script th:src="@{/js/SearchFunc/SearchFunc.js}"></script>
 </body>
 </html>

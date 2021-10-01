@@ -1,3 +1,26 @@
+
+window.goMoviePage = function (photoOriName) {
+    const newWindow = window.open("about:blank");
+    newWindow.location.href = "/EachMovie/getMovieInfo?photoOriName=" + photoOriName;
+};
+
+
+
+$('#movieView').click(function () {
+    const data = $("#movieName");
+    $.ajax({
+        type: "POST",
+        url: "/oneMovie/viewOneMovie",
+        data: data,
+        success: function (searchResult) {
+            goSearchPage(JSON.stringify(searchResult));
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("통신 실패.")
+        }
+    });
+});
+
 function goSearchPage(result) {
     const jsonParseResult = JSON.parse(result);
     const form = document.createElement('form'); // 폼객체 생성
@@ -17,25 +40,3 @@ function goSearchPage(result) {
     document.body.appendChild(form);
     form.submit();
 }
-
-
-window.goMoviePage = function (photoOriName) {
-    const newWindow = window.open("about:blank");
-    newWindow.location.href = "/EachMovie/getMovieInfo?photoOriName=" + photoOriName;
-};
-
-
-$('#movieView').click(function () {
-    const data = $("#movieName");
-    $.ajax({
-        type: "POST",
-        url: "/oneMovie/viewOneMovie",
-        data: data,
-        success: function (searchResult) {
-            goSearchPage(JSON.stringify(searchResult));
-        },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-            alert("통신 실패.")
-        }
-    });
-});
