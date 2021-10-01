@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel='stylesheet' th:href="@{/webjars/bootstrap/4.5.0/css/bootstrap.min.css}"> <!-- 부트스트랩 사용시 좌측코드 복붙 -->
-    <link rel="stylesheet" th:href="@{/css/main.css}"> <!-- css폴더에 css파일 전부다 넣어놓고, 해당 css경로는 얘처럼 작성하기 -->
+    <link rel='stylesheet' th:href="@{/webjars/bootstrap/4.5.0/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
     <script src="https://kit.fontawesome.com/cffe88607d.js" crossorigin="anonymous"></script>
 </head>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script th:src="@{/js/Logout/LogoutFunc.js}"></script>
 <body>
 <header>
     <div class="title">
@@ -18,19 +19,15 @@
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="영화 제목을 검색해보세요!" id="movieName" name="movieName" th:field="${movieInfo.movieName}" aria-label="Recipient's username" aria-describedby="button-addon2">
             <button class="btn btn-outline-secondary" type="button"  id="movieView"><i class="fas fa-search"></i></button>
-            <!--
-            input태그안에 id="movieName" name="movieName" th:field="${movieInfo.movieName}" 얘네들은건들지 말기. 서버에서 데이터 받아오는부분이다.
-            button태그안에 type을 변경하거나 id값 건들이면 안됨 !
-            -->
         </div>
         <div class="Info">
             <div class="mypage">
-                <a href="MyPage">마이페이지</a> <!-- 마이패이지로가는 경로에 들어가는 a href는 좌측코드 복붙 -->
+                <a href="MyPage">마이페이지</a>
             </div>
             <div class="logIn">
                 <a href="Join"></a>
-                <a href="Login">로그인</a> <!-- 로그인페이지로가는 경로에 들어가는 a href는 좌측코드 복붙 -->
-                <a href="logout">로그아웃</a> <!-- 로그아웃페이지로 가는 경로에 들어가는 a href는 좌측코드 복붙. 얘는 지금은 페이지에 없어서 주석처리해놨다. -->
+                <a href="Login">로그인</a>
+                <a href="logout">로그아웃</a>
             </div>
         </div>
     </div>
@@ -38,10 +35,6 @@
 
 
 <div id="container">
-    <!--
-    th:block으로 묶인부분은 서버에서 받아온 list를 반복하며 처리하는 부분.
-    통채로 움직여야 한다. 근데 리뷰를 받아와서 출력하는부분은 block 내부에서 태그위치나 태그추가정도는 해도 될듯 ? 고치기전에 원본코드부분은 주석처리 해놓고 만들자.
-     -->
         <th:block th:each="borads : ${boardList}" >
             <div id="columns">
                   <img class="moviePoster" th:src="@{/moviePhoto/}+${borads.getPhotoOriName}" th:onclick="goMoviePage([[${borads.getPhotoOriName}]]);">
@@ -68,53 +61,6 @@
         </ul>
     </nav>
 </div>
-<!-- 메인페이지에 맨아래 페이지숫자 나오는부분. 얘네는 중앙에 모이는것만 고치고 색깔이나 디자인부분만 건들면 될듯. 다른건 건들 ㄴㄴ -->
-
-
-<script>
-
-    $('#logout').click(function () {
-        // ajax 통신
-        $.ajax({
-            type: "GET",
-            url: "/logout",
-            success: function (logoutResult) {
-                alert(logoutResult)
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("통신 실패.")
-            }
-        });
-    });
-
-    window.goMoviePage = function(photoOriName){
-        const newWindow = window.open("about:blank");
-        newWindow.location.href="/EachMovie/getMovieInfo?photoOriName="+photoOriName;
-    };
-
-    $('#movieView').click(function () {
-        const data = $("#movieName");
-        $.ajax({
-            type: "POST",
-            url: "/oneMovie/viewOneMovie",
-            data: data,
-            success: function (jpaMovieInfos) {
-                $('ol').empty(); // append결과 초기화
-                $('ol').append('<h3>검색결과</h3>')
-                for (const i in jpaMovieInfos) {
-                    const value = jpaMovieInfos[i].photoUri;
-                    $('ol').append('</div></div><img id="moviePoster" src="' + jpaMovieInfos[i].photoUri + '" >');
-                    $('ol').append('<li onclick="goMoviePage(\''+value+'\')" type="hidden" name="movieName" id="goEachMovieInfo" >' + jpaMovieInfos[i].movieName + '</li>');
-                    // String 값을 전달해주기 위해 정규표현식 사용
-                    // \'' + value + '\'
-
-                }
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("통신 실패.")
-            }
-        });
-    });
-</script>
+<script th:src="@{/js/SearchFunc/SearchFunc.js}"></script>
 </body>
 </html>

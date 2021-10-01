@@ -6,12 +6,6 @@
 </head>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<!--<style>-->
-<!--    .field-error {-->
-<!--        border-color: #dc3545;-->
-<!--        color: #dc3545;-->
-<!--    }-->
-<!--</style>-->
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -46,10 +40,6 @@
 
 <content>
     <div class="container">
-        <!--
-        아래 쭉 id값을 변경시키거나 name, th가 달려있는 서버에서 가져오는부분을 변경시키면 안댐.
-        피자모형부분은 아직 작업하지 않았기때문에 자유롭게 변경 가능
-         -->
         <div class="item"><img id="moviePoster" th:src="@{/moviePhoto/}+${photoPath}"></div>
         <div class="item" name="TrailerCode" th:utext="${oneMovieInfo.getTrailerCode()}"></div>
         <div class="item">평가</div> <!-- 피자모형 -->
@@ -58,8 +48,7 @@
         <div class="item" name="StoryLine" th:text="${oneMovieInfo.getStoryLine()}">줄거리</div>
         <div class="item">평점 몰아보기 <!-- 디자인작업 필요 -->
             <th:block th:each="reviews : ${AllReviewInfo}">
-                <!-- block 내부에서 태그를 변경하거나 테이블을 생성해 정렬하는것은 자유임. 근데 서버에서 받아오는 th:text="..." 얘네를 건들이면 안댐. -->
-                리뷰단사람 id : <span th:text="${reviews.reviewUser}"></span>
+                 리뷰단사람 id : <span th:text="${reviews.reviewUser}"></span>
                 </br>
                 리뷰 본문     : <span th:text="${reviews.movieReivew}"></span>
                 </br>
@@ -69,16 +58,14 @@
         </div>
         <div class="item">내가 쓰는 평점
             <div>
-                <!-- th:errors가 붙어있는 태그들은 일단그냥 놔두기. 나중에 예쁘게 바꾸자. -->
-                <div class="field-error" th:field="${ReviewInfo.reviewUser}" th:errors="${ReviewInfo.reviewUser}">
+                 <div class="field-error" th:field="${ReviewInfo.reviewUser}" th:errors="${ReviewInfo.reviewUser}">
                     로그인 오류
                 </div>
                 <td>리뷰작성</td>
                 <td>
                     <label>
                         <input th:type="text" th:field="${ReviewInfo.movieReivew}" name="movieReivew" id = "movieReivew" th:errorclass="field-error">
-                        <!-- 위의 input태그안에 있는 모든코드는 변경하면 안됌. 얘는 어차피 text필드니까 디자인만 바꾸자. 물론 추가하는건 상관없음. 근데 위치를변경하거나 값을 바꾸면 에러터짐-->
-                        <div class="field-error" th:errors="${ReviewInfo.movieReivew}">
+                         <div class="field-error" th:errors="${ReviewInfo.movieReivew}">
                             리뷰작성 오류
                         </div>
                     </label>
@@ -87,187 +74,15 @@
                 <td>점수작성</td>
                 <td>
                     <label>
-                        <input th:type="text" th:field="${ReviewInfo.moviePoint}" name ="moviePoint" id = "moviePoint"  th:errorclass="field-error">
-                        <!-- 얘도 모든코드는 변경하면 안됌. 얘도물론 추가하는건 가능하지만, 위치를 변경하거나 값을바꾸면 에러터짐.-->
-                        <div class="field-error" th:errors="${ReviewInfo.moviePoint}">
-                            점수작성 오류
-                        </div>
+                        <input type="number" min="0" max="8" step="1" th:field="${ReviewInfo.moviePoint}" name ="moviePoint" id = "moviePoint"  th:errorclass="field-error">
                     </label>
                 </td>
                 <input type="button" value="리뷰작성하기"  id="reviewUpload" onclick="window.location.reload()">
-                <!-- input태그안에 타입을 변경하거나 id, onclick정보를 바꾸면 에러터짐. 디자인만 변경하기. value안에 글자는 당연히 바꿔도 됨. 속성 추가도 당연히 됨. 변경이나 위치이동만 x -->
-            </div>
+                </div>
         </div>
     </div>
 </content>
-<script>
-    window.goMoviePage = function(photoOriName){
-        const newWindow = window.open("about:blank");
-        newWindow.location.href="/EachMovie/getMovieInfo?photoOriName="+photoOriName;
-    };
-
-    $('#movieView').click(function () {
-        const data = $("#movieName");
-        $.ajax({
-            type: "POST",
-            url: "/oneMovie/viewOneMovie",
-            data: data,
-            success: function (jpaMovieInfos) {
-                $('div').empty(); // append결과 초기화
-                for (const i in jpaMovieInfos) {
-                    const value = jpaMovieInfos[i].photoUri;
-                    $('div').append('<img id="moviePoster" src="' + jpaMovieInfos[i].photoUri + '" >');
-                    $('div').append('<h3 onclick="goMoviePage(\''+value+'\')" type="hidden" name="movieName" id="goEachMovieInfo" >' + jpaMovieInfos[i].movieName + '</h3>');
-                    // String 값을 전달해주기 위해 정규표현식 사용
-                    // \'' + value + '\'
-
-                }
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("통신 실패.")
-            }
-        });
-    });
-
-    // 리뷰업로드부분
-    $('#reviewUpload').click(function () {
-        // json 형식으로 데이터 set
-        var params = {
-            movieReivew : $("#movieReivew").val()
-            ,moviePoint : $("#moviePoint").val()
-        }
-        $.ajax({
-            type:"GET",
-            url: "/EachMovie/reviewUpload",
-            data:params,
-            success: function (result) {
-                if(result ===  1){
-                    alert("리뷰업로드가 완료되었습니다.");
-                }else{
-                    alert("리뷰업로드가 실패했습니다.");
-                }
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("통신 실패.");
-            }
-        });
-    });
-
-
-</script>
+<script th:src="@{/js/SearchFunc/SearchFunc.js}"></script>
+<script th:src="@{/js/Review/ReviewFunc.js}"></script>
 </body>
 </html>
-
-<!--<body>-->
-<!--영화제목을 입력해 주세요-->
-<!--<input type="text" id="movieName" name="movieName" th:field="${movieInfo.movieName}">-->
-<!--<input type="button" id="movieView" value="영화조회">-->
-<!--</br>-->
-<!--</br>-->
-<!--<img id="moviePoster" th:src="@{/moviePhoto/}+${photoPath}">-->
-<!--</br>-->
-<!--영화 제목 : <h3 name="movieName" th:text="${oneMovieInfo.getMovieName()}"></h3>-->
-<!--감독 이름 :<h3 name="movieDirector" th:text="${oneMovieInfo.getDirectorName()}"></h3>-->
-<!--개봉일 : <h3 name="openYear" th:text="${oneMovieInfo.getOpenYear()}"></h3>-->
-<!--시놉시스 : <h3 name="StoryLine" th:text="${oneMovieInfo.getStoryLine()}"></h3>-->
-<!--<h3 name="TrailerCode" th:utext="${oneMovieInfo.getTrailerCode()}"></h3>-->
-<!--<th:block th:each="reviews : ${AllReviewInfo}">-->
-<!--    리뷰단사람 id : <span th:text="${reviews.reviewUser}"></span>-->
-<!--    </br>-->
-<!--    </br>-->
-<!--    리뷰 본문     : <span th:text="${reviews.movieReivew}"></span>-->
-<!--    </br>-->
-<!--    </br>-->
-<!--    영화 점수     : <span th:text="${reviews.moviePoint}"></span>-->
-<!--    </br>-->
-<!--    </br>-->
-<!--</th:block>-->
-
-
-<!--<div>-->
-<!--    <div class="field-error" th:field="${ReviewInfo.reviewUser}" th:errors="${ReviewInfo.reviewUser}">-->
-<!--        로그인 오류-->
-<!--    </div>-->
-<!--    <td>리뷰작성</td>-->
-<!--    <td>-->
-<!--        <label>-->
-<!--            <input th:type="text" th:field="${ReviewInfo.movieReivew}" name="movieReivew" id = "movieReivew" th:errorclass="field-error">-->
-<!--            <div class="field-error" th:errors="${ReviewInfo.movieReivew}">-->
-<!--                리뷰작성 오류-->
-<!--            </div>-->
-<!--        </label>-->
-<!--    </td>-->
-
-<!--    <td>점수작성</td>-->
-<!--    <td>-->
-<!--        <label>-->
-<!--            <input th:type="text" th:field="${ReviewInfo.moviePoint}" name ="moviePoint" id = "moviePoint"  th:errorclass="field-error">-->
-<!--            <div class="field-error" th:errors="${ReviewInfo.moviePoint}">-->
-<!--                점수작성 오류-->
-<!--            </div>-->
-<!--        </label>-->
-<!--    </td>-->
-
-<!--    <input type="button" value="리뷰작성하기"  id="reviewUpload" onclick="window.location.reload()">-->
-<!--</div>-->
-
-<!--<h4>-->
-<!--    &lt;!&ndash; 요소들 append 들어갈 부분 &ndash;&gt;-->
-<!--</h4>-->
-<!--<input type="button" value="메인페이지로 나가기" th:onclick="|location.href='@{/}'|">-->
-<!--<script>-->
-<!--    window.goMoviePage = function(photoOriName){-->
-<!--        const newWindow = window.open("about:blank");-->
-<!--        newWindow.location.href="/EachMovie/getMovieInfo?photoOriName="+photoOriName;-->
-<!--    };-->
-
-<!--    $('#movieView').click(function () {-->
-<!--        const data = $("#movieName");-->
-<!--        $.ajax({-->
-<!--            type: "POST",-->
-<!--            url: "/oneMovie/viewOneMovie",-->
-<!--            data: data,-->
-<!--            success: function (jpaMovieInfos) {-->
-<!--                $('div').empty(); // append결과 초기화-->
-<!--                for (const i in jpaMovieInfos) {-->
-<!--                    const value = jpaMovieInfos[i].photoUri;-->
-<!--                    $('div').append('<img id="moviePoster" src="' + jpaMovieInfos[i].photoUri + '" >');-->
-<!--                    $('div').append('<h3 onclick="goMoviePage(\''+value+'\')" type="hidden" name="movieName" id="goEachMovieInfo" >' + jpaMovieInfos[i].movieName + '</h3>');-->
-<!--                    // String 값을 전달해주기 위해 정규표현식 사용-->
-<!--                    // \'' + value + '\'-->
-
-<!--                }-->
-<!--            },-->
-<!--            error: function (XMLHttpRequest, textStatus, errorThrown) {-->
-<!--                alert("통신 실패.")-->
-<!--            }-->
-<!--        });-->
-<!--    });-->
-
-<!--    // 리뷰업로드부분-->
-<!--    $('#reviewUpload').click(function () {-->
-<!--        // json 형식으로 데이터 set-->
-<!--        var params = {-->
-<!--            movieReivew : $("#movieReivew").val()-->
-<!--            ,moviePoint : $("#moviePoint").val()-->
-<!--        }-->
-<!--        $.ajax({-->
-<!--            type:"GET",-->
-<!--            url: "/EachMovie/reviewUpload",-->
-<!--            data:params,-->
-<!--            success: function (result) {-->
-<!--                if(result ===  1){-->
-<!--                    alert("리뷰업로드가 완료되었습니다.");-->
-<!--                }else{-->
-<!--                    alert("리뷰업로드가 실패했습니다.");-->
-<!--                }-->
-<!--            },-->
-<!--            error: function (XMLHttpRequest, textStatus, errorThrown) {-->
-<!--                alert("통신 실패.");-->
-<!--            }-->
-<!--        });-->
-<!--    });-->
-
-
-<!--</script>-->
-<!--</body>-->
