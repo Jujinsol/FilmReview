@@ -9,7 +9,6 @@
 </head>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
 <body>
 <form th:action th:object="${userInfo}" th:method="post" name="form" >
     <div id="join">
@@ -72,12 +71,8 @@
                 <td>e-mail</td>
                 <td>
                     <label>
-                        <input type="text" id="email" name="email" th:field="*{email}" th:errorclass="field-error">
+                        <input type="email" id="email" name="email" th:field="*{email}" th:errorclass="field-error">
                         <input type="button" id="SendJoinCode" value="인증번호 전송">
-                        <div class="field-error" th:errors="*{email}">
-                            email 오류
-                        </div>
-                        </input>
                     </label>
                 </td>
             </tr>
@@ -100,53 +95,8 @@
                 </td>
             </tr>
         </table>
-        <script src="/js/signUp.js" charset="utf-8"></script>
     </div>
 </form>
-<script>
-    $('#SendJoinCode').click(function () {
-        var data = $("#email");
-        // ajax 통신
-        $.ajax({
-            type: "POST",                  // HTTP method type(GET, POST) 형식이다.
-            url: "/Join/emailCertification",      // 컨트롤러에서 대기중인 URL 주소이다.
-            data: data,              // 데이터
-            success: function (res) {
-                if (res.sendResult === true) {
-                    alert("메일함을 확인해 주세요")
-                }else{
-                    alert("실패")
-                }
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) { // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
-                alert("통신 실패.")
-            }
-        });
-    });
-
-    var gbl_data;
-
-    $('#CodeComparison').click(function () {
-        var joinCompare = $("#joinCode");
-        $.ajax({
-            type: "POST",
-            url: "/Join/compare",
-            async:false, // success로 받아온 값을 전역변수에 저장하기 위한 async:false; ajax는 기본적으로 비동기로 작동하지만, 동기식으로 작동하게끔 변환한것
-            data: joinCompare,
-            success: function (compareResult) {
-                if (compareResult.code == 1) {
-                    gbl_data = 1;
-                    alert("인증완료")
-                } else {
-                    alert("인증 실패")
-                }
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("통신 실패.")
-            }
-        });
-    });
-
-</script>
+<script th:src="@{/js/JoinFunc_Email_certification/EmailCertificationFunc.js}"></script>
 </body>
 </html>

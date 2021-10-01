@@ -37,35 +37,6 @@
 <form th:action="@{/MyPage/delete}" th:method="post" class="answer">
     <input type="submit" value="회원 탈퇴하기">
 </form>
-<script>
-    $('#deleteMovie').click(function () {
-        const checkData = new Object();
-
-        const sendData = {
-            'deleteName': $("#movieName").val()
-        }
-
-        // ajax 통신
-        $.ajax({
-            type: "GET",
-            dataType: 'json',
-            url: "/DeleteMovie",
-            data: sendData,
-            success: function (movieOriName) {
-                const splitResult = movieOriName.toString().split(",");
-                for (let i = 0; i < splitResult.length; i++) {
-                    checkData[i] = splitResult[i];
-                }
-
-                console.log("객체생성완료" + checkData[0] + checkData[1])
-
-                location.href='/DeleteMovie/DeleteCheck?'+$.param(checkData);
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("통신 실패." + XMLHttpRequest + textStatus + errorThrown);
-            }
-        });
-    });
-</script>
+<script th:src="@{/js/MovieDeleteFunc/MovieDeleteCheckFunc.js}"></script>
 </body>
 </html>
