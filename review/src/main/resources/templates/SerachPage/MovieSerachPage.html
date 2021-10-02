@@ -3,15 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>검색결과</title>
+    <link rel="stylesheet" th:href="@{/css/MovieSearchPage.css}">
 </head>
 <body>
 검색결과
+<div class="Searchcontainer">
 <th:block th:each="searchMovies : ${SerachResult}">
-    <div>
-        <img class="moviePoster" th:onclick="goMoviePage([[${searchMovies.photoOriName}]])" th:src="@{/moviePhoto/}+${searchMovies.photoOriName}">
-        <h3 th:text="${searchMovies.movieName}" th:onclick="goMoviePage([[${searchMovies.photoOriName}]])"></h3>
+    <div class="SearchResult">
+        <img class="searchMoviePoster"
+             th:onclick="goMoviePage([[${searchMovies.photoOriName}]])"
+             th:src="@{/moviePhoto/}+${searchMovies.photoOriName}"
+        >
+        <!--                class="moviePoster"-->
+
+        <h3 class="searchMovieName"
+            th:text="${searchMovies.movieName}"
+            th:onclick="goMoviePage([[${searchMovies.photoOriName}]])"
+        ></h3>
     </div>
 </th:block>
+</div>
 
 <a href="/">메인페이지로 나가기</a>
 <script th:src="@{/js/SearchFunc/SearchFunc.js}"></script>
