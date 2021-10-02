@@ -1,9 +1,7 @@
-
 window.goMoviePage = function (photoOriName) {
     const newWindow = window.open("about:blank");
     newWindow.location.href = "/EachMovie/getMovieInfo?photoOriName=" + photoOriName;
 };
-
 
 
 $('#movieView').click(function () {

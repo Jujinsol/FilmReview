@@ -37,12 +37,6 @@ public class MoviePage {
     private final photoUriInfo photoUriinfo;
     private ObjectMapper objectMapper = new ObjectMapper();
 
-    @GetMapping
-    public String goMovie(Model model) {
-        model.addAttribute("movieInfo", new movieInfo());
-        return "MoviePage/MoviePageMain";
-    }
-
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/viewOneMovie")
     @ResponseBody
@@ -61,8 +55,8 @@ public class MoviePage {
     @PostMapping(value = "/newPage")
     public String newPage(@RequestParam("movieJsonData") String jsonResult,
                           Model model) throws JsonProcessingException {
-        log.info("result={}", jsonResult);
         List<String> jsonMovieSearchlist = objectMapper.readValue(jsonResult, List.class);
+        model.addAttribute("movieInfo",new movieInfo());
         model.addAttribute("SerachResult",jsonMovieSearchlist);
         return "/SerachPage/MovieSerachPage";
     }

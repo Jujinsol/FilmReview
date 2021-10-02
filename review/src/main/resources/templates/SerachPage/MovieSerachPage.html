@@ -3,10 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <title>검색결과</title>
+    <link rel='stylesheet' th:href="@{/webjars/bootstrap/4.5.0/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/MovieSearchPage.css}">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <script src="https://kit.fontawesome.com/cffe88607d.js" crossorigin="anonymous"></script>
 </head>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script th:src="@{/js/Logout/LogoutFunc.js}"></script>
 <body>
-검색결과
+<script th:src="@{/js/SearchFunc/SearchFunc.js}"></script>
+<header>
+    <div class="title">
+        <b>검색 결과</b>
+    </div>
+    <div class="base">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control"
+                   placeholder="영화 제목을 검색해보세요!"
+                   id="movieName"
+                   name="movieName"
+                   aria-label="Recipient's username"
+                   aria-describedby="button-addon2">
+            <button
+                    class="btn btn-outline-secondary"
+                    type="button"
+                    id="movieView">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+        <div class="Info">
+            <div class="mypage">
+                <a href="MyPage">마이페이지</a>
+            </div>
+            <div class="logIn">
+                <a th:href="@{/}">메인페이지로 나가기</a>
+                <a th:href="@{/templates/Join}">회원가입</a>
+                <a th:href="@{/Login}">로그인</a>
+                <a th:href="@{/logout}">로그아웃</a>
+            </div>
+        </div>
+    </div>
+</header>
 <div class="Searchcontainer">
 <th:block th:each="searchMovies : ${SerachResult}">
     <div class="SearchResult">
@@ -14,7 +52,6 @@
              th:onclick="goMoviePage([[${searchMovies.photoOriName}]])"
              th:src="@{/moviePhoto/}+${searchMovies.photoOriName}"
         >
-        <!--                class="moviePoster"-->
 
         <h3 class="searchMovieName"
             th:text="${searchMovies.movieName}"
@@ -24,7 +61,5 @@
 </th:block>
 </div>
 
-<a href="/">메인페이지로 나가기</a>
-<script th:src="@{/js/SearchFunc/SearchFunc.js}"></script>
 </body>
 </html>
