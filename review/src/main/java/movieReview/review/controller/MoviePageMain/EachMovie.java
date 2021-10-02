@@ -33,19 +33,21 @@ public class EachMovie {
                                 @ModelAttribute("movieInfo") movieInfo movieinfo, // 검색기능을 위한 movieInfo
                                 @ModelAttribute("ReviewInfo") ReviewInfo reviewInfo,// 에러처리용 ReviewInfo
                                 Model model,
+                                @SessionAttribute(name = SessionConst.LoginId, required = false) String id,
                                 HttpServletResponse response) throws ClassNotFoundException, UnsupportedEncodingException {
 
-        if(photoOriName.contains("movie")){ // 검색기능통해 들어왔을경우
-            response.addCookie(new Cookie("photoOriName",getCookie(photoOriName, movieinfo, reviewInfo, model))); // reviewUplaod에서 사용하기 위해 쿠키에 원본사진이름 저장 .
-        }else{ // 메인페이지를통해 들어왔을경우
-            model.addAttribute("photoPath",photoOriName); // 사진경로 처리후 모델에 담아서 전송
+        if (photoOriName.contains("movie")) { // 검색기능통해 들어왔을경우
+            response.addCookie(new Cookie("photoOriName", getCookie(photoOriName, movieinfo, reviewInfo, model))); // reviewUplaod에서 사용하기 위해 쿠키에 원본사진이름 저장 .
+        } else { // 메인페이지를통해 들어왔을경우
+            model.addAttribute("photoPath", photoOriName); // 사진경로 처리후 모델에 담아서 전송
 
-            String cooke = URLEncoder.encode(photoOriName,"utf-8"); // 한글파일 쿠키저장위해 인코딩
-            response.addCookie(new Cookie("photoOriName",cooke)); // reviewUplaod에서 사용하기 위해 쿠키에 원본사진이름 저장 .
+            String cooke = URLEncoder.encode(photoOriName, "utf-8"); // 한글파일 쿠키저장위해 인코딩
+            response.addCookie(new Cookie("photoOriName", cooke)); // reviewUplaod에서 사용하기 위해 쿠키에 원본사진이름 저장 .
         }
 
-        model.addAttribute("oneMovieInfo",getMovieInfoService.EachMovie(movieinfo)); // photoOriName으로 영화정보 모델에담아서 전송
-        model.addAttribute("AllReviewInfo",reviewUploadService.selectAllReview(reviewInfo)); // 모든리뷰정보 가져와 모델에담아서 전송
+        model.addAttribute("sessionId", id);
+        model.addAttribute("oneMovieInfo", getMovieInfoService.EachMovie(movieinfo)); // photoOriName으로 영화정보 모델에담아서 전송
+        model.addAttribute("AllReviewInfo", reviewUploadService.selectAllReview(reviewInfo)); // 모든리뷰정보 가져와 모델에담아서 전송
 
         return "MoviePage/EachMovie";
     }
@@ -55,28 +57,45 @@ public class EachMovie {
         movieinfo.setPhotoOriName(originPhotoUri); // 영화정보 가져오기위해서 set
         reviewInfo.setPhotoOriName(originPhotoUri); // 영화별 리뷰 전부다 가져오기위해서 set
 
-        model.addAttribute("photoPath",originPhotoUri); // 사진경로 처리후 모델에 담아서 전송
+        model.addAttribute("photoPath", originPhotoUri); // 사진경로 처리후 모델에 담아서 전송
 
-        return URLEncoder.encode(originPhotoUri,"utf-8");// 한글파일 쿠키저장위해 인코딩
+        return URLEncoder.encode(originPhotoUri, "utf-8");// 한글파일 쿠키저장위해 인코딩
     }
 
     @GetMapping("/reviewUpload")
     @ResponseBody
     public int reviewUpload(@SessionAttribute(value = SessionConst.LoginId, required = false) String id,
-                            @CookieValue(name="photoOriName",required = false) String photoOriName,
-                            @Validated ReviewInfo reviewInfo, BindingResult reviewError){
+                            @CookieValue(name = "photoOriName", required = false) String photoOriName,
+                            @Validated ReviewInfo reviewInfo, BindingResult reviewError) {
 
-        if(id==null){
-            reviewError.rejectValue("reviewUser","noUser","로그인부터 진행해 주세요..");
+        if (id == null) {
+            reviewError.rejectValue("reviewUser", "noUser", "로그인부터 진행해 주세요..");
         }
 
-        if(reviewError.hasErrors()){
-            log.info("errors ={}",reviewError);
+        if (reviewError.hasErrors()) {
+            log.info("errors ={}", reviewError);
             return 0;
         }
 
         reviewInfo.setReviewUser(id);
         reviewInfo.setPhotoOriName(photoOriName);
         return reviewUploadService.reviewUpload(reviewInfo);
+    }
+
+    @GetMapping("/reviewDelete")
+    @ResponseBody
+    public int reviewDelete(@SessionAttribute(value = SessionConst.LoginId, required = false) String id,
+                            ReviewInfo reviewInfo,
+                            BindingResult reviewError){
+        if (id == null) {
+            reviewError.rejectValue("reviewUser", "noUser", "로그인부터 진행해 주세요..");
+        }
+
+        if (reviewError.hasErrors()) {
+            return 0;
+        }
+
+        reviewInfo.setReviewUser(id);
+        return reviewUploadService.deleteReview(reviewInfo);
     }
 }
