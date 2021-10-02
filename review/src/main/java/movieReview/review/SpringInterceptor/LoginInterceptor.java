@@ -24,8 +24,6 @@ public class LoginInterceptor implements HandlerInterceptor {
             response.sendRedirect("/Login?redirectURL=" + requestURL);
             return false;
         }
-
-        log.info("preHandle run 로그인 해서 통과");
         return true;
     }
 }
