@@ -36,14 +36,7 @@ public class EachMovie {
                                 HttpServletResponse response) throws ClassNotFoundException, UnsupportedEncodingException {
 
         if(photoOriName.contains("movie")){ // 검색기능통해 들어왔을경우
-            String originPhotoUri = photoOriName.substring(10); // 원본사진이름 추출
-            movieinfo.setPhotoOriName(originPhotoUri); // 영화정보 가져오기위해서 set
-            reviewInfo.setPhotoOriName(originPhotoUri); // 영화별 리뷰 전부다 가져오기위해서 set
-
-            model.addAttribute("photoPath",originPhotoUri); // 사진경로 처리후 모델에 담아서 전송
-
-            String cooke = URLEncoder.encode(originPhotoUri,"utf-8"); // 한글파일 쿠키저장위해 인코딩
-            response.addCookie(new Cookie("photoOriName",cooke)); // reviewUplaod에서 사용하기 위해 쿠키에 원본사진이름 저장 .
+            response.addCookie(new Cookie("photoOriName",getCookie(photoOriName, movieinfo, reviewInfo, model))); // reviewUplaod에서 사용하기 위해 쿠키에 원본사진이름 저장 .
         }else{ // 메인페이지를통해 들어왔을경우
             model.addAttribute("photoPath",photoOriName); // 사진경로 처리후 모델에 담아서 전송
 
@@ -51,14 +44,20 @@ public class EachMovie {
             response.addCookie(new Cookie("photoOriName",cooke)); // reviewUplaod에서 사용하기 위해 쿠키에 원본사진이름 저장 .
         }
 
-        movieInfo oneMovieInfo = getMovieInfoService.EachMovie(movieinfo); // photoOriName으로 영화정보 하나 갖고옴
-
-        model.addAttribute("oneMovieInfo",oneMovieInfo); // 영화정보 모델에담아서 전송
-
-        List<JpaRevieTab> jpaRevieTabs = reviewUploadService.selectAllReview(reviewInfo);
-        model.addAttribute("AllReviewInfo",jpaRevieTabs); // 모든리뷰정보 가져와 모델에담아서 전송
+        model.addAttribute("oneMovieInfo",getMovieInfoService.EachMovie(movieinfo)); // photoOriName으로 영화정보 모델에담아서 전송
+        model.addAttribute("AllReviewInfo",reviewUploadService.selectAllReview(reviewInfo)); // 모든리뷰정보 가져와 모델에담아서 전송
 
         return "MoviePage/EachMovie";
+    }
+
+    private String getCookie(String photoOriName, movieInfo movieinfo, ReviewInfo reviewInfo, Model model) throws UnsupportedEncodingException {
+        String originPhotoUri = photoOriName.substring(10); // 원본사진이름 추출
+        movieinfo.setPhotoOriName(originPhotoUri); // 영화정보 가져오기위해서 set
+        reviewInfo.setPhotoOriName(originPhotoUri); // 영화별 리뷰 전부다 가져오기위해서 set
+
+        model.addAttribute("photoPath",originPhotoUri); // 사진경로 처리후 모델에 담아서 전송
+
+        return URLEncoder.encode(originPhotoUri,"utf-8");// 한글파일 쿠키저장위해 인코딩
     }
 
     @GetMapping("/reviewUpload")
