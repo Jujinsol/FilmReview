@@ -12,7 +12,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://kit.fontawesome.com/cffe88607d.js" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <link rel='stylesheet' th:href="@{/webjars/bootstrap/4.5.0/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/main_detail.css}">
 
@@ -25,8 +26,10 @@
             <a href="/" style="color: #F17F42;"><i class="fas fa-circle fa-2x"></i></a>
         </div>
         <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="영화 제목을 검색해보세요!" id="movieName" name="movieName" th:field="${movieInfo.movieName}" aria-label="Recipient's username" aria-describedby="button-addon2">
-            <button class="btn btn-outline-secondary" type="button"  id="movieView"><i class="fas fa-search"></i></button>
+            <input type="text" class="form-control" placeholder="영화 제목을 검색해보세요!" id="movieName" name="movieName"
+                   th:field="${movieInfo.movieName}" aria-label="Recipient's username" aria-describedby="button-addon2">
+            <button class="btn btn-outline-secondary" type="button" id="movieView"><i class="fas fa-search"></i>
+            </button>
             <!-- 여기도 메인페이지의 검색코드와 동일한 부분. -->
         </div>
         <div class="mypage"> <!-- 내정보 -->
@@ -46,26 +49,69 @@
         <div class="item" name="movieName" th:text="${oneMovieInfo.getMovieName()}">영화제목</div>
         <div class="item" name="movieDirector" th:text="${oneMovieInfo.getDirectorName()}">감독이름</div>
         <div class="item" name="StoryLine" th:text="${oneMovieInfo.getStoryLine()}">줄거리</div>
-        <div class="item">평점 몰아보기 <!-- 디자인작업 필요 -->
-            <th:block th:each="reviews : ${AllReviewInfo}">
-                 리뷰단사람 id : <span th:text="${reviews.reviewUser}"></span>
-                </br>
-                리뷰 본문     : <span th:text="${reviews.movieReivew}"></span>
-                </br>
-                영화 점수     : <span th:text="${reviews.moviePoint}"></span>
-                </br>
-            </th:block>
+        <div id="reviewsInfo" class="item">평점 몰아보기 <!-- 디자인작업 필요 -->
+            <script th:inline="javascript">
+                const isEmpty = function (value) {
+                    if (value=="null" || value == "" || value == null || value == undefined || (value != null && typeof value == "object" && !Object.keys(value).length)) {
+                        return true
+                    } else {
+                        return false
+                    }
+                };
+
+
+                const getReview = [[${AllReviewInfo}]];
+                if (getReview.length == 1) {
+                    $("#reviewsInfo").append('<div>등록된 리뷰가 없습니다</div>')
+                } else {
+                    $("#reviewsInfo").empty();
+                    for (let i = 1; i < getReview.length; i++) {
+                        $("#reviewsInfo").append('리뷰단사람 id : <div>' + getReview[i].reviewUser + '</div>')
+                        $("#reviewsInfo").append('영화 점수 : <div>' + getReview[i].moviePoint + '</div>')
+                        $("#reviewsInfo").append('리뷰 본문 : <div>' + getReview[i].movieReivew + '</div>')
+                        $("#reviewsInfo").append('<button onclick="deleteReview(\'' + [[${sessionId}]] + '\');" >리뷰 삭제하기</button>')
+                    }
+                }
+
+                window.deleteReview = function (reviewUser) {
+                    if (isEmpty(reviewUser)) {
+                        alert("로그인부터 진행해 주세요.")
+                    } else {
+                        if (confirm("리뷰를 삭제하시겠습니까?") == true) {
+                            $.ajax({
+                                type: "GET",
+                                url: "/EachMovie/reviewDelete",
+                                data: reviewUser,
+                                success: function (deleteResult) {
+                                    if (deleteResult == 0) {
+                                        alert("로그인부터 진행해 주세요.")
+                                    } else {
+                                        alert("리뷰가 삭제되었습니다.")
+                                        window.location.reload();
+                                    }
+                                },
+                                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                    alert("통신 실패.")
+                                }
+                            });
+                        } else {
+                            return;
+                        }
+                    }
+                };
+            </script>
         </div>
         <div class="item">내가 쓰는 평점
             <div>
-                 <div class="field-error" th:field="${ReviewInfo.reviewUser}" th:errors="${ReviewInfo.reviewUser}">
+                <div class="field-error" th:field="${ReviewInfo.reviewUser}" th:errors="${ReviewInfo.reviewUser}">
                     로그인 오류
                 </div>
                 <td>리뷰작성</td>
                 <td>
                     <label>
-                        <input th:type="text" th:field="${ReviewInfo.movieReivew}" name="movieReivew" id = "movieReivew" th:errorclass="field-error">
-                         <div class="field-error" th:errors="${ReviewInfo.movieReivew}">
+                        <input th:type="text" th:field="${ReviewInfo.movieReivew}" name="movieReivew" id="movieReivew"
+                               th:errorclass="field-error">
+                        <div class="field-error" th:errors="${ReviewInfo.movieReivew}">
                             리뷰작성 오류
                         </div>
                     </label>
@@ -74,11 +120,12 @@
                 <td>점수작성</td>
                 <td>
                     <label>
-                        <input type="number" min="0" max="8" step="1" th:field="${ReviewInfo.moviePoint}" name ="moviePoint" id = "moviePoint"  th:errorclass="field-error">
+                        <input type="number" min="0" max="8" step="1" th:field="${ReviewInfo.moviePoint}"
+                               name="moviePoint" id="moviePoint" th:errorclass="field-error">
                     </label>
                 </td>
-                <input type="button" value="리뷰작성하기"  id="reviewUpload" onclick="window.location.reload()">
-                </div>
+                <input type="button" value="리뷰작성하기" id="reviewUpload" onclick="window.location.reload()">
+            </div>
         </div>
     </div>
 </content>

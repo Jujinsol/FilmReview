@@ -1,0 +1,24 @@
+.Searchcontainer {
+    justify-content: space-around;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.SearchResult{
+    width: 30%;
+    display: block;
+}
+
+.searchMoviePoster {
+    width :100%;
+    cursor: pointer;
+    border-radius: 15px;
+}
+
+.searchMovieName {
+    text-align: center;
+    margin-top: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}

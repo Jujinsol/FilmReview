@@ -24,7 +24,7 @@ public class MainPageController{
 
     @GetMapping
     // uri경로로 넘어오는 페이지번호를 받아서 출력
-    public String goMainPage(Model model ,@RequestParam(required = false, defaultValue = "0", value = "page") int page, @ModelAttribute("movieInfo") movieInfo movieInfo){
+    public String goMainPage(Model model ,@RequestParam(required = false, defaultValue = "0", value = "page") int page){
         Page<JpaMovieInfo> movieList = pageService.findAll(page); // 페이지 가져오기
         model.addAttribute("nowPage",page); // 현재 페이지정보 전송
         model.addAttribute("boardList",movieList);
