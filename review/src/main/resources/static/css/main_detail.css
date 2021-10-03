@@ -66,6 +66,10 @@ content .container{
     border-bottom:1px solid #F17F42;
 }
 
+.pizza{
+    width: 100px;
+}
+
 .item:nth-child(1){
     grid-column: 1/5;
     grid-row: 1/7;

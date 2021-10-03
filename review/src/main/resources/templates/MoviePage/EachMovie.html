@@ -32,10 +32,10 @@
             </button>
         </div>
         <div class="mypage"> <!-- 내정보 -->
-            <a href="MyPage" style="color: #F17F42;"><i class="fas fa-user-circle fa-2x"></i></a>
+            <a th:href="@{/MyPage}" style="color: #F17F42;"><i class="fas fa-user-circle fa-2x"></i></a>
         </div>
         <div class="logout"> <!-- 로그인/로그아웃 -->
-            <a href="Login" style="color: #F17F42;"><i class="fas fa-sign-out-alt fa-2x"></i></a> <!-- 로그인으로 가는 버튼 -->
+            <a th:href="@{/Login}" style="color: #F17F42;"><i class="fas fa-sign-out-alt fa-2x"></i></a> <!-- 로그인으로 가는 버튼 -->
         </div>
     </div>
 </header>
@@ -44,7 +44,9 @@
     <div class="container">
         <div class="item"><img id="moviePoster" th:src="@{/moviePhoto/}+${photoPath}"></div>
         <div class="item" name="TrailerCode" th:utext="${oneMovieInfo.getTrailerCode()}"></div>
-        <div class="item">평가</div> <!-- 피자모형 -->
+        <div class="item">
+            <img class="pizza" th:src="${pizza}">
+        </div>
         <div class="item" name="movieName" th:text="${oneMovieInfo.getMovieName()}">영화제목</div>
         <div class="item" name="movieDirector" th:text="${oneMovieInfo.getDirectorName()}">감독이름</div>
         <div class="item" name="StoryLine" th:text="${oneMovieInfo.getStoryLine()}">줄거리</div>
@@ -77,7 +79,7 @@
                                name="moviePoint" id="moviePoint" th:errorclass="field-error">
                     </label>
                 </td>
-                <input type="button" value="리뷰작성하기" id="reviewUpload" onclick="window.location.reload()">
+                <input type="button" value="리뷰작성하기" onclick="reviewUpload(sessionId)">
             </div>
         </div>
     </div>

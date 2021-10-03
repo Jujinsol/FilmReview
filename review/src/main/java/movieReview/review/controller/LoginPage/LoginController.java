@@ -54,7 +54,7 @@ public class LoginController {
             } else {
                 HttpSession loginSession = request.getSession(true);
                 loginSession.setAttribute(SessionConst.LoginId,form.getId());
-                if(redirectAttributes!=null){
+                if(redirectAttributes.getAttribute("redirectURL")!=null){
                     return "redirect:"+request.getParameter("redirectURL"); // 들어가는거 시도했던 페이지로 돌아감
                 }
                 return "redirect:/";
@@ -73,7 +73,7 @@ public class LoginController {
             } else {
                 HttpSession loginSession = request.getSession(true);
                 loginSession.setAttribute(SessionConst.LoginId,form.getId());
-                if(redirectAttributes!=null){
+                if(redirectAttributes.getAttribute("redirectURL")!=null){
                     return "redirect:"+request.getParameter("redirectURL"); // 들어가는거 시도했던 페이지로 돌아감
                 }
                 return "redirect:/";
