@@ -32,8 +32,8 @@ public class EachMovie {
 
     @GetMapping("/getMovieInfo")
     public String EachMovieInfo(@RequestParam("photoOriName") String photoOriName,
-                                @ModelAttribute("movieInfo") movieInfo movieinfo, // 검색기능을 위한 movieInfo
-                                @ModelAttribute("ReviewInfo") ReviewInfo reviewInfo,// 에러처리용 ReviewInfo
+                                @ModelAttribute("movieInfo") movieInfo movieinfo,
+                                @ModelAttribute("ReviewInfo") ReviewInfo reviewInfo,
                                 Model model,
                                 @SessionAttribute(name = SessionConst.LoginId, required = false) String id,
                                 HttpServletResponse response) throws ClassNotFoundException, UnsupportedEncodingException {

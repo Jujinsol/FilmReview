@@ -17,6 +17,11 @@ public class GradeServiceImpl implements GradeService {
     private String PizzaFilePath = "/gradePhoto/";
     private static Map<Integer, String> PizzaFileList = new HashMap<>();
 
+    public void MakePizzaUri(){
+        for (int i = 1; i <= 8; i++) {
+            PizzaFileList.put(i, PizzaFilePath + i + ".png");
+        }
+    }
 
     public GradeServiceImpl(List<JpaRevieTab> grade) {
         for (JpaRevieTab reviewInfo : grade) {
@@ -24,9 +29,14 @@ public class GradeServiceImpl implements GradeService {
         }
         this.AllGrade = requestMoviePoint;
 
-        for (int i = 1; i <= 8; i++) {
-            PizzaFileList.put(i, PizzaFilePath + i + ".png");
-        }
+        MakePizzaUri();
+    }
+
+    public GradeServiceImpl(int grade){
+        requestMoviePoint.add(grade);
+        this.AllGrade = requestMoviePoint;
+
+        MakePizzaUri();
     }
 
     public int average() {

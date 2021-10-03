@@ -17,8 +17,10 @@
     </div>
     <div class="base">
         <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="영화 제목을 검색해보세요!" id="movieName" name="movieName" aria-label="Recipient's username" aria-describedby="button-addon2">
-            <button class="btn btn-outline-secondary" type="button"  id="movieView"><i class="fas fa-search"></i></button>
+            <input type="text" class="form-control" placeholder="영화 제목을 검색해보세요!" id="movieName" name="movieName"
+                   aria-label="Recipient's username" aria-describedby="button-addon2">
+            <button class="btn btn-outline-secondary" type="button" id="movieView"><i class="fas fa-search"></i>
+            </button>
         </div>
         <div class="Info">
             <div class="mypage">
@@ -33,18 +35,47 @@
     </div>
 </header>
 
-
+<script>
+    let i = 0;
+    let htmlImageElement;
+    let defaultImg;
+</script>
 <div id="container">
-        <th:block th:each="borads : ${boardList}" >
-            <div id="columns">
-                  <img class="moviePoster" th:src="@{/moviePhoto/}+${borads.getPhotoOriName}" th:onclick="goMoviePage([[${borads.getPhotoOriName}]]);">
-                  <figure class="movieName" th:text="${borads.getMovieName()}" th:onclick="goMoviePage([[${borads.getPhotoOriName}]]);"></figure>
-            </div>
-        </th:block>
-</div>
-<ol>
+    <th:block th:each="borads : ${boardList}">
+        <div id="columns">
+            <img class="moviePoster" th:src="@{/moviePhoto/}+${borads.getPhotoOriName}"
+                 th:onclick="goMoviePage([[${borads.getPhotoOriName}]]);">
+            <figure id="movieNames" class="movieName" th:text="${borads.getMovieName()}"
+                    th:onclick="goMoviePage([[${borads.getPhotoOriName}]]);"></figure>
+            <div id="pizzaImgArea"></div>
+            <script>
+                console.log(i)
+                console.log("hi"+eval(+i))
+                console.log("htmlImageElement"+eval(+"i"))
+                console.log("htmlImageElement"+eval(+i))
 
-</ol>
+
+                "htmlImageElement"+eval('i'+" = document.createElement('img')")
+                "htmlImageElement"+eval('i'+".setAttribute('id','pizzaImg'"+'i'+")")
+                "htmlImageElement"+eval('i'+".setAttribute('src','')")
+
+                "defaultImg"+eval('i'+" = document.getElementById('pizzaImgArea')");
+                "defaultImg"+eval('i'+".appendChild(htmlImageElement)")
+                ++i;
+            </script>
+        </div>
+    </th:block>
+</div>
+<script th:inline="javascript">
+
+    const pizzas = [[${AllPizzaShape}]];
+    for (let i = 0; i < pizzas.length; i++) {
+        console.log("pizzaShape" + pizzas[i])
+        const id = "pizzaImg"+i
+        document.getElementById(id).src = pizzas[i];
+    }
+
+</script>
 
 <div id="page_move_div">
     <nav aria-label="Page navigation example" class="page_move">
