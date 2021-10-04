@@ -36,8 +36,8 @@ public class ReviewFunctionRepositoryImpl implements ReviewFunctionRepository {
 
     @Override
     public int deleteReview(ReviewInfo reviewInfo) {
-        String sql = "delete from reviewTab where reviewUser = ?";
-        return template.update(sql,reviewInfo.getReviewUser());
+        String sql = "delete from reviewTab where reviewUser = ? AND photoOriName = ?";
+        return template.update(sql,reviewInfo.getReviewUser(),reviewInfo.getPhotoOriName());
     }
 
     // 여러행 조회

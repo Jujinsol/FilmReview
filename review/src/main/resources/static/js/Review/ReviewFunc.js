@@ -44,19 +44,23 @@ if (getReview.length === 1) { // 리뷰전체등록
         $("#reviewsInfo").append('리뷰단사람 id : <div>' + getReview[i].reviewUser + '</div>')
         $("#reviewsInfo").append('영화 점수 : <div>' + getReview[i].moviePoint + '</div>')
         $("#reviewsInfo").append('리뷰 본문 : <div>' + getReview[i].movieReivew + '</div>')
-        $("#reviewsInfo").append('<button onclick="deleteReview(\'' + sessionId + '\');" >리뷰 삭제하기</button>')
+        $("#reviewsInfo").append('<button onclick="deleteReview(\'' + sessionId + '\',\'' + photoOriName + '\');" >리뷰 삭제하기</button>')
     }
 }
 
-window.deleteReview = function (reviewUser) { // 리뷰삭제
+window.deleteReview = function (reviewUser, photoOriName) { // 리뷰삭제
     if (isEmpty(reviewUser)) {
         alert("로그인부터 진행해 주세요.")
     } else {
         if (confirm("리뷰를 삭제하시겠습니까?") == true) {
+            const data = {
+                'reviewUser' : reviewUser,
+                'photoOriName' : photoOriName
+            }
             $.ajax({
                 type: "GET",
                 url: "/EachMovie/reviewDelete",
-                data: reviewUser,
+                data: data,
                 success: function (deleteResult) {
                     if (deleteResult == 0) {
                         alert("로그인부터 진행해 주세요.")

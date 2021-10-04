@@ -52,6 +52,7 @@
         <div class="item" name="StoryLine" th:text="${oneMovieInfo.getStoryLine()}">줄거리</div>
         <div id="reviewsInfo" class="item">평점 몰아보기 <!-- 디자인작업 필요 -->
             <script th:inline="javascript">
+                const photoOriName= [[${photoPath}]]
                 const getReview = [[${AllReviewInfo}]];
                 const sessionId = [[${sessionId}]];
             </script>
