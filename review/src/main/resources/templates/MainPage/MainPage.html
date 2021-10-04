@@ -35,11 +35,6 @@
     </div>
 </header>
 
-<script>
-    let i = 0;
-    let htmlImageElement;
-    let defaultImg;
-</script>
 <div id="container">
     <th:block th:each="borads : ${boardList}">
         <div id="columns">
@@ -47,35 +42,9 @@
                  th:onclick="goMoviePage([[${borads.getPhotoOriName}]]);">
             <figure id="movieNames" class="movieName" th:text="${borads.getMovieName()}"
                     th:onclick="goMoviePage([[${borads.getPhotoOriName}]]);"></figure>
-            <div id="pizzaImgArea"></div>
-            <script>
-                console.log(i)
-                console.log("hi"+eval(+i))
-                console.log("htmlImageElement"+eval(+"i"))
-                console.log("htmlImageElement"+eval(+i))
-
-
-                "htmlImageElement"+eval('i'+" = document.createElement('img')")
-                "htmlImageElement"+eval('i'+".setAttribute('id','pizzaImg'"+'i'+")")
-                "htmlImageElement"+eval('i'+".setAttribute('src','')")
-
-                "defaultImg"+eval('i'+" = document.getElementById('pizzaImgArea')");
-                "defaultImg"+eval('i'+".appendChild(htmlImageElement)")
-                ++i;
-            </script>
         </div>
     </th:block>
 </div>
-<script th:inline="javascript">
-
-    const pizzas = [[${AllPizzaShape}]];
-    for (let i = 0; i < pizzas.length; i++) {
-        console.log("pizzaShape" + pizzas[i])
-        const id = "pizzaImg"+i
-        document.getElementById(id).src = pizzas[i];
-    }
-
-</script>
 
 <div id="page_move_div">
     <nav aria-label="Page navigation example" class="page_move">
@@ -92,6 +61,49 @@
         </ul>
     </nav>
 </div>
+<script th:inline="javascript">
+    let newVar = [[${AllPizzaShape}]];
+    let i = 0;
+    let tags = {
+        'naturalTag': 0,
+        'newTag': 0,
+        'FigureMovieName': 0,
+        'pizzaImgArea': 0
+    }
+
+
+    for (let i2 = 0; i2 < newVar.length; i2++) {
+        eval("tags.newTag=" + "i")
+        eval("tags.naturalTag=" + "i")
+        eval("tags.pizzaImgArea=" + "i")
+        eval("tags.FigureMovieName=" + "i")
+
+
+        tags.FigureMovieName = document.getElementById("movieNames");
+        tags.FigureMovieName.setAttribute("id", tags.FigureMovieName)
+        // let elementById = document.getElementById("movieNames");
+        // elementById.setAttribute("id", tags.movieNames);
+
+
+        $(tags.FigureMovieName).append('<div id="' + tags.pizzaImgArea + '"></div>')
+
+
+        console.log("부모태그" + tags.naturalTag)
+        console.log("새로운태그" + tags.newTag)
+        console.log("피자영역태그" + tags.pizzaImgArea)
+
+        tags.naturalTag = document.getElementById(tags.pizzaImgArea);
+        tags.newTag = document.createElement("Img");
+
+        tags.newTag.setAttribute("id", "pizzaShapes");
+        tags.newTag.setAttribute("src", newVar[i]);
+
+        tags.naturalTag.appendChild(tags.newTag);
+        console.log("반복종료")
+        ++i;
+    }
+
+</script>
 <script th:src="@{/js/SearchFunc/SearchFunc.js}"></script>
 </body>
 </html>
