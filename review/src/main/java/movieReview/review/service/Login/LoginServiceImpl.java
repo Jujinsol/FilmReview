@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import movieReview.review.Domain.Login.loginMangerInfo;
 import movieReview.review.Domain.Login.loginUserInfo;
 import movieReview.review.service.Join.checkMangerOrUser;
+import movieReview.review.service.Login.Check.CheckInfoExist;
 import movieReview.review.service.Login.Check.CheckInfoExistImpl;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ import java.util.Optional;
 @Slf4j
 public class LoginServiceImpl implements LoginService{
     private final checkMangerOrUser checkMangerOrUser;
-    private final CheckInfoExistImpl checkInfoExist;
+    private final CheckInfoExist checkInfoExist;
 
     //사용자인지 관리자인지 아예없는회원인지 판단하는 메서드
     @Override

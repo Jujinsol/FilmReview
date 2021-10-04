@@ -7,6 +7,8 @@ import movieReview.review.Domain.MovieInfo.movieInfo;
 import movieReview.review.Domain.ReviewInfo.JpaRevieTab;
 import movieReview.review.Domain.ReviewInfo.ReviewInfo;
 import movieReview.review.service.GetMovieInfo.getMovieInfoService;
+import movieReview.review.service.reviewFunction.GradeCalculate.GradeService;
+import movieReview.review.service.reviewFunction.GradeCalculate.GradeServiceImpl;
 import movieReview.review.service.reviewFunction.reviewUploadServie.ReviewUploadService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,8 +32,8 @@ public class EachMovie {
 
     @GetMapping("/getMovieInfo")
     public String EachMovieInfo(@RequestParam("photoOriName") String photoOriName,
-                                @ModelAttribute("movieInfo") movieInfo movieinfo, // 검색기능을 위한 movieInfo
-                                @ModelAttribute("ReviewInfo") ReviewInfo reviewInfo,// 에러처리용 ReviewInfo
+                                @ModelAttribute("movieInfo") movieInfo movieinfo,
+                                @ModelAttribute("ReviewInfo") ReviewInfo reviewInfo,
                                 Model model,
                                 @SessionAttribute(name = SessionConst.LoginId, required = false) String id,
                                 HttpServletResponse response) throws ClassNotFoundException, UnsupportedEncodingException {
@@ -44,10 +46,15 @@ public class EachMovie {
             String cooke = URLEncoder.encode(photoOriName, "utf-8"); // 한글파일 쿠키저장위해 인코딩
             response.addCookie(new Cookie("photoOriName", cooke)); // reviewUplaod에서 사용하기 위해 쿠키에 원본사진이름 저장 .
         }
+        List<JpaRevieTab> AllReviewsInfo = reviewUploadService.selectAllReview(reviewInfo);
+
+        GradeService GradeInfo = new GradeServiceImpl(AllReviewsInfo);
+        String PizzaPhoster = GradeInfo.pizzaReturn(GradeInfo.average());
+        model.addAttribute("pizza",PizzaPhoster);
 
         model.addAttribute("sessionId", id);
         model.addAttribute("oneMovieInfo", getMovieInfoService.EachMovie(movieinfo)); // photoOriName으로 영화정보 모델에담아서 전송
-        model.addAttribute("AllReviewInfo", reviewUploadService.selectAllReview(reviewInfo)); // 모든리뷰정보 가져와 모델에담아서 전송
+        model.addAttribute("AllReviewInfo", AllReviewsInfo); // 모든리뷰정보 가져와 모델에담아서 전송
 
         return "MoviePage/EachMovie";
     }
@@ -69,7 +76,7 @@ public class EachMovie {
                             @Validated ReviewInfo reviewInfo, BindingResult reviewError) {
 
         if (id == null) {
-            reviewError.rejectValue("reviewUser", "noUser", "로그인부터 진행해 주세요..");
+            reviewError.rejectValue("reviewUser", "noUser", "로그인 안함");
         }
 
         if (reviewError.hasErrors()) {
@@ -88,7 +95,7 @@ public class EachMovie {
                             ReviewInfo reviewInfo,
                             BindingResult reviewError){
         if (id == null) {
-            reviewError.rejectValue("reviewUser", "noUser", "로그인부터 진행해 주세요..");
+            reviewError.rejectValue("reviewUser", "noUser", "로그인 안함");
         }
 
         if (reviewError.hasErrors()) {

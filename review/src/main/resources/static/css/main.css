@@ -26,6 +26,10 @@ header{
     margin-top: 50px;
 }
 
+.Allpizza{
+    width: 40px;
+}
+
 .input-group.mb-3{
     width: 500px;
     margin: 0 auto;

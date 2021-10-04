@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -34,7 +35,8 @@ public class LoginController {
     @PostMapping
     public String doLogin(@Validated @ModelAttribute loginUserInfo form,
                           BindingResult bindingResult,
-                          HttpServletRequest request) {
+                          HttpServletRequest request,
+                          RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors() ) {
             log.info("errors={}", bindingResult);
             return "LogIn/LogIn";
@@ -52,6 +54,9 @@ public class LoginController {
             } else {
                 HttpSession loginSession = request.getSession(true);
                 loginSession.setAttribute(SessionConst.LoginId,form.getId());
+                if(redirectAttributes.getAttribute("redirectURL")!=null){
+                    return "redirect:"+request.getParameter("redirectURL"); // 들어가는거 시도했던 페이지로 돌아감
+                }
                 return "redirect:/";
             }
 
@@ -68,6 +73,9 @@ public class LoginController {
             } else {
                 HttpSession loginSession = request.getSession(true);
                 loginSession.setAttribute(SessionConst.LoginId,form.getId());
+                if(redirectAttributes.getAttribute("redirectURL")!=null){
+                    return "redirect:"+request.getParameter("redirectURL"); // 들어가는거 시도했던 페이지로 돌아감
+                }
                 return "redirect:/";
             }
         } else {

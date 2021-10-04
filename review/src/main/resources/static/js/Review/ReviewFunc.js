@@ -1,29 +1,34 @@
-$('#reviewUpload').click(function () {
-    // json 형식으로 데이터 set
-    var params = {
-        movieReivew : $("#movieReivew").val()
-        ,moviePoint : $("#moviePoint").val()
-    }
-    $.ajax({
-        type:"GET",
-        url: "/EachMovie/reviewUpload",
-        data:params,
-        success: function (result) {
-            if(result ===  1){
-                alert("리뷰업로드가 완료되었습니다.");
-            }else{
-                alert("리뷰업로드가 실패했습니다.");
-            }
-        },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-            alert("통신 실패.");
+window.reviewUpload = function (reviewUser) { // 리뷰업로드
+    if (isEmpty(reviewUser)) {
+        alert("로그인부터 진행해 주세요")
+    } else {
+        const params = {
+            movieReivew: $("#movieReivew").val()
+            , moviePoint: $("#moviePoint").val()
         }
-    });
-});
+        $.ajax({
+            type: "GET",
+            url: "/EachMovie/reviewUpload",
+            data: params,
+            success: function (result) {
+                if (result === 1) {
+                    alert("리뷰업로드가 완료되었습니다.");
+                    window.location.reload()
+                } else {
+                    alert("리뷰업로드가 실패했습니다.");
+                    window.location.reload()
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("통신 실패.");
+            }
+        });
+    }
+}
 
 // 비어있는지 확인
 const isEmpty = function (value) {
-    if (value=="null" || value == "" || value == null || value == undefined || (value != null && typeof value == "object" && !Object.keys(value).length)) {
+    if (value == "null" || value == "" || value == null || value == undefined || (value != null && typeof value == "object" && !Object.keys(value).length)) {
         return true
     } else {
         return false
@@ -31,7 +36,7 @@ const isEmpty = function (value) {
 };
 
 
-if (getReview.length === 1) {
+if (getReview.length === 1) { // 리뷰전체등록
     $("#reviewsInfo").append('<div>등록된 리뷰가 없습니다</div>')
 } else {
     $("#reviewsInfo").empty();
@@ -43,7 +48,7 @@ if (getReview.length === 1) {
     }
 }
 
-window.deleteReview = function (reviewUser) {
+window.deleteReview = function (reviewUser) { // 리뷰삭제
     if (isEmpty(reviewUser)) {
         alert("로그인부터 진행해 주세요.")
     } else {
