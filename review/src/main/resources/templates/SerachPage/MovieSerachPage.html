@@ -10,10 +10,19 @@
 </head>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script th:src="@{/js/Logout/LogoutFunc.js}"></script>
 <body>
 <header>
+    <div class="Info">
+        <div class="mypage">
+            <a href="MyPage">마이페이지</a>
+        </div>
+        <div class="logIn">
+            <a th:href="@{/templates/Join}">회원가입</a>
+        </div>
+        <div id="LoginArea"></div>
+    </div>
     <div class="title">
+        <a href="/"><img src="/gradePhoto/6.png"></a>
         <b>검색 결과</b>
     </div>
     <div class="base">
@@ -31,32 +40,22 @@
                 <i class="fas fa-search"></i>
             </button>
         </div>
-        <div class="Info">
-            <div class="mypage">
-                <a href="MyPage">마이페이지</a>
-            </div>
-            <div class="logIn">
-                <a th:href="@{/}">메인페이지로 나가기</a>
-                <a th:href="@{/templates/Join}">회원가입</a>
-                <div id="LoginArea"></div>
-            </div>
-        </div>
     </div>
 </header>
 <div class="Searchcontainer">
-<th:block th:each="searchMovies : ${SerachResult}">
-    <div class="SearchResult">
-        <img class="searchMoviePoster"
-             th:onclick="goMoviePage([[${searchMovies.photoOriName}]])"
-             th:src="@{/moviePhoto/}+${searchMovies.photoOriName}"
-        >
+    <th:block th:each="searchMovies : ${SerachResult}">
+        <div class="SearchResult">
+            <img class="searchMoviePoster"
+                 th:onclick="goMoviePage([[${searchMovies.photoOriName}]])"
+                 th:src="@{/moviePhoto/}+${searchMovies.photoOriName}"
+            >
 
-        <h3 class="searchMovieName"
-            th:text="${searchMovies.movieName}"
-            th:onclick="goMoviePage([[${searchMovies.photoOriName}]])"
-        ></h3>
-    </div>
-</th:block>
+            <h3 class="searchMovieName"
+                th:text="${searchMovies.movieName}"
+                th:onclick="goMoviePage([[${searchMovies.photoOriName}]])"
+            ></h3>
+        </div>
+    </th:block>
 </div>
 <script th:src="@{/js/LoginOrLogOutFunc/LoginOrLogOutFunc.js}"></script>
 <script th:inline="javascript">

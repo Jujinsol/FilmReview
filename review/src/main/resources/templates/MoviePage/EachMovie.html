@@ -23,7 +23,7 @@
 <header>
     <div class="container">
         <div class="main">
-            <a href="/" style="color: #F17F42;"><i class="fas fa-circle fa-2x"></i></a>
+            <a href="/"><img  src="/gradePhoto/6.png"></a>
         </div>
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="영화 제목을 검색해보세요!" id="movieName" name="movieName"
@@ -32,11 +32,10 @@
             </button>
         </div>
         <div class="mypage"> <!-- 내정보 -->
-            <a th:href="@{/MyPage}" style="color: #F17F42;"><i class="fas fa-user-circle fa-2x"></i></a>
+            <a th:href="@{/MyPage}">마이페이지</a>
         </div>
-        <div id="LoginArea" class="logout"> <!-- 로그인/로그아웃 -->
-<!--            <a th:href="@{/Login}" style="color: #F17F42;"><i class="fas fa-sign-out-alt fa-2x"></i></a> &lt;!&ndash; 로그인으로 가는 버튼 &ndash;&gt;-->
-        </div>
+        <div id="LoginArea" class="LoginArea"> <!-- 로그인/로그아웃 -->
+      </div>
     </div>
 </header>
 

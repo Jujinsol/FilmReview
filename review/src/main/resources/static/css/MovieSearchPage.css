@@ -1,3 +1,10 @@
+.title img{
+    width: 50px;
+}
+
+#LoginArea{
+    cursor: pointer;
+}
 .Searchcontainer {
     justify-content: space-around;
     display: flex;
@@ -17,8 +24,14 @@
 }
 
 .searchMovieName {
+    height: 25px;
+    font-size: 1.2em;
     text-align: center;
     margin-top: 10px;
     font-weight: bold;
     cursor: pointer;
+}
+.searchMovieName:hover{
+    color: rgba(189, 68, 68, 0.79);
+    transition: all .5s ease;
 }

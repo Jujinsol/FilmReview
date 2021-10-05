@@ -5,12 +5,34 @@
 header{
     display: flex;
     flex-direction: column;
-    justify-content: center;
-
-    height: 500px;
-    background: #755D68;
+    height: 300px;
+    background: #73b616;
     margin-bottom: 30px;
 }
+.Info{
+    display: flex;
+    flex-direction: row;
+    margin-right: 0;
+}
+.Info a{
+    font-size: 1.1em;
+    margin: 0 10px 0 10px;
+    color: black;
+    font-weight: bold;
+    text-decoration:none !important;
+}
+.Info a:hover{
+    color: rgba(189, 68, 68, 0.79);
+    transition: all 250ms ease;
+}
+.mypage{
+    margin-bottom: 10px;
+}
+.logIn{
+    text-align: center;
+    cursor: pointer;
+}
+
 .title{
     text-align: center;
     color: white;
@@ -37,47 +59,16 @@ header{
     border-radius: 20px 0 0 20px;
 }
 #movieView{
-    color: white;
+    background-color: white;
     border: 1px solid #ced4da;
     border-radius: 0 20px 20px 0;
 }
 #movieView:hover{
-    background-color: #F2838F;
+    background-color: rgba(189, 68, 68, 0.79);
     transition: all .5s ease;
-    border: 1px solid #F2838F;
-}
-.Info{
-    display: flex;
-    flex-direction: column;
-    margin-top: 50px;
-}
-.Info a{
-    color: white;
-    text-decoration:none !important;
-}
-.Info a:hover{
-    color: #F2838F;
-    transition: all 250ms ease;
-}
-.Info a:after{
-    display:block;
-    content: '';
-    width: 100%;
-    border-bottom: solid 4px #F2838F;
-    transform: scaleX(0);
-    transition: transform 250ms ease-in-out;
-}
-.Info a:hover:after{
-    transform: scaleX(1);
+    border: 1px solid rgba(189, 68, 68, 0.79);
 }
 
-
-.mypage{
-    margin-bottom: 10px;
-}
-.logIn{
-    text-align: center;
-}
 
 #container{
     display: flex;

@@ -4,10 +4,6 @@ margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align
 /* body{ font-size: 1.5rem; } */
 
 
-body{
-    background: black;
-    color: #fff;
-}
 .field-error {
     border-color: #dc3545;
     color: #dc3545;
@@ -20,36 +16,50 @@ header .container{
     max-width: 100%;
     position: fixed;
     /* left: 0; right: 0; top: 0; */
-    background: black;
-    border-bottom: 1px solid #F17F42;
+    background-color: #73b616;
+
     height: 100px;
-}
-header .container:hover{
-    box-shadow: 1px 1px 20px #F17F42;
 }
 .main{
    margin-right: 2%;
 }
+.main img{
+    width: 70px;
+}
+
 .mb-3{
     width: 30%;
     margin-bottom: 0!important;
 }
 .mb-3 input:focus{
     box-shadow: none;
-    border: 1px solid #F17F42;
+    border: 1px solid rgba(189, 68, 68, 0.79);
 }
 .mb-3 button:hover{
-    background-color: #f17f4270;
+    background-color: rgba(189, 68, 68, 0.79);
 }
 .mb-3 button:focus{
     box-shadow: none;
 }
+.btn-outline-secondary{
+    background-color: white;
+}
 .mypage{
     margin-left: 30%;
+    text-decoration: none;
+    font-weight: bold;
 }
-
-.logout{
+.mypage a{
+    color: black;
+}
+.LoginArea{
     margin-left: 2%;
+    font-weight: bold;
+    cursor: pointer;
+}
+.LoginArea:hover{
+    color: rgba(189, 68, 68, 0.79);
+    transition: all 250ms ease;
 }
 
 
