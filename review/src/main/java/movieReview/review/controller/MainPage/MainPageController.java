@@ -6,6 +6,7 @@ import movieReview.review.Domain.MovieInfo.JpaMovieInfo;
 import movieReview.review.Domain.MovieInfo.movieInfo;
 import movieReview.review.Domain.ReviewInfo.JpaRevieTab;
 import movieReview.review.Domain.ReviewInfo.ReviewInfo;
+import movieReview.review.Session.SessionConst;
 import movieReview.review.repository.MainPage.MainPageRepository;
 import movieReview.review.service.MainPage.MainPageService;
 import movieReview.review.service.reviewFunction.GradeCalculate.GradeService;
@@ -34,11 +35,14 @@ public class MainPageController {
 
     @GetMapping
     // uri경로로 넘어오는 페이지번호를 받아서 출력
-    public String goMainPage(Model model, @RequestParam(required = false, defaultValue = "0", value = "page") int page) throws ClassNotFoundException {
+    public String goMainPage(Model model,
+                             @RequestParam(required = false, defaultValue = "0", value = "page") int page,
+                             @SessionAttribute(required = false, value = SessionConst.LoginId) String id) throws ClassNotFoundException {
 
         Page<JpaMovieInfo> movieList = pageService.findAll(page); // 페이지 가져오기
         GetAllPizzaShape(movieList, pizzaShape); // 영화별 피자모형 생성
 
+        model.addAttribute("SessionId",id); // 로그인한상태인지 확인하기 위해 세션값 모델에담아 전송
         model.addAttribute("nowPage", page); // 현재 페이지정보 전송
         model.addAttribute("boardList", movieList);
         model.addAttribute("totalPage", movieList.getTotalPages()); // 전체페이지 모델에담아 전송
@@ -68,14 +72,6 @@ public class MainPageController {
             String pizza = GradeInfo.pizzaReturn(GradeInfo.average());
             pizzaShape.add(pizza); // 전체피자모형 리스트에 추가
         }
-    }
-
-    @GetMapping("/logout")
-    @ResponseBody
-    public String logout(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        session.invalidate();
-        return "로그아웃 되었습니다..";
     }
 
 }

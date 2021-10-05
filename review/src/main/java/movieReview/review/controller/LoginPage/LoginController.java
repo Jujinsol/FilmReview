@@ -32,6 +32,14 @@ public class LoginController {
         return "LogIn/LogIn";
     }
 
+    @GetMapping("/logout")
+    @ResponseBody
+    public String logout(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        session.invalidate();
+        return "로그아웃 되었습니다..";
+    }
+
     @PostMapping
     public String doLogin(@Validated @ModelAttribute loginUserInfo form,
                           BindingResult bindingResult,

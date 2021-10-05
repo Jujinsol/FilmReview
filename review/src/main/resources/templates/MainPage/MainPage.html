@@ -26,20 +26,15 @@
             <div class="mypage">
                 <a href="MyPage">마이페이지</a>
             </div>
-            <div class="logIn">
-                <a href="Join"></a>
-                <a href="Login">로그인</a>
-                <a href="logout">로그아웃</a>
+            <div id ="LoginArea" class="logIn">
+                <a href="Join">회원가입</a>
+<!--                <a href="Login">로그인</a>-->
+<!--                <a href="logout">로그아웃</a>-->
             </div>
         </div>
     </div>
 </header>
 
-<script>
-    let i = 0;
-    let htmlImageElement;
-    let defaultImg;
-</script>
 <div id="container">
     <th:block th:each="borads : ${boardList}">
         <div id="columns">
@@ -47,35 +42,9 @@
                  th:onclick="goMoviePage([[${borads.getPhotoOriName}]]);">
             <figure id="movieNames" class="movieName" th:text="${borads.getMovieName()}"
                     th:onclick="goMoviePage([[${borads.getPhotoOriName}]]);"></figure>
-            <div id="pizzaImgArea"></div>
-            <script>
-                console.log(i)
-                console.log("hi"+eval(+i))
-                console.log("htmlImageElement"+eval(+"i"))
-                console.log("htmlImageElement"+eval(+i))
-
-
-                "htmlImageElement"+eval('i'+" = document.createElement('img')")
-                "htmlImageElement"+eval('i'+".setAttribute('id','pizzaImg'"+'i'+")")
-                "htmlImageElement"+eval('i'+".setAttribute('src','')")
-
-                "defaultImg"+eval('i'+" = document.getElementById('pizzaImgArea')");
-                "defaultImg"+eval('i'+".appendChild(htmlImageElement)")
-                ++i;
-            </script>
         </div>
     </th:block>
 </div>
-<script th:inline="javascript">
-
-    const pizzas = [[${AllPizzaShape}]];
-    for (let i = 0; i < pizzas.length; i++) {
-        console.log("pizzaShape" + pizzas[i])
-        const id = "pizzaImg"+i
-        document.getElementById(id).src = pizzas[i];
-    }
-
-</script>
 
 <div id="page_move_div">
     <nav aria-label="Page navigation example" class="page_move">
@@ -92,6 +61,13 @@
         </ul>
     </nav>
 </div>
+<script th:src="@{/js/LoginOrLogOutFunc/LoginOrLogOutFunc.js}"></script>
+<script th:inline="javascript">
+    let newVar = [[${AllPizzaShape}]];
+    let SessionId = [[${SessionId}]]
+    loginOrLogOutCheck(SessionId)
+</script>
+<script th:src="@{/js/MainPizzaShapeFunc/pizzaShape.js}"></script>
 <script th:src="@{/js/SearchFunc/SearchFunc.js}"></script>
 </body>
 </html>

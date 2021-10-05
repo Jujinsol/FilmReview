@@ -34,8 +34,8 @@
         <div class="mypage"> <!-- 내정보 -->
             <a th:href="@{/MyPage}" style="color: #F17F42;"><i class="fas fa-user-circle fa-2x"></i></a>
         </div>
-        <div class="logout"> <!-- 로그인/로그아웃 -->
-            <a th:href="@{/Login}" style="color: #F17F42;"><i class="fas fa-sign-out-alt fa-2x"></i></a> <!-- 로그인으로 가는 버튼 -->
+        <div id="LoginArea" class="logout"> <!-- 로그인/로그아웃 -->
+<!--            <a th:href="@{/Login}" style="color: #F17F42;"><i class="fas fa-sign-out-alt fa-2x"></i></a> &lt;!&ndash; 로그인으로 가는 버튼 &ndash;&gt;-->
         </div>
     </div>
 </header>
@@ -51,10 +51,6 @@
         <div class="item" name="movieDirector" th:text="${oneMovieInfo.getDirectorName()}">감독이름</div>
         <div class="item" name="StoryLine" th:text="${oneMovieInfo.getStoryLine()}">줄거리</div>
         <div id="reviewsInfo" class="item">평점 몰아보기 <!-- 디자인작업 필요 -->
-            <script th:inline="javascript">
-                const getReview = [[${AllReviewInfo}]];
-                const sessionId = [[${sessionId}]];
-            </script>
         </div>
         <div class="item">내가 쓰는 평점
             <div>
@@ -84,6 +80,12 @@
         </div>
     </div>
 </content>
+<script th:src="@{/js/LoginOrLogOutFunc/LoginOrLogOutFunc.js}"></script>
+<script th:inline="javascript">
+    const photoOriName= [[${photoPath}]]
+    const getReview = [[${AllReviewInfo}]];
+    const sessionId = [[${sessionId}]];
+</script>
 <script th:src="@{/js/SearchFunc/SearchFunc.js}"></script>
 <script type="text/javascript" th:src="@{/js/Review/ReviewFunc.js}"></script>
 </body>

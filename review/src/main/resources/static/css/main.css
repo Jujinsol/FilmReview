@@ -26,6 +26,7 @@ header{
     margin-top: 50px;
 }
 
+
 .Allpizza{
     width: 40px;
 }
@@ -88,6 +89,8 @@ header{
     width: 22%;
 }
 
+
+
 .moviePoster{
     width :100%;
     cursor: pointer;
@@ -100,6 +103,10 @@ header{
     font-weight: bold;
     cursor: pointer;
 }
+#pizzaShapes{
+    width: 20%;
+}
+
 .movieName:hover{
     color: #fa7683;
     transition: all 250ms ease;
