@@ -38,8 +38,7 @@
             <div class="logIn">
                 <a th:href="@{/}">메인페이지로 나가기</a>
                 <a th:href="@{/templates/Join}">회원가입</a>
-                <a th:href="@{/Login}">로그인</a>
-                <a th:href="@{/logout}">로그아웃</a>
+                <div id="LoginArea"></div>
             </div>
         </div>
     </div>
@@ -59,6 +58,11 @@
     </div>
 </th:block>
 </div>
+<script th:src="@{/js/LoginOrLogOutFunc/LoginOrLogOutFunc.js}"></script>
+<script th:inline="javascript">
+    const SessionId = [[${SessionId}]];
+    loginOrLogOutCheck(SessionId)
+</script>
 <script th:src="@{/js/SearchFunc/SearchFunc.js}"></script>
 </body>
 </html>

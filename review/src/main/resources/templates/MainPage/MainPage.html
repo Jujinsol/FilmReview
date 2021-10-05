@@ -26,10 +26,10 @@
             <div class="mypage">
                 <a href="MyPage">마이페이지</a>
             </div>
-            <div class="logIn">
-                <a href="Join"></a>
-                <a href="Login">로그인</a>
-                <a href="logout">로그아웃</a>
+            <div id ="LoginArea" class="logIn">
+                <a href="Join">회원가입</a>
+<!--                <a href="Login">로그인</a>-->
+<!--                <a href="logout">로그아웃</a>-->
             </div>
         </div>
     </div>
@@ -61,8 +61,11 @@
         </ul>
     </nav>
 </div>
+<script th:src="@{/js/LoginOrLogOutFunc/LoginOrLogOutFunc.js}"></script>
 <script th:inline="javascript">
     let newVar = [[${AllPizzaShape}]];
+    let SessionId = [[${SessionId}]]
+    loginOrLogOutCheck(SessionId)
 </script>
 <script th:src="@{/js/MainPizzaShapeFunc/pizzaShape.js}"></script>
 <script th:src="@{/js/SearchFunc/SearchFunc.js}"></script>
