@@ -9,7 +9,6 @@
 </head>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script th:src="@{/js/Logout/LogoutFunc.js}"></script>
 <body>
 <header>
     <div class="title">
@@ -64,7 +63,7 @@
 <script th:src="@{/js/LoginOrLogOutFunc/LoginOrLogOutFunc.js}"></script>
 <script th:inline="javascript">
     let newVar = [[${AllPizzaShape}]];
-    let SessionId = [[${SessionId}]]
+    let SessionId = [[${SessionId}]];
     loginOrLogOutCheck(SessionId)
 </script>
 <script th:src="@{/js/MainPizzaShapeFunc/pizzaShape.js}"></script>

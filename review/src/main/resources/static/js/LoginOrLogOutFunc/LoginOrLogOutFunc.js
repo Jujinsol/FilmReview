@@ -1,8 +1,10 @@
 function loginOrLogOutCheck(sessionIdValue){
     $('#LoginArea').empty()
     if(sessionIdValue===null){
+        console.log("정상처리")
         $('#LoginArea').append('<a onclick="goLogin()">로그인</a>')
     }else{
+        console.log("정상처리")
         $('#LoginArea').append('<a onclick="goLogOut()">로그아웃</a>')
     }
 }
