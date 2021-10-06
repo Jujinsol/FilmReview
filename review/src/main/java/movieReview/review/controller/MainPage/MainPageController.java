@@ -9,10 +9,16 @@ import movieReview.review.Domain.ReviewInfo.ReviewInfo;
 import movieReview.review.Session.SessionConst;
 import movieReview.review.repository.MainPage.MainPageRepository;
 import movieReview.review.service.MainPage.MainPageService;
+import movieReview.review.service.MainPage.MainPizzaShapeMake.GetAllPizzaShape;
+import movieReview.review.service.Upload.UploadService;
 import movieReview.review.service.reviewFunction.GradeCalculate.GradeService;
 import movieReview.review.service.reviewFunction.GradeCalculate.GradeServiceImpl;
 import movieReview.review.service.reviewFunction.reviewUploadServie.ReviewUploadService;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.dom4j.rule.Mode;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -21,6 +27,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +38,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MainPageController {
     private final MainPageService pageService;
-    private final ReviewUploadService reviewUploadService;
+    private final UploadService uploadService;
+    private final GetAllPizzaShape getAllPizzaShape;
     private List<String> pizzaShape = new ArrayList<>(); // 모든영화 피자모형 갖고있음
 
     @GetMapping
@@ -40,7 +49,7 @@ public class MainPageController {
                              @SessionAttribute(required = false, value = SessionConst.LoginId) String id) throws ClassNotFoundException {
 
         Page<JpaMovieInfo> movieList = pageService.findAll(page); // 페이지 가져오기
-        GetAllPizzaShape(movieList, pizzaShape); // 영화별 피자모형 생성
+        getAllPizzaShape.GetAllPizzaShape(movieList, pizzaShape); // 영화별 피자모형 생성
 
         model.addAttribute("SessionId",id); // 로그인한상태인지 확인하기 위해 세션값 모델에담아 전송
         model.addAttribute("nowPage", page); // 현재 페이지정보 전송
@@ -50,28 +59,10 @@ public class MainPageController {
         return "MainPage/MainPage";
     }
 
-    private void GetAllPizzaShape(Page<JpaMovieInfo> movieList,
-                                  List<String> pizzaShape) throws ClassNotFoundException {
-        int totalPoint = 0;
-        for (JpaMovieInfo AllReview : movieList) {
-            ReviewInfo reviewInfo = new ReviewInfo();
-            reviewInfo.setPhotoOriName(AllReview.getPhotoOriName());
-            List<JpaRevieTab> jpaRevieTabs = reviewUploadService.selectAllReview(reviewInfo);
-
-            for (int i = 0; i < jpaRevieTabs.size(); i++) {
-                totalPoint = 0;
-                if (jpaRevieTabs.size() > 1) {
-                    JpaRevieTab jpaRevieTab = jpaRevieTabs.get(i);
-                    totalPoint += jpaRevieTab.getMoviePoint();
-                } else {
-                    JpaRevieTab jpaRevieTab = jpaRevieTabs.get(0);
-                    totalPoint += jpaRevieTab.getMoviePoint();
-                }
-            }
-            GradeService GradeInfo = new GradeServiceImpl(totalPoint);
-            String pizza = GradeInfo.pizzaReturn(GradeInfo.average());
-            pizzaShape.add(pizza); // 전체피자모형 리스트에 추가
-        }
+    @ResponseBody
+    @GetMapping("/moviePhoto/{filename}")
+    public Resource downloadImage(@PathVariable String filename) throws MalformedURLException {
+        return new UrlResource("file:"+uploadService.getFullPath(filename));
     }
 
 }
