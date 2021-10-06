@@ -20,6 +20,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
+import static org.apache.commons.io.FilenameUtils.getFullPath;
+
 @Controller
 @RequestMapping("/Upload")
 @Slf4j
@@ -29,14 +31,12 @@ public class UploadController {
     private final LoginService loginServiceImpl;
     private final UploadServiceImpl uploadService;
 
-    @Value("${file.dir}")
-    private String fileDir;
 
     @GetMapping
     public String uploadPage(@SessionAttribute(value = SessionConst.LoginId, required = false) String id,Model model){
         if (loginServiceImpl.FirstCheck(id)==1){
             log.info("사용자가 업로드에 접근");
-            return "MainPage/MainPage";
+            return "redirect:/";
         }
 
         model.addAttribute("movieInfo", new movieInfo());
@@ -56,13 +56,13 @@ public class UploadController {
         }
 
         moviePoster = movieinfo.getMoviePoster();
-        String storeFileName = createStoreFileName(moviePoster.getOriginalFilename());
+        String storeFileName = uploadService.createStoreFileName(moviePoster.getOriginalFilename());
 
         // 경로에 파일 저장
-        moviePoster.transferTo(new File(getFullPath(storeFileName)));
+        moviePoster.transferTo(new File(uploadService.getFullPath(storeFileName)));
 
         movieinfo.setPhotoOriName(storeFileName); //UUID로 변환된 사진파일이름 DB에 저장됨
-        movieinfo.setPhotoUri(fileDir+moviePoster.getOriginalFilename());
+        movieinfo.setPhotoUri(uploadService.getFullPath(moviePoster.getOriginalFilename()));
 
         // db 저장
         uploadService.create(movieinfo);
@@ -74,18 +74,5 @@ public class UploadController {
         return "/MyPage/managerUploadSuccess";
     }
 
-    private String createStoreFileName(String originalFilename) {
-        String ext = extractExt(originalFilename);
-        String uuid = UUID.randomUUID().toString();
-        return uuid + "." + ext; // 서버에 저장할 파일명 생성
-    }
 
-    private String extractExt(String originalFileName){
-        int pos = originalFileName.lastIndexOf(".");
-        return originalFileName.substring(pos+1); // .을 기준으로 파일확장자명만 반환
-    }
-
-    public String getFullPath(String filename){
-        return fileDir+filename; // 파일 저장경로를 반환해준다. 파일저장폴더 + 원본파일명
-    }
 }
