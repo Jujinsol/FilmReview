@@ -3,10 +3,10 @@ package movieReview.review.repository.Join;
 import lombok.extern.slf4j.Slf4j;
 import movieReview.review.Domain.mangerInfo;
 import movieReview.review.Domain.userInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
@@ -18,26 +18,12 @@ import java.util.List;
 @Repository
 public class joinRepositoryImpl implements joinRepository{
 
-    private String driver="com.mysql.cj.jdbc.Driver";
-    private String userid="root";
-    private String url="jdbc:mysql://118.67.133.219:3306/moviereview?serverTimezone=UTC&characterEncoding=UTF-8";
-    private String userpw="1234wlstjddl";
-
-    private DriverManagerDataSource dataSource;
-    private JdbcTemplate template;
-
-    public joinRepositoryImpl(){
-
-        log.info("dirve={}",driver);
-        dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(driver);
-        dataSource.setUrl(url);
-        dataSource.setUsername(userid);
-        dataSource.setPassword(userpw);
-
-        template = new JdbcTemplate();
-        template.setDataSource(dataSource);
+    private final JdbcTemplate template;
+    @Autowired
+    public joinRepositoryImpl(JdbcTemplate template){
+        this.template = template;
     }
+
 
     // 유저회원가입
     @Override

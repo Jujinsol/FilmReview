@@ -9,15 +9,21 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SpringBootTest
 class LoginRepositoryImplTest {
-    joinRepositoryImpl joinRepository = new joinRepositoryImpl();
-    LoginRepositoryImpl loginRepository = new LoginRepositoryImpl();
+    @Autowired
+    joinRepositoryImpl joinRepository;
+    @Autowired
+    LoginRepositoryImpl loginRepository;
 
 
     loginUserInfo userinfo = new loginUserInfo();

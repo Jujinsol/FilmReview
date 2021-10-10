@@ -2,15 +2,21 @@ package movieReview.review.repository;
 
 import movieReview.review.Domain.mangerInfo;
 import movieReview.review.Domain.userInfo;
+import movieReview.review.repository.Join.joinRepository;
 import movieReview.review.repository.Join.joinRepositoryImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SpringBootTest
 class joinRepositoryImplTest {
-    joinRepositoryImpl jo = new joinRepositoryImpl();
+    @Autowired
+    joinRepository jo;
     userInfo userinfo = new userInfo();
     mangerInfo mangerinfo = new mangerInfo();
 
@@ -40,7 +46,6 @@ class joinRepositoryImplTest {
     @Test
     void createAndDeleteManger() {
         //given
-        joinRepositoryImpl jo = new joinRepositoryImpl();
         mangerinfo.setId("imy0529");
         mangerinfo.setPassword(1234);
         mangerinfo.setEmail("imy0529@naver.com");

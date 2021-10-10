@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import movieReview.review.Domain.FileInfo.photoUriInfo;
 import movieReview.review.Domain.MovieInfo.movieInfo;
 import movieReview.review.Domain.ReviewInfo.JpaRevieTab;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
@@ -22,25 +23,10 @@ import java.util.Map;
 @Slf4j
 public class UploadRepositoryImpl implements UploadRepository{
 
-    private String driver="com.mysql.cj.jdbc.Driver";
-    private String userid="root";
-    private String url="jdbc:mysql://118.67.133.219:3306/moviereview?serverTimezone=UTC&characterEncoding=UTF-8";
-    private String userpw="1234wlstjddl";
-
-    private DriverManagerDataSource dataSource;
-    private JdbcTemplate template;
-
-
-    public UploadRepositoryImpl(){
-
-        dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(driver);
-        dataSource.setUrl(url);
-        dataSource.setUsername(userid);
-        dataSource.setPassword(userpw);
-
-        template = new JdbcTemplate();
-        template.setDataSource(dataSource);
+    private final JdbcTemplate template;
+    @Autowired
+    public UploadRepositoryImpl(JdbcTemplate template){
+        this.template = template;
     }
 
     @Override
