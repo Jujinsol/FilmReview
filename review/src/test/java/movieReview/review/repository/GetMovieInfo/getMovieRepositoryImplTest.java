@@ -15,7 +15,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 class getMovieRepositoryImplTest {
-    UploadRepositoryImpl uploadRepository = new UploadRepositoryImpl();
+    @Autowired
+    UploadRepositoryImpl uploadRepository;
     movieInfo movieinfo = new movieInfo();
 
     @Autowired

@@ -9,14 +9,21 @@ import movieReview.review.repository.Login.LoginRepositoryImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SpringBootTest
 class CheckInfoExistImplTest {
 
-    LoginRepositoryImpl loginRepository = new LoginRepositoryImpl();
-    CheckInfoExistImpl checkInfoExist = new CheckInfoExistImpl(loginRepository);
-    joinRepositoryImpl joinRepository = new joinRepositoryImpl();
+    @Autowired
+    LoginRepositoryImpl loginRepository;
+    @Autowired
+    CheckInfoExistImpl checkInfoExist;
+    @Autowired
+    joinRepositoryImpl joinRepository;
 
 
     userInfo userinfo = new userInfo();
