@@ -1,5 +1,6 @@
 package movieReview.review.repository.Login;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import movieReview.review.Domain.Login.loginMangerInfo;
 import movieReview.review.Domain.Login.loginUserInfo;
@@ -17,35 +18,11 @@ import java.util.List;
 
 @Repository
 @Slf4j
+@RequiredArgsConstructor
 public class LoginRepositoryImpl implements LoginRepository{
 
     private final JdbcTemplate template;
-    @Autowired
-    public LoginRepositoryImpl(JdbcTemplate template){
-        this.template = template;
-    }
 
-//    private String driver="com.mysql.cj.jdbc.Driver";
-//    private String userid="root";
-//    private String url="jdbc:mysql://118.67.133.219:3306/moviereview?serverTimezone=UTC&characterEncoding=UTF-8";
-//    private String userpw="1234wlstjddl";
-//
-//    private DriverManagerDataSource dataSource;
-//    private JdbcTemplate template;
-//
-//
-//    public LoginRepositoryImpl(){
-//
-//        log.info("dirve={}",driver);
-//        dataSource = new DriverManagerDataSource();
-//        dataSource.setDriverClassName(driver);
-//        dataSource.setUrl(url);
-//        dataSource.setUsername(userid);
-//        dataSource.setPassword(userpw);
-//
-//        template = new JdbcTemplate();
-//        template.setDataSource(dataSource);
-//    }
 
     // 유저로그인 체크
     @Override

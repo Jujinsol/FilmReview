@@ -1,5 +1,6 @@
 package movieReview.review.repository.reviewFunction.FindMovie;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import movieReview.review.Domain.ReviewInfo.JpaRevieTab;
 import movieReview.review.Domain.ReviewInfo.ReviewInfo;
@@ -14,14 +15,10 @@ import java.util.List;
 
 @Slf4j
 @Repository
+@RequiredArgsConstructor
 public class ReviewFunctionRepositoryImpl implements ReviewFunctionRepository {
 
     private final JdbcTemplate template;
-
-    @Autowired
-    public ReviewFunctionRepositoryImpl(JdbcTemplate template) {
-        this.template = template;
-    }
 
     @Override
     public int insertReview(ReviewInfo reviewinfo) {
