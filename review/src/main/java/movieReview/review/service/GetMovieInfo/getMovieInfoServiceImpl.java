@@ -25,12 +25,14 @@ public class getMovieInfoServiceImpl implements getMovieInfoService {
     @Override
     public movieInfo EachMovie(movieInfo movieinfo) {
         JpaMovieInfo jpaMovieInfo = getMovieRepository.EachMovieInfo(movieinfo);
-        movieinfo.setMovieName(jpaMovieInfo.getMovieName());
-        movieinfo.setPhotoUri(jpaMovieInfo.getPhotoUri());
-        movieinfo.setOpenYear(jpaMovieInfo.getOpenYear());
-        movieinfo.setStoryLine(jpaMovieInfo.getStoryLine());
-        movieinfo.setDirectorName(jpaMovieInfo.getDirectorName());
-        movieinfo.setTrailerCode(jpaMovieInfo.getTrailerCode());
+        movieinfo.Builder()
+                .setMovieName(jpaMovieInfo.getMovieName())
+                .setPhotoUri(jpaMovieInfo.getPhotoUri())
+                .setOpenYear(jpaMovieInfo.getOpenYear())
+                .setStoryLine(jpaMovieInfo.getStoryLine())
+                .setDirectorName(jpaMovieInfo.getDirectorName())
+                .setTrailerCode(jpaMovieInfo.getTrailerCode())
+                .build();
         return movieinfo;
     }
 

@@ -1,5 +1,6 @@
 package movieReview.review.repository.Upload;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import movieReview.review.Domain.FileInfo.photoUriInfo;
 import movieReview.review.Domain.MovieInfo.movieInfo;
@@ -21,13 +22,10 @@ import java.util.Map;
 
 @Repository
 @Slf4j
+@RequiredArgsConstructor
 public class UploadRepositoryImpl implements UploadRepository{
 
     private final JdbcTemplate template;
-    @Autowired
-    public UploadRepositoryImpl(JdbcTemplate template){
-        this.template = template;
-    }
 
     @Override
     public int insert(movieInfo movieinfo) {
