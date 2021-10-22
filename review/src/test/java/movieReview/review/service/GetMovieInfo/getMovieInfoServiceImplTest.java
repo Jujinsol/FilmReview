@@ -35,7 +35,7 @@ class getMovieInfoServiceImplTest {
         movieinfo.setOpenYear(2010);
         movieinfo.setDirectorName("주진성");
 
-        movieinfo2.setPhotoOriName("test.png");
+        movieinfo2.setPhotoOriName("test2.png");
         movieinfo2.setPhotoUri("staticasd/---");
         movieinfo2.setStoryLine("줄거리두번쨰");
         movieinfo2.setMovieName("제목");

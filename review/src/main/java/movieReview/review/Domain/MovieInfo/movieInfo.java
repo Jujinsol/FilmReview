@@ -34,4 +34,7 @@ public class movieInfo {
     private String photoUri; // 파일 저장 경로
     private Path path; // 출력할때 쓸 경로
 
+    public static movieInfoBuilder Builder(){
+        return new movieInfoBuilder();
+    }
 }
