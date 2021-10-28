@@ -16,16 +16,10 @@ for (let i2 = 0; i2 < newVar.length; i2++) {
 
     tags.FigureMovieName = document.getElementById("movieNames");
     tags.FigureMovieName.setAttribute("id", tags.FigureMovieName)
-    // let elementById = document.getElementById("movieNames");
-    // elementById.setAttribute("id", tags.movieNames);
 
 
     $(tags.FigureMovieName).append('<div id="' + tags.pizzaImgArea + '"></div>')
 
-
-    console.log("부모태그" + tags.naturalTag)
-    console.log("새로운태그" + tags.newTag)
-    console.log("피자영역태그" + tags.pizzaImgArea)
 
     tags.naturalTag = document.getElementById(tags.pizzaImgArea);
     tags.newTag = document.createElement("Img");
@@ -34,6 +28,5 @@ for (let i2 = 0; i2 < newVar.length; i2++) {
     tags.newTag.setAttribute("src", newVar[i]);
 
     tags.naturalTag.appendChild(tags.newTag);
-    console.log("반복종료")
     ++i;
 }
