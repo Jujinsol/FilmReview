@@ -2,8 +2,6 @@ package movieReview.review.Domain.MovieInfo;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.nio.file.Path;
 
 public class movieInfoBuilder {

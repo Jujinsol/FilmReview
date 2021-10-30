@@ -25,7 +25,7 @@ public class getMovieInfoServiceImpl implements getMovieInfoService {
     @Override
     public movieInfo EachMovie(movieInfo movieinfo) {
         JpaMovieInfo jpaMovieInfo = getMovieRepository.EachMovieInfo(movieinfo);
-        movieinfo.Builder()
+        return movieinfo.Builder()
                 .setMovieName(jpaMovieInfo.getMovieName())
                 .setPhotoUri(jpaMovieInfo.getPhotoUri())
                 .setOpenYear(jpaMovieInfo.getOpenYear())
@@ -33,7 +33,6 @@ public class getMovieInfoServiceImpl implements getMovieInfoService {
                 .setDirectorName(jpaMovieInfo.getDirectorName())
                 .setTrailerCode(jpaMovieInfo.getTrailerCode())
                 .build();
-        return movieinfo;
     }
 
 }
