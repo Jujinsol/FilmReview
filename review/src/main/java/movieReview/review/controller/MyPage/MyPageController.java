@@ -8,6 +8,7 @@ import movieReview.review.Domain.updatePageDto.updateDto;
 import movieReview.review.Domain.userInfo;
 import movieReview.review.service.Join.checkMangerOrUser;
 import movieReview.review.service.Join.joinService;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
@@ -50,11 +51,12 @@ public class MyPageController {
 
     }
 
-    @PostMapping
-    public String userChangePassword(@Validated updateDto updatedto,
-                                     BindingResult bindingResult,
-                                     @SessionAttribute(name = SessionConst.LoginId, required = false) String id,
-                                     RedirectAttributes redirectAttributes) {
+    @PatchMapping
+    public String userChangePassword(
+            @Validated updateDto updatedto, BindingResult bindingResult,
+            @SessionAttribute(name = SessionConst.LoginId, required = false) String id,
+            RedirectAttributes redirectAttributes
+    ) {
 
         if(bindingResult.hasErrors()){
             log.info("errors={}", bindingResult);
