@@ -76,7 +76,7 @@ public class EachMovie {
         return URLEncoder.encode(originPhotoUri, "utf-8");// 한글파일 쿠키저장위해 인코딩
     }
 
-    @GetMapping("/reviewUpload")
+    @PostMapping("/reviewUpload")
     @ResponseBody
     public int reviewUpload(@SessionAttribute(value = SessionConst.LoginId, required = false) String id,
                             @CookieValue(name = "photoOriName", required = false) String photoOriName,
@@ -101,7 +101,7 @@ public class EachMovie {
         return reviewUploadService.reviewUpload(reviewInfo);
     }
 
-    @GetMapping("/reviewDelete")
+    @DeleteMapping("/reviewDelete")
     @ResponseBody
     public int reviewDelete(@SessionAttribute(value = SessionConst.LoginId, required = false) String id,
                             ReviewInfo reviewInfo,

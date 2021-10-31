@@ -3,7 +3,7 @@ window.DropFunc = function (OriName) {
         'deleteName': OriName
     }
     $.ajax({
-        type: "GET",
+        type: "Delete",
         url: "/DeleteMovie/DeleteFunc",
         data: sendData,
         success: function (result) {

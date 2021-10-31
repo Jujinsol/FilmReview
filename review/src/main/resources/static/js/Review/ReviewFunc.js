@@ -32,7 +32,7 @@ window.deleteReview = function (reviewUser, photoOriName) { // 리뷰삭제
                 'photoOriName' : photoOriName
             }
             $.ajax({
-                type: "GET",
+                type: "Delete",
                 url: "/EachMovie/reviewDelete",
                 data: data,
                 success: function (deleteResult) {
@@ -63,7 +63,7 @@ window.reviewUpload = function (reviewUser) { // 리뷰업로드
             'ids' : JSON.stringify(reviewMenIds)
         }
         $.ajax({
-            type: "GET",
+            type: "POST",
             url: "/EachMovie/reviewUpload",
             data: params,
             success: function (result) {
