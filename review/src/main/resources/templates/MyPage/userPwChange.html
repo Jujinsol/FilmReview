@@ -6,7 +6,7 @@
     <link rel="stylesheet" th:href="@{/css/userPwChange.css}">
 </head>
 <body>
-<h>사용자 비밀번호 변경 페이지</h>
+<h>내 정보</h>
 <form th:action method="post" th:object="${userInfo}" name="form">
     <input type="hidden" name="_method" value="PATCH"/>
     <table>
@@ -34,6 +34,7 @@
     </table>
     <input type="submit" value="비밀번호 변경하기">
     <input type="button" value="메인페이지로 나가기" th:onclick="|location.href='@{/}'|">
+    <input type="button" value="내가 작성했던 리뷰 전체 조회하기" th:onclick="||">
 </form>
 <form th:action="@{/MyPage/delete}" th:method="post">
     <input type="hidden" name="_method" value="delete"/>
