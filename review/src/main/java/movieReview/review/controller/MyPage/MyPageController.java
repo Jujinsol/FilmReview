@@ -91,7 +91,7 @@ public class MyPageController {
     }
 
     // 회원탈퇴
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     public String deleteUser(@SessionAttribute(name = SessionConst.LoginId, required = false) String id) {
         if (checkMangerOrUser.check(id) == 1) {
             // 유저 회원탈퇴

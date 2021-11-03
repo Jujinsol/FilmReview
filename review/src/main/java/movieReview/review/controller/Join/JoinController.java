@@ -6,6 +6,7 @@ import movieReview.review.Domain.mangerInfo;
 import movieReview.review.Domain.userInfo;
 import movieReview.review.service.Join.Mail.MailServiceImpl;
 import movieReview.review.service.Join.joinServiceImpl;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,6 +29,9 @@ public class JoinController {
     private final joinServiceImpl joinService;
     private final MailServiceImpl mailService;
     private Map<String,Object> compareResult = new HashMap<String,Object>();
+
+    @Value("${spring.mail.username}")
+    private String MailName;
 
     @GetMapping
     public String joinPage(@ModelAttribute("userInfo") userInfo userinfo, @ModelAttribute("mangerInfo") mangerInfo mangerinfo) {
@@ -108,7 +112,6 @@ public class JoinController {
     public Map<String,Object> emailSign(userInfo userinfo, HttpSession session) {
         Map<String,Object> result = new HashMap<String,Object>();
 
-        String email = userinfo.getEmail();
         int random = new Random().nextInt(1000000) + 1000; // 1000 ~ 99999 인증번호 난수생성
 
         String joinCode = String.valueOf(random);
@@ -121,7 +124,7 @@ public class JoinController {
         sb.append("귀하의 인증 코드는 " + joinCode + " 입니다.");
 
         // 전송
-        boolean send = mailService.send(subject, sb.toString(), "jjs04122002@gmail.com", email, null);
+        boolean send = mailService.send(subject, sb.toString(),MailName , userinfo.getEmail(), null);
         result.put("sendResult",send);
         return result;
     }

@@ -35,6 +35,7 @@
     </div>
 </form>
 <form th:action="@{/MyPage/delete}" th:method="post" class="answer">
+    <input type="hidden" name="_method" value="delete"/>
     <input type="submit" value="회원 탈퇴하기">
 </form>
 <script th:src="@{/js/MovieDeleteFunc/MovieDeleteCheckFunc.js}"></script>
