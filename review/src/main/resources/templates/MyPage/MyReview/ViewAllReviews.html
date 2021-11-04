@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>ReviewPage</title>
+</head>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script  th:inline="javascript">
+  const myReviews = [[${AllMyReviewInfo}]]
+  const OriMovieName= [[${OriMovieName}]]
+</script>
+<body>
+<h1>내가쓴 모든 리뷰들</h1>
+<div id="reviewPosition">
+
+</div> <!-- 리뷰정보 박히는 곳 -->
+<br><br><br>
+<input type="button" value="메인페이지로 나가기" th:onclick="|location.href='@{/}'|">
+<script th:src="@{/js/Review/viewAllReviewFunc/ViewAllReviewFunc.js}"></script>
+</body>
+</html>
