@@ -34,7 +34,10 @@ public class ReviewFunctionRepositoryImpl implements ReviewFunctionRepository {
     @Override
     public int deleteReview(ReviewInfo reviewInfo) {
         String sql = "delete from reviewTab where reviewUser = ? AND photoOriName = ?";
-        return template.update(sql,reviewInfo.getReviewUser(),reviewInfo.getPhotoOriName());
+        return template.update(sql,
+                reviewInfo.getReviewUser(),
+                reviewInfo.getPhotoOriName()
+        );
     }
 
     // 여러행 조회
@@ -53,6 +56,24 @@ public class ReviewFunctionRepositoryImpl implements ReviewFunctionRepository {
                         return reviews;
                     }
                 }, reviewInfo.getPhotoOriName()
+        );
+    }
+
+    @Override
+    public List<ReviewInfo> selectMyReviews(ReviewInfo reviewInfo) {
+        String sql = "select * from reviewTab where reviewUser = ?";
+        return template.query(
+                sql, new RowMapper<ReviewInfo>() {
+                    @Override
+                    public ReviewInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
+                        ReviewInfo reviewInfo1 = new ReviewInfo();
+                        reviewInfo1.setPhotoOriName(rs.getString("photoOriName"));
+                        reviewInfo1.setReviewUser(rs.getString("reviewUser"));
+                        reviewInfo1.setMovieReivew(rs.getString("movieReview"));
+                        reviewInfo1.setMoviePoint(rs.getInt("moviePoint"));
+                        return reviewInfo1;
+                    }
+                }, reviewInfo.getReviewUser()
         );
     }
 }
