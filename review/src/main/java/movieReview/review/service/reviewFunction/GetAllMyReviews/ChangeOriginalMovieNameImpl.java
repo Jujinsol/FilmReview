@@ -22,8 +22,10 @@ public class ChangeOriginalMovieNameImpl implements ChangeOriginalMovieName {
     }
 
 
-    public String[] ChangeMovieName(ReviewInfo reviewInfo) throws ClassNotFoundException {
-        List<ReviewInfo> allMyReviews = getAllMyReviews.getAllMyReviews(reviewInfo);
+    public String[] ChangeMovieName(String id) throws ClassNotFoundException {
+        ReviewInfo reviewInfo = new ReviewInfo();
+        reviewInfo.setReviewUser(id);
+        List<ReviewInfo> allMyReviews = getAllMyReviews.getAllMyReviews(reviewInfo.getReviewUser());
         String[] OriMovieNames = new String[allMyReviews.size()];
 
         for(int i = 0; i<allMyReviews.size(); i++){

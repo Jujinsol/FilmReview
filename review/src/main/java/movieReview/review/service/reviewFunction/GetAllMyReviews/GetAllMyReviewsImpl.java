@@ -15,7 +15,9 @@ public class GetAllMyReviewsImpl implements GetAllMyReviews{
     private final ReviewFunctionRepository reviewReposi;
 
     @Override
-    public List<ReviewInfo> getAllMyReviews(ReviewInfo reviewInfo) {
+    public List<ReviewInfo> getAllMyReviews(String id) {
+        ReviewInfo reviewInfo = new ReviewInfo();
+        reviewInfo.setReviewUser(id);
         return reviewReposi.selectMyReviews(reviewInfo);
     }
 }

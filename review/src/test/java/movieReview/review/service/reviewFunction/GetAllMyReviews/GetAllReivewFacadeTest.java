@@ -88,7 +88,7 @@ class GetAllReivewFacadeTest {
     @Test
     void 리뷰정보들로영화제목들반환하는지체크() throws ClassNotFoundException {
 
-        String[] movieName = allReivewFacade.ChangeMovieName(reviewInfo);
+        String[] movieName = allReivewFacade.ChangeMovieName("jjsair0412");
         assertThat(movieName[0]).isEqualTo("제목");
         assertThat(movieName[1]).isEqualTo("제목두번째");
     }
