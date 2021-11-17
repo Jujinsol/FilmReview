@@ -12,7 +12,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Slf4j
 public class checkMangerOrUser {
-    private final joinServiceImpl joinService;
+    private final joinService joinService;
 
     public int check(String id){
 
