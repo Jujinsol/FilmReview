@@ -14,12 +14,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Random;
 
 @Controller
@@ -33,6 +31,7 @@ public class JoinController {
 
     @Value("${spring.mail.username}")
     private String MailName;
+
 
     @GetMapping
     public String joinPage(@ModelAttribute("userInfo") userInfo userinfo, @ModelAttribute("mangerInfo") mangerInfo mangerinfo) {
@@ -104,59 +103,58 @@ public class JoinController {
 
     @PostMapping("/emailCertification")
     @ResponseBody
-    public boolean emailSign(@RequestParam String email, HttpSession session) throws AddressException {
+    public boolean emailSign(@RequestParam String email,
+                             HttpSession session) throws AddressException {
         if(mailService.checkEmail(email) == false){
             return false;
         }
 
         int random = new Random().nextInt(1000000) + 1000; // 1000 ~ 99999 인증번호 난수생성
-
         String joinCode = String.valueOf(random);
-
         // 세션 저장 - 나중에 사용자가 작성한 인증번호와 같은지 확인하기 위한 용도
         session.setAttribute("joinCode", joinCode);
-
-        String subject = "회원가입 인증 코드 발급 안내 입니다.";
-        StringBuilder sb = new StringBuilder();
-        sb.append("귀하의 인증 코드는 " + joinCode + " 입니다.");
-
         // 전송
-        return mailService.send(subject, sb.toString(), MailName, email, null);
+        return mailService.send(joinCode,MailName, mailService.checkCode(email), null);
     }
 
 
     @PostMapping("/compare")
     @ResponseBody
     public int compare(@RequestParam String joinCode,
-                       HttpSession session) {
-        if(joinCode == null){
+                       @SessionAttribute(name="joinCode") String serverCode) {
+        String result = mailService.checkCode(joinCode);
+        if(result.equals("false")){
             return 0;
         }
+
         Map<String, Object> map = new HashMap<>();
         compareResult.set(map);
         Map<String, Object> comRes = compareResult.get();
 
-
-        Object serverCode = session.getAttribute("joinCode");
-
         // 1이면 인증성공, 0이면 실패
-        int CompareResult = mailService.JoinCodeComparison(serverCode.toString(), joinCode);
+        int CompareResult = mailService.JoinCodeComparison(serverCode, result);
         comRes.put("code", CompareResult);
         return CompareResult;
     }
 
 
     @GetMapping("/{id}")
-    public String myInfo(@PathVariable("id") String id, Model model) {
+    public String myInfo(@PathVariable("id") String id,
+                         Model model,
+                         HttpSession session) {
         compareResult.remove();
+        session.invalidate();
         userInfo userInfo = joinService.myInfo(id);
         model.addAttribute("userInfo", userInfo);
         return "/Join/signUpSuccess";
     }
 
     @GetMapping("/Man/{id}")
-    public String MangerInfo(@PathVariable("id") String id, Model model) {
+    public String MangerInfo(@PathVariable("id") String id,
+                             Model model,
+                             HttpSession session) {
         compareResult.remove();
+        session.invalidate();
         userInfo userInfo = joinService.myInfo(id);
         mangerInfo mangerInfo = joinService.mangerInfo(id);
         log.info("mangerInfo.getId()={}", mangerInfo.getId());
