@@ -1,13 +1,11 @@
 package movieReview.review.service.Join.Mail;
 
 
+import javax.mail.internet.AddressException;
+
 public interface MailService {
-    /** 메일 전송
-     *  @param subject 제목
-     *  @param text 내용
-     *  @param from 보내는 메일 주소
-     *  @param to 받는 메일 주소
-     *  @param filePath 첨부 파일 경로: 첨부파일 없을시 null **/
-    public boolean send(String subject, String text, String from, String to, String filePath);
-    int JoinCodeComparison(String myCode, String serverCode);
+    boolean send(String code, String from, String to, String filePath); // 메일보내는 메서드
+    int JoinCodeComparison(String myCode, String serverCode);    // 인증코드 비교
+    boolean checkEmail(String email) throws AddressException; // 이메일 형식 확인용 메서드
+    String checkCode(String code); // 인증코드 검증용 메서드
 }

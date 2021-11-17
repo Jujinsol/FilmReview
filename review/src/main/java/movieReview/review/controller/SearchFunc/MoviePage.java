@@ -30,7 +30,6 @@ public class MoviePage {
     private final UploadService uploadService;
     private final getMovieInfoService getMovieInfoService;
     private final photoUriInfo photoUriinfo;
-    private ObjectMapper objectMapper = new ObjectMapper();
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/viewOneMovie")
@@ -51,6 +50,7 @@ public class MoviePage {
     public String newPage(@RequestParam("movieJsonData") String jsonResult,
                           Model model,
                           @SessionAttribute(required = false, value = SessionConst.LoginId) String id) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
         List<String> jsonMovieSearchlist = objectMapper.readValue(jsonResult, List.class);
 
         model.addAttribute("SessionId",id);

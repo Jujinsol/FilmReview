@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import movieReview.review.Session.SessionConst;
 import movieReview.review.Domain.MovieInfo.movieInfo;
 import movieReview.review.service.Login.LoginService;
+import movieReview.review.service.Upload.UploadService;
 import movieReview.review.service.Upload.UploadServiceImpl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -29,7 +30,7 @@ import static org.apache.commons.io.FilenameUtils.getFullPath;
 @PropertySource("classpath:application.properties")
 public class UploadController {
     private final LoginService loginServiceImpl;
-    private final UploadServiceImpl uploadService;
+    private final UploadService uploadService;
 
 
     @GetMapping

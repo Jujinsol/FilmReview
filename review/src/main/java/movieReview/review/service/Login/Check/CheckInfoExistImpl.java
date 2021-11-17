@@ -13,10 +13,11 @@ import java.util.Optional;
 @Slf4j
 public class CheckInfoExistImpl implements CheckInfoExist{
     private LoginRepositoryImpl loginRepository;
-    private Map<String,String> sql = new HashMap<>();
+    private Map<String,String> sql =new HashMap<>();
 
     @Autowired
     public CheckInfoExistImpl(LoginRepositoryImpl loginRepository){
+
         this.loginRepository = loginRepository;
 
         sql.put("userSql","SELECT userId, userPw,userEmail from user where userId=? AND userPw =?;");
@@ -31,9 +32,8 @@ public class CheckInfoExistImpl implements CheckInfoExist{
 
     @Override
     public loginUserInfo checkUser(String id, Integer password){
-        Optional<loginUserInfo> userInfoCheck = Optional.ofNullable((loginRepository.userLoginCheck(setuser(id, password), sql.get("userSql"))));
-        log.info("id={},password={},",id,password);
-        log.info("userInfoCheck={},",userInfoCheck);
+        Optional<loginUserInfo> userInfoCheck =
+                Optional.ofNullable((loginRepository.userLoginCheck(setuser(id, password), sql.get("userSql"))));
         if(userInfoCheck.isEmpty()){
             // 둘다 틀리게 작성했을 경우 ( 테이블에 아예 존재하지 않는 경우 )
             return null;
@@ -45,7 +45,9 @@ public class CheckInfoExistImpl implements CheckInfoExist{
 
     @Override
     public loginMangerInfo checkManger(String id, Integer password){
-        Optional<loginMangerInfo> mangerInfoCheck = Optional.ofNullable(loginRepository.mangerLoginCheck(setmanger(id, password), sql.get("masterSql")));
+
+        Optional<loginMangerInfo> mangerInfoCheck =
+                Optional.ofNullable(loginRepository.mangerLoginCheck(setmanger(id, password), sql.get("masterSql")));
         if(mangerInfoCheck.isEmpty()){
             // 둘다 틀리게 작성했을 경우 ( 테이블에 아예 존재하지 않는 경우 )
             return null;
@@ -58,7 +60,8 @@ public class CheckInfoExistImpl implements CheckInfoExist{
 
     @Override
     public loginUserInfo userIdCheck(String id) {
-        Optional<loginUserInfo> userIdCheck = Optional.ofNullable(loginRepository.userIdCheck(setuser(id,null), sql.get("checkUserId")));
+        Optional<loginUserInfo> userIdCheck =
+                Optional.ofNullable(loginRepository.userIdCheck(setuser(id,null), sql.get("checkUserId")));
         if(userIdCheck.isEmpty()){
             return null;
         }else{
@@ -69,7 +72,8 @@ public class CheckInfoExistImpl implements CheckInfoExist{
 
     @Override
     public loginMangerInfo mangerIdCheck(String id) {
-        Optional<loginMangerInfo> mangerIdCheck = Optional.ofNullable(loginRepository.mangerIdCheck(setmanger(id, null), sql.get("checkMasterId")));
+        Optional<loginMangerInfo> mangerIdCheck =
+                Optional.ofNullable(loginRepository.mangerIdCheck(setmanger(id, null), sql.get("checkMasterId")));
         if(mangerIdCheck.isEmpty()){
             return null;
         }else{
@@ -80,7 +84,8 @@ public class CheckInfoExistImpl implements CheckInfoExist{
 
     @Override
     public loginUserInfo userPwChcek(Integer password) {
-        Optional<loginUserInfo> userPwCheck = Optional.ofNullable(loginRepository.userPwCheck(setuser(null, password), sql.get("checkUserPassword")));
+        Optional<loginUserInfo> userPwCheck =
+                Optional.ofNullable(loginRepository.userPwCheck(setuser(null, password), sql.get("checkUserPassword")));
         if(userPwCheck.isEmpty()){
             return null;
         }else{
@@ -91,7 +96,8 @@ public class CheckInfoExistImpl implements CheckInfoExist{
 
     @Override
     public loginMangerInfo mangerPwCheck(Integer password) {
-        Optional<loginMangerInfo> mangerPwCheck = Optional.ofNullable(loginRepository.mangerPwCheck(setmanger(null,password),sql.get("checkMasterPassword")));
+        Optional<loginMangerInfo> mangerPwCheck =
+                Optional.ofNullable(loginRepository.mangerPwCheck(setmanger(null,password),sql.get("checkMasterPassword")));
         if(mangerPwCheck.isEmpty()){
             return null;
         }else{
