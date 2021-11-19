@@ -10,7 +10,6 @@ import javax.validation.constraints.Positive;
 
 @Getter
 @Setter
-@Component
 public class mangerInfo{
     @NotBlank(message = "id는 필수로 작성해야 합니다.")
     private String id;

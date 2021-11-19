@@ -10,7 +10,8 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <body>
-<form th:action th:object="${userInfo}" th:method="post" name="form" >
+<!--<form th:action th:object="${userInfo}" th:method="post" name="form" >-->
+<form th:action th:object="${JoinForm}" th:method="post">
     <div id="join">
         <h1>회원가입</h1>
         <table>
@@ -20,11 +21,11 @@
                     <label>
                         <input type="text" th:name="id" th:field="*{id}" th:errorclass="field-error">
 
-                        <div class="field-error" th:if="${mangerInfo.getNumber()!=null}">
-                            <div th:errorclass="field-error" th:errors="${mangerInfo.id}">
-                                id 오류
-                            </div>
-                        </div>
+<!--                        <div class="field-error" th:if="${mangerInfo.getNumber()!=null}">-->
+<!--                            <div th:errorclass="field-error" th:errors="${mangerInfo.id}">-->
+<!--                                id 오류-->
+<!--                            </div>-->
+<!--                        </div>-->
 
                         <div class="field-error" th:errors="*{id}">
                             id 오류
@@ -63,7 +64,8 @@
                 <td>관리자 번호</td>
                 <td>
                     <label>
-                        <input type="text" name="textbox" th:field="${mangerInfo.number}">
+<!--                        <input type="text" name="textbox" th:field="${mangerInfo.number}">-->
+                        <input type="text" name="textbox" th:field="*{number}">
                     </label>
                 </td>
             </tr>
