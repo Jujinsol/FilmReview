@@ -34,7 +34,9 @@ public class UploadController {
 
 
     @GetMapping
-    public String uploadPage(@SessionAttribute(value = SessionConst.LoginId, required = false) String id,Model model){
+    public String uploadPage(
+            @SessionAttribute(value = SessionConst.LoginId, required = false) String id,
+            Model model){
         if (loginServiceImpl.FirstCheck(id)==1){
             log.info("사용자가 업로드에 접근");
             return "redirect:/";

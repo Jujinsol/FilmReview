@@ -1,16 +1,21 @@
-package movieReview.review.Domain;
+package movieReview.review.controller.Join;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 @Getter
 @Setter
-public class userInfo {
+@Component
+public class JoinForm {
     @NotBlank(message = "id는 필수로 작성해야 합니다.")
     private String id;
+
+    private Integer number;
 
     @NotBlank(message = "E-mail은 필수로 작성해야 합니다.")
     private String email;

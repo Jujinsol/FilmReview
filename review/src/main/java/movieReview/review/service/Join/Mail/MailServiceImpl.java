@@ -78,9 +78,9 @@ public class MailServiceImpl implements MailService{
 
     @Override
     public String checkCode(String code) {
-        if(code == null || code.isBlank()){
+        if(code == null || code.isBlank()){ // null이거나 비어있을 경우
             return "false";
-        }else if(code.contains(" ")){
+        }else if(code.contains(" ")){ // 공백이 포함되었을 경우
             StringBuilder br = new StringBuilder();
             String[] splitResult = code.split(" ");
             for(int i = 0; i<splitResult.length; i++){

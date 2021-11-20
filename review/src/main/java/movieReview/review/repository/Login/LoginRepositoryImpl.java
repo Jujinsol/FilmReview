@@ -2,6 +2,7 @@ package movieReview.review.repository.Login;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import movieReview.review.Domain.Login.loginDto;
 import movieReview.review.Domain.Login.loginMangerInfo;
 import movieReview.review.Domain.Login.loginUserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,183 +20,94 @@ import java.util.List;
 @Repository
 @Slf4j
 @RequiredArgsConstructor
-public class LoginRepositoryImpl implements LoginRepository{
+public class LoginRepositoryImpl implements LoginRepository {
 
     private final JdbcTemplate template;
 
-
     // 유저로그인 체크
     @Override
-    public loginUserInfo userLoginCheck(loginUserInfo userinfo, String usersql) {
-        List<loginUserInfo> stocks = null;
-
-        stocks = template.query(usersql, new PreparedStatementSetter() {
-
+    public loginDto userLoginCheck(loginDto dto, String sql) {
+        List<loginDto> result = template.query(sql, new RowMapper<loginDto>() {
             @Override
-            public void setValues(PreparedStatement pstmt) throws SQLException {
-                pstmt.setString(1, userinfo.getId());
-                pstmt.setInt(2, userinfo.getPassword());
-
+            public loginDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+                loginDto loginDto = new loginDto();
+                loginDto.setId(rs.getString("userId"));
+                loginDto.setPassword(rs.getInt("userPw"));
+                return loginDto;
             }
-        }, new RowMapper<loginUserInfo>() {
-
-            @Override
-            public loginUserInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
-                userinfo.setId(rs.getString("userId"));
-                userinfo.setPassword(rs.getInt("userPw"));
-                return userinfo;
-            }
-
-        });
-        if (stocks.isEmpty()) {
-            return null;
-        } else {
-            return userinfo;
-        }
+        }, dto.getId(), dto.getPassword());
+        return result.size() == 0 ? null : result.get(0);
     }
 
 
     // 관리자로그인 체크
     @Override
-    public loginMangerInfo mangerLoginCheck(loginMangerInfo mangerinfo, String mastersql) {
-        List<loginMangerInfo> mang = null;
-
-        mang = template.query(mastersql, new PreparedStatementSetter() {
-
+    public loginDto mangerLoginCheck(loginDto dto, String sql) {
+        List<loginDto> result = template.query(sql, new RowMapper<loginDto>() {
             @Override
-            public void setValues(PreparedStatement pstmt) throws SQLException {
-                pstmt.setString(1, mangerinfo.getId());
-                pstmt.setInt(2,mangerinfo.getPassword());
-
+            public loginDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+                loginDto loginDto = new loginDto();
+                loginDto.setId(rs.getString("masterId"));
+                loginDto.setPassword(rs.getInt("pw"));
+                return loginDto;
             }
-        }, new RowMapper<loginMangerInfo>() {
-
-            @Override
-            public loginMangerInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
-                mangerinfo.setId(rs.getString("masterId"));
-                mangerinfo.setPassword(rs.getInt("pw"));
-
-                return mangerinfo;
-            }
-
-        });
-        if (mang.isEmpty()) {
-            return null;
-        } else {
-            return mangerinfo;
-        }
+        }, dto.getId(), dto.getPassword());
+        return result.size() == 0 ? null : result.get(0);
     }
 
     @Override
-    public loginUserInfo userIdCheck(loginUserInfo userinfo, String sql) {
-        List<loginUserInfo> stocks = null;
-
-        stocks = template.query(sql, new PreparedStatementSetter() {
+    public loginDto userIdCheck(loginDto dto, String sql) {
+        List<loginDto> result = template.query(sql, new RowMapper<loginDto>() {
             @Override
-            public void setValues(PreparedStatement pstmt) throws SQLException {
-                pstmt.setString(1, userinfo.getId());
-
+            public loginDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+                loginDto loginDto = new loginDto();
+                loginDto.setId(rs.getString("userId"));
+                loginDto.setPassword(rs.getInt("userPw"));
+                return loginDto;
             }
-        }, new RowMapper<loginUserInfo>() {
-
-            @Override
-            public loginUserInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
-                userinfo.setId(rs.getString("userId"));
-                userinfo.setPassword(rs.getInt("userPw"));
-                return userinfo;
-            }
-
-        });
-        if (stocks.isEmpty()) {
-            return null;
-        } else {
-            return userinfo;
-        }
+        }, dto.getId());
+        return result.size() == 0 ? null : result.get(0);
     }
 
     @Override
-    public loginMangerInfo mangerIdCheck(loginMangerInfo mangerinfo, String sql) {
-        List<loginMangerInfo> mang = null;
-
-        mang = template.query(sql, new PreparedStatementSetter() {
-
+    public loginDto mangerIdCheck(loginDto dto, String sql) {
+        List<loginDto> result = template.query(sql, new RowMapper<loginDto>() {
             @Override
-            public void setValues(PreparedStatement pstmt) throws SQLException {
-                pstmt.setString(1, mangerinfo.getId());
+            public loginDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+                loginDto loginDto = new loginDto();
+                loginDto.setId(rs.getString("masterId"));
+                loginDto.setPassword(rs.getInt("pw"));
+                return loginDto;
             }
-        }, new RowMapper<loginMangerInfo>() {
-
-            @Override
-            public loginMangerInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
-                mangerinfo.setId(rs.getString("masterId"));
-                mangerinfo.setPassword(rs.getInt("pw"));
-
-                return mangerinfo;
-            }
-
-        });
-        if (mang.isEmpty()) {
-            return null;
-        } else {
-            return mangerinfo;
-        }
+        }, dto.getId());
+        return result.size() == 0 ? null : result.get(0);
     }
 
     @Override
-    public loginUserInfo userPwCheck(loginUserInfo userinfo, String sql) {
-        List<loginUserInfo> stocks = null;
-
-        stocks = template.query(sql, new PreparedStatementSetter() {
-
+    public loginDto userPwCheck(loginDto dto, String sql) {
+        List<loginDto> result = template.query(sql, new RowMapper<loginDto>() {
             @Override
-            public void setValues(PreparedStatement pstmt) throws SQLException {
-                pstmt.setInt(1, userinfo.getPassword());
-
+            public loginDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+                loginDto loginDto = new loginDto();
+                loginDto.setId(rs.getString("userId"));
+                loginDto.setPassword(rs.getInt("userPw"));
+                return loginDto;
             }
-        }, new RowMapper<loginUserInfo>() {
-
-            @Override
-            public loginUserInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
-                userinfo.setId(rs.getString("userId"));
-                userinfo.setPassword(rs.getInt("userPw"));
-                return userinfo;
-            }
-
-        });
-        if (stocks.isEmpty()) {
-            return null;
-        } else {
-            return userinfo;
-        }
+        }, dto.getPassword());
+        return result.size() == 0 ? null : result.get(0);
     }
 
     @Override
-    public loginMangerInfo mangerPwCheck(loginMangerInfo mangerinfo, String sql) {
-        List<loginMangerInfo> mang = null;
-
-        mang = template.query(sql, new PreparedStatementSetter() {
-
+    public loginDto mangerPwCheck(loginDto dto, String sql) {
+        List<loginDto> result = template.query(sql, new RowMapper<loginDto>() {
             @Override
-            public void setValues(PreparedStatement pstmt) throws SQLException {
-                pstmt.setInt(1,mangerinfo.getPassword());
-
+            public loginDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+                loginDto loginDto = new loginDto();
+                loginDto.setId(rs.getString("masterId"));
+                loginDto.setPassword(rs.getInt("pw"));
+                return loginDto;
             }
-        }, new RowMapper<loginMangerInfo>() {
-
-            @Override
-            public loginMangerInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
-                mangerinfo.setId(rs.getString("masterId"));
-                mangerinfo.setPassword(rs.getInt("pw"));
-
-                return mangerinfo;
-            }
-
-        });
-        if (mang.isEmpty()) {
-            return null;
-        } else {
-            return mangerinfo;
-        }
+        }, dto.getPassword());
+        return result.size() == 0 ? null : result.get(0);
     }
-
 }

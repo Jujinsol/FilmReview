@@ -2,6 +2,7 @@ package movieReview.review.controller.LoginPage;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import movieReview.review.Domain.Login.loginForm;
 import movieReview.review.Session.SessionConst;
 import movieReview.review.Domain.Login.loginMangerInfo;
 import movieReview.review.Domain.Login.loginUserInfo;
@@ -23,12 +24,13 @@ import java.util.Optional;
 @RequestMapping("/Login")
 @Slf4j
 public class LoginController {
-    private final LoginService loginServiceImpl;
+    private final LoginService service;
 
 
     @GetMapping
-    public String LoginPage(Model model) {
-        model.addAttribute("loginUserInfo", new loginUserInfo());
+    public String LoginPage(
+            @ModelAttribute("loginForm") loginForm form)
+    {
         return "LogIn/LogIn";
     }
 
@@ -41,57 +43,36 @@ public class LoginController {
     }
 
     @PostMapping
-    public String doLogin(@Validated @ModelAttribute loginUserInfo form,
-                          BindingResult bindingResult,
-                          HttpServletRequest request,
-                          RedirectAttributes redirectAttributes) {
-        if (bindingResult.hasErrors() ) {
+    public String doLogin(
+            @Validated @ModelAttribute("loginForm") loginForm form,
+            BindingResult bindingResult,
+            HttpServletRequest request,
+            RedirectAttributes redirectAttributes
+    ) {
+        if (bindingResult.hasErrors()) {
             log.info("errors={}", bindingResult);
             return "LogIn/LogIn";
         }
 
-        loginMangerInfo mangerinfo = new loginMangerInfo();
+        int result = service.loginResult(form);
 
-        if (loginServiceImpl.FirstCheck(form.getId()) == 1) {
-            //사용자
-            Optional<loginUserInfo> userLoginResult = Optional.ofNullable(loginServiceImpl.userLogin(form));
-            if (userLoginResult.isEmpty()) {
-                bindingResult.reject("GlobalUserLoginWorn");
-                log.info("user.errors={}", bindingResult);
-                return "LogIn/LogIn";
-            } else {
-                HttpSession loginSession = request.getSession(true);
-                loginSession.setAttribute(SessionConst.LoginId,form.getId());
-                if(redirectAttributes.getAttribute("redirectURL")!=null){
-                    return "redirect:"+request.getParameter("redirectURL"); // 들어가는거 시도했던 페이지로 돌아감
+        switch (result){
+            case 1 :
+                HttpSession session = request.getSession();
+                session.setAttribute(SessionConst.LoginId, form.getId());
+                if (redirectAttributes.getAttribute("redirectURL") != null) {
+                    return "redirect:" + request.getParameter("redirectURL"); // 들어가는거 시도했던 페이지로 돌아감
                 }
                 return "redirect:/";
-            }
-
-        } else if (loginServiceImpl.FirstCheck(form.getId()) == 2) {
-            //관리자
-            mangerinfo.setId(form.getId());
-            mangerinfo.setPassword(form.getPassword());
-            Optional<loginMangerInfo> mangerLoginResult = Optional.ofNullable(loginServiceImpl.mangerLogin(mangerinfo));
-
-            if (mangerLoginResult.isEmpty()) {
-                bindingResult.reject( "GlobalMangerLoginWorn");
-                log.info("manger.errors={}", bindingResult);
+            case 0 :
+                bindingResult.reject("GlobalLoginError.loginFail");
                 return "LogIn/LogIn";
-            } else {
-                HttpSession loginSession = request.getSession(true);
-                loginSession.setAttribute(SessionConst.LoginId,form.getId());
-                if(redirectAttributes.getAttribute("redirectURL")!=null){
-                    return "redirect:"+request.getParameter("redirectURL"); // 들어가는거 시도했던 페이지로 돌아감
-                }
-                return "redirect:/";
-            }
-        } else {
-            //없는 회원 id
-            bindingResult.reject("noSuchId");
-            log.info("noSuchId.errors={}", bindingResult);
-            return "LogIn/LogIn";
+            case 2 :
+                bindingResult.reject("GlobalLoginError.noSuchId");
+                return "LogIn/LogIn";
         }
+
+        return "LogIn/LogIn";
     }
 }
 

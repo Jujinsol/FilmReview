@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import movieReview.review.Domain.mangerInfo;
 import movieReview.review.Domain.userInfo;
+import movieReview.review.Session.SessionConst;
 import movieReview.review.service.Join.Mail.MailService;
 import movieReview.review.service.Join.joinService;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,8 +17,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.mail.internet.AddressException;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 @Controller
@@ -27,85 +26,61 @@ import java.util.Random;
 public class JoinController {
     private final joinService joinService;
     private final MailService mailService;
-    private ThreadLocal<Map<String, Object>> compareResult = new ThreadLocal<>();
 
     @Value("${spring.mail.username}")
     private String MailName;
 
 
     @GetMapping
-    public String joinPage(@ModelAttribute("userInfo") userInfo userinfo, @ModelAttribute("mangerInfo") mangerInfo mangerinfo) {
+    public String joinPage(
+            @ModelAttribute("JoinForm") JoinForm joinForm
+    ) {
         return "Join/signUp";
     }
 
     @PostMapping
-    public String joinUser(@Validated @ModelAttribute userInfo userinfo,
-                           BindingResult userError,
-                           @ModelAttribute mangerInfo mangerinfo,
-                           BindingResult managerError,
-                           RedirectAttributes redirectAttributes
+    public String joinUser(
+            @Validated @ModelAttribute("JoinForm") JoinForm joinForm,
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes,
+            @SessionAttribute(name = SessionConst.JoinSession, required = false) String CompareResult
     ) {
-        if (managerError.hasErrors() || userError.hasErrors()) {
-            log.info("errors={}", managerError);
+
+        if (bindingResult.hasErrors()) {
+            return "/Join/signUp";
+        }
+
+        if (CompareResult.equals("0")) {
+            bindingResult.rejectValue("joinCode", "JoinForm.Email.NoEmailJoin");
             return "Join/signUp";
         }
-        Map<String, Object> code = compareResult.get();
-        if (code == null) {
-            userError.rejectValue("joinCode", "NoEmailJoin");
-            log.info("이메일 인증 미진행. code is Empty");
-            return "Join/signUp";
-        } else {
-            int toJoinCode = (int) code.get("code");
-            if (toJoinCode == 1) {
-                //이메일 인증 성공. 회원가입진행
-                // 이메일 인증 성공
-                if (mangerinfo.getNumber() == null) {
-                    // 사용자일경우
-                    int join = joinService.join(userinfo.getEmail(), userinfo.getId(), userinfo.getPassword(), null);
 
-                    if (join == 1) {
+        String join = joinService.join(joinForm);
 
-                        userInfo joinResult = joinService.myInfo(userinfo.getId());
-                        redirectAttributes.addAttribute("id", joinResult.getId());
-
-                        return "redirect:/Join/{id}";
-                    } else {
-                        userError.rejectValue("id", "equal");
-                        log.info("errors={}", userError);
-                        return "Join/signUp";
-                    }
-                } else {
-                    // 관리자일경우
-                    int mangerJoin = joinService.join(userinfo.getEmail(), userinfo.getId(), userinfo.getPassword(), mangerinfo.getNumber());
-
-                    if (mangerJoin == 1) {
-                        mangerInfo joinMangerResult = joinService.mangerInfo(userinfo.getId());
-                        redirectAttributes.addAttribute("id", joinMangerResult.getId());
-
-
-                        return "redirect:/Join/Man/{id}";
-                    } else {
-                        managerError.rejectValue("id", "equal");
-                        log.info("errors={}", managerError);
-                        return "Join/signUp";
-                    }
-                }
-            } else {
-                userError.rejectValue("joinCode", "EmailJoin");
-                log.info("이메일 인증 실패");
-                //이메일 인증 실패. 이메일인증 진행
+        switch (join){
+            case "JoinForm.id" :
+                bindingResult.rejectValue("id", join);
                 return "Join/signUp";
-            }
-
+            case "fail" :
+                bindingResult.rejectValue("fail", "JoinForm.fail");
+                return "Join/signUp";
+            case "관리자" :
+                redirectAttributes.addAttribute("id", joinForm.getId());
+                return "redirect:/Join/Man/{id}";
+            case "사용자" :
+                redirectAttributes.addAttribute("id",joinForm.getId());
+                return "redirect:/Join/{id}";
         }
+        return "Join/signUp";
     }
 
 
     @PostMapping("/emailCertification")
     @ResponseBody
     public boolean emailSign(@RequestParam String email,
-                             HttpSession session) throws AddressException {
-        if(mailService.checkEmail(email) == false){
+                             HttpSession session) throws AddressException
+    {
+        if (mailService.checkEmail(email) == false) {
             return false;
         }
 
@@ -114,26 +89,23 @@ public class JoinController {
         // 세션 저장 - 나중에 사용자가 작성한 인증번호와 같은지 확인하기 위한 용도
         session.setAttribute("joinCode", joinCode);
         // 전송
-        return mailService.send(joinCode,MailName, mailService.checkCode(email), null);
+        return mailService.send(joinCode, MailName, mailService.checkCode(email), null);
     }
 
 
     @PostMapping("/compare")
     @ResponseBody
     public int compare(@RequestParam String joinCode,
-                       @SessionAttribute(name="joinCode") String serverCode) {
+                       @SessionAttribute(name = "joinCode") String serverCode,
+                       HttpSession session
+    ) {
         String result = mailService.checkCode(joinCode);
-        if(result.equals("false")){
+        if (result.equals("false")) {
             return 0;
         }
-
-        Map<String, Object> map = new HashMap<>();
-        compareResult.set(map);
-        Map<String, Object> comRes = compareResult.get();
-
         // 1이면 인증성공, 0이면 실패
         int CompareResult = mailService.JoinCodeComparison(serverCode, result);
-        comRes.put("code", CompareResult);
+        session.setAttribute("code", Integer.toString(CompareResult));
         return CompareResult;
     }
 
@@ -142,7 +114,6 @@ public class JoinController {
     public String myInfo(@PathVariable("id") String id,
                          Model model,
                          HttpSession session) {
-        compareResult.remove();
         session.invalidate();
         userInfo userInfo = joinService.myInfo(id);
         model.addAttribute("userInfo", userInfo);
@@ -153,13 +124,8 @@ public class JoinController {
     public String MangerInfo(@PathVariable("id") String id,
                              Model model,
                              HttpSession session) {
-        compareResult.remove();
         session.invalidate();
-        userInfo userInfo = joinService.myInfo(id);
         mangerInfo mangerInfo = joinService.mangerInfo(id);
-        log.info("mangerInfo.getId()={}", mangerInfo.getId());
-
-        model.addAttribute("userInfo", userInfo);
         model.addAttribute("mangerInfo", mangerInfo);
         return "/Join/MsignUpSuccess";
     }
