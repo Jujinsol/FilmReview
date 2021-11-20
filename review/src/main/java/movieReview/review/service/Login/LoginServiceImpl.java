@@ -2,11 +2,12 @@ package movieReview.review.service.Login;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import movieReview.review.Domain.Login.loginDto;
+import movieReview.review.Domain.Login.loginForm;
 import movieReview.review.Domain.Login.loginMangerInfo;
 import movieReview.review.Domain.Login.loginUserInfo;
 import movieReview.review.service.Join.checkMangerOrUser;
 import movieReview.review.service.Login.Check.CheckInfoExist;
-import movieReview.review.service.Login.Check.CheckInfoExistImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -25,10 +26,46 @@ public class LoginServiceImpl implements LoginService{
     }
 
     @Override
+    public int loginResult(loginForm form) {
+        switch (FirstCheck(form.getId())){
+            case 0 : // 아예없을때
+                return 2;
+
+            case 1: // 사용자
+                loginUserInfo user = new loginUserInfo();
+                user.setId(form.getId());
+                user.setPassword(form.getPassword());
+
+                loginUserInfo userResult = userLogin(user);
+
+                if(userResult != null){
+                    return 1;
+                }else{
+                    return 0;
+                }
+
+            case 2: // 관리자
+                loginMangerInfo man = new loginMangerInfo();
+                man.setId(form.getId());
+                man.setPassword(form.getPassword());
+
+                loginMangerInfo manResult = mangerLogin(man);
+
+                if(manResult != null){
+                    return 1;
+                }else{
+                    return 0;
+                }
+
+        }
+        return 0;
+    }
+
+    @Override
     public loginUserInfo userLogin(loginUserInfo userinfo) {
-        Optional<loginUserInfo> userIdCheck = Optional.ofNullable(checkInfoExist.userIdCheck(userinfo.getId()));
-        Optional<loginUserInfo> userPwCheck = Optional.ofNullable(checkInfoExist.userPwChcek(userinfo.getPassword()));
-        Optional<loginUserInfo> userCheck = Optional.ofNullable(checkInfoExist.checkUser(userinfo.getId(), userinfo.getPassword()));
+        Optional<loginDto> userIdCheck = Optional.ofNullable(checkInfoExist.userIdCheck(userinfo.getId()));
+        Optional<loginDto> userPwCheck = Optional.ofNullable(checkInfoExist.userPwChcek(userinfo.getPassword()));
+        Optional<loginDto> userCheck = Optional.ofNullable(checkInfoExist.checkUser(userinfo.getId(), userinfo.getPassword()));
 
         if(!userIdCheck.isEmpty()){
             if(!userPwCheck.isEmpty()){
@@ -48,9 +85,9 @@ public class LoginServiceImpl implements LoginService{
 
     @Override
     public loginMangerInfo mangerLogin(loginMangerInfo mangerinfo) {
-        Optional<loginMangerInfo> mangerIdCheck = Optional.ofNullable(checkInfoExist.mangerIdCheck(mangerinfo.getId()));
-        Optional<loginMangerInfo> mangerPwCheck = Optional.ofNullable(checkInfoExist.mangerPwCheck(mangerinfo.getPassword()));
-        Optional<loginMangerInfo> mangerCheck = Optional.ofNullable(checkInfoExist.checkManger(mangerinfo.getId(), mangerinfo.getPassword()));
+        Optional<loginDto> mangerIdCheck = Optional.ofNullable(checkInfoExist.mangerIdCheck(mangerinfo.getId()));
+        Optional<loginDto> mangerPwCheck = Optional.ofNullable(checkInfoExist.mangerPwCheck(mangerinfo.getPassword()));
+        Optional<loginDto> mangerCheck = Optional.ofNullable(checkInfoExist.checkManger(mangerinfo.getId(), mangerinfo.getPassword()));
 
         if(!mangerIdCheck.isEmpty()){
             if(!mangerPwCheck.isEmpty()){
@@ -67,6 +104,8 @@ public class LoginServiceImpl implements LoginService{
             return null;
         }
     }
+
+
 
     @Override
     public int noSuchuser(String id) {

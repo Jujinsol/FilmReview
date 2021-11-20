@@ -1,5 +1,6 @@
 package movieReview.review.service.Login.Check;
 
+import movieReview.review.Domain.Login.loginDto;
 import movieReview.review.Domain.Login.loginMangerInfo;
 import movieReview.review.Domain.Login.loginUserInfo;
 import movieReview.review.Domain.mangerInfo;
@@ -57,7 +58,7 @@ class CheckInfoExistImplTest {
     @Test
     void checkUser성공() {
         //when
-        loginUserInfo userInfo = checkInfoExist.checkUser("jjs1111", 222);
+        loginDto userInfo = checkInfoExist.checkUser("jjs1111", 222);
 
         //then
         assertThat(userInfo.getId()).isEqualTo("jjs1111");
@@ -67,7 +68,7 @@ class CheckInfoExistImplTest {
     @Test
     void checkUser로그인실패아예다른idpw작성시(){
         //when
-        loginUserInfo jjj = checkInfoExist.checkUser("jjj", 1);
+        loginDto jjj = checkInfoExist.checkUser("jjj", 1);
         //then
         assertThat(jjj).isNull();
     }
@@ -75,7 +76,7 @@ class CheckInfoExistImplTest {
     @Test
     void checkManger성공() {
         //given
-        loginMangerInfo mangerInfo = checkInfoExist.checkManger("imy0111", 222);
+        loginDto mangerInfo = checkInfoExist.checkManger("imy0111", 222);
 
         assertThat(mangerInfo.getId()).isEqualTo("imy0111");
         assertThat(mangerInfo.getPassword()).isEqualTo(222);
@@ -84,7 +85,7 @@ class CheckInfoExistImplTest {
 
     @Test
     void checkManger로그인실패아에다른idpw작성시(){
-        loginMangerInfo iii = checkInfoExist.checkManger("iii", 11);
+        loginDto iii = checkInfoExist.checkManger("iii", 11);
         assertThat(iii).isNull();
     }
 
@@ -92,7 +93,7 @@ class CheckInfoExistImplTest {
     @Test
     void userIdCheck성공() {
         //when
-        loginUserInfo userInfo = checkInfoExist.userIdCheck("jjs1111");
+        loginDto userInfo = checkInfoExist.userIdCheck("jjs1111");
         //then
         assertThat(userInfo.getId()).isEqualTo("jjs1111");
         assertThat(userInfo.getPassword()).isEqualTo(222);
@@ -102,7 +103,7 @@ class CheckInfoExistImplTest {
     @Test
     void userIdCheck실패(){
         //when
-        loginUserInfo jjs1111 = checkInfoExist.userIdCheck("jjs0");
+        loginDto jjs1111 = checkInfoExist.userIdCheck("jjs0");
         //then
         assertThat(jjs1111).isNull();
     }
@@ -110,7 +111,7 @@ class CheckInfoExistImplTest {
     @Test
     void mangerIdCheck성공() {
         //when
-        loginMangerInfo mangerInfo = checkInfoExist.mangerIdCheck("imy0111");
+        loginDto mangerInfo = checkInfoExist.mangerIdCheck("imy0111");
 
         //then
         assertThat(mangerInfo.getId()).isEqualTo("imy0111");
@@ -120,7 +121,7 @@ class CheckInfoExistImplTest {
     @Test
     void mangerIdCheck실패(){
         //when
-        loginMangerInfo imy = checkInfoExist.mangerIdCheck("imy");
+        loginDto imy = checkInfoExist.mangerIdCheck("imy");
         //then
         assertThat(imy).isNull();
 
@@ -129,7 +130,7 @@ class CheckInfoExistImplTest {
     @Test
     void userPwChcek성공() {
         //when
-        loginUserInfo userInfo = checkInfoExist.userPwChcek(222);
+        loginDto userInfo = checkInfoExist.userPwChcek(222);
 
         //then
         assertThat(userInfo.getId()).isEqualTo("jjs1111");
@@ -139,7 +140,7 @@ class CheckInfoExistImplTest {
     @Test
     void userPwCheck실패(){
         //when
-        loginUserInfo userInfo = checkInfoExist.userPwChcek(1);
+        loginDto userInfo = checkInfoExist.userPwChcek(1);
         //then
         assertThat(userInfo).isNull();
 
@@ -148,7 +149,7 @@ class CheckInfoExistImplTest {
     @Test
     void mangerPwCheck성공() {
         //when
-        loginMangerInfo mangerInfo = checkInfoExist.mangerPwCheck(222);
+        loginDto mangerInfo = checkInfoExist.mangerPwCheck(222);
 
         //then
         assertThat(mangerInfo.getId()).isEqualTo("imy0111");

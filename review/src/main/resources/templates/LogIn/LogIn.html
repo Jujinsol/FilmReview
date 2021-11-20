@@ -7,7 +7,7 @@
     <link rel="stylesheet" th:href="@{/css/LogIn.css}">
 </head>
 <body>
-    <form th:action th:object="${loginUserInfo}" method="post">
+    <form th:action th:object="${loginForm}" method="post">
         <h1>로그인</h1>
 
         <div th:if="${#fields.hasGlobalErrors()}" th:each="err : ${#fields.globalErrors()}">

@@ -1,7 +1,9 @@
 package movieReview.review.service.Login.Check;
 import lombok.extern.slf4j.Slf4j;
+import movieReview.review.Domain.Login.loginDto;
 import movieReview.review.Domain.Login.loginMangerInfo;
 import movieReview.review.Domain.Login.loginUserInfo;
+import movieReview.review.repository.Login.LoginRepository;
 import movieReview.review.repository.Login.LoginRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,7 +14,7 @@ import java.util.Optional;
 @Component
 @Slf4j
 public class CheckInfoExistImpl implements CheckInfoExist{
-    private LoginRepositoryImpl loginRepository;
+    private LoginRepository loginRepository;
     private Map<String,String> sql =new HashMap<>();
 
     @Autowired
@@ -31,83 +33,85 @@ public class CheckInfoExistImpl implements CheckInfoExist{
     }
 
     @Override
-    public loginUserInfo checkUser(String id, Integer password){
-        Optional<loginUserInfo> userInfoCheck =
-                Optional.ofNullable((loginRepository.userLoginCheck(setuser(id, password), sql.get("userSql"))));
+    public loginDto checkUser(String id, Integer password){
+        Optional<loginDto> userInfoCheck =
+                Optional.ofNullable((loginRepository.userLoginCheck(setInfo(id, password), sql.get("userSql"))));
         if(userInfoCheck.isEmpty()){
             // 둘다 틀리게 작성했을 경우 ( 테이블에 아예 존재하지 않는 경우 )
             return null;
         }else{
-            loginUserInfo userInfo = userInfoCheck.get();
+            loginDto userInfo = userInfoCheck.get();
             return userInfo;
         }
     }
 
     @Override
-    public loginMangerInfo checkManger(String id, Integer password){
+    public loginDto checkManger(String id, Integer password){
 
-        Optional<loginMangerInfo> mangerInfoCheck =
-                Optional.ofNullable(loginRepository.mangerLoginCheck(setmanger(id, password), sql.get("masterSql")));
+        Optional<loginDto> mangerInfoCheck =
+                Optional.ofNullable(loginRepository.mangerLoginCheck(setInfo(id, password), sql.get("masterSql")));
         if(mangerInfoCheck.isEmpty()){
             // 둘다 틀리게 작성했을 경우 ( 테이블에 아예 존재하지 않는 경우 )
             return null;
         }else{
-            loginMangerInfo mangerInfo = mangerInfoCheck.get();
+            loginDto mangerInfo = mangerInfoCheck.get();
             return mangerInfo;
         }
 
     }
 
     @Override
-    public loginUserInfo userIdCheck(String id) {
-        Optional<loginUserInfo> userIdCheck =
-                Optional.ofNullable(loginRepository.userIdCheck(setuser(id,null), sql.get("checkUserId")));
+    public loginDto userIdCheck(String id) {
+        Optional<loginDto> userIdCheck =
+                Optional.ofNullable(loginRepository.userIdCheck(setInfo(id,null), sql.get("checkUserId")));
         if(userIdCheck.isEmpty()){
             return null;
         }else{
-            loginUserInfo userInfo = userIdCheck.get();
+            loginDto userInfo = userIdCheck.get();
             return userInfo;
         }
     }
 
     @Override
-    public loginMangerInfo mangerIdCheck(String id) {
-        Optional<loginMangerInfo> mangerIdCheck =
-                Optional.ofNullable(loginRepository.mangerIdCheck(setmanger(id, null), sql.get("checkMasterId")));
+    public loginDto mangerIdCheck(String id) {
+        Optional<loginDto> mangerIdCheck =
+                Optional.ofNullable(loginRepository.mangerIdCheck(setInfo(id, null), sql.get("checkMasterId")));
         if(mangerIdCheck.isEmpty()){
             return null;
         }else{
-            loginMangerInfo mangerInfo = mangerIdCheck.get();
+            loginDto mangerInfo = mangerIdCheck.get();
             return mangerInfo;
         }
     }
 
     @Override
-    public loginUserInfo userPwChcek(Integer password) {
-        Optional<loginUserInfo> userPwCheck =
-                Optional.ofNullable(loginRepository.userPwCheck(setuser(null, password), sql.get("checkUserPassword")));
+    public loginDto userPwChcek(Integer password) {
+        Optional<loginDto> userPwCheck =
+                Optional.ofNullable(loginRepository.userPwCheck(setInfo(null, password), sql.get("checkUserPassword")));
         if(userPwCheck.isEmpty()){
             return null;
         }else{
-            loginUserInfo userInfo = userPwCheck.get();
+            loginDto userInfo = userPwCheck.get();
             return userInfo;
         }
     }
 
     @Override
-    public loginMangerInfo mangerPwCheck(Integer password) {
-        Optional<loginMangerInfo> mangerPwCheck =
-                Optional.ofNullable(loginRepository.mangerPwCheck(setmanger(null,password),sql.get("checkMasterPassword")));
+    public loginDto mangerPwCheck(Integer password) {
+        Optional<loginDto> mangerPwCheck =
+                Optional.ofNullable(loginRepository.mangerPwCheck(setInfo(null,password),sql.get("checkMasterPassword")));
         if(mangerPwCheck.isEmpty()){
             return null;
         }else{
-            loginMangerInfo mangerInfo = mangerPwCheck.get();
+            loginDto mangerInfo = mangerPwCheck.get();
             return mangerInfo;
         }
     }
 
-    public loginUserInfo setuser(String id, Integer password){
-        loginUserInfo userinfo = new loginUserInfo();
+
+
+    private loginDto setInfo(String id, Integer password) {
+        loginDto userinfo = new loginDto();
         if(id==null){
             userinfo.setPassword(password);
             return userinfo;
@@ -120,18 +124,5 @@ public class CheckInfoExistImpl implements CheckInfoExist{
             return userinfo;
         }
     }
-    public loginMangerInfo setmanger(String id, Integer password){
-        loginMangerInfo mangerinfo = new loginMangerInfo();
-        if(id==null){
-            mangerinfo.setPassword(password);
-            return mangerinfo;
-        }else if(password==null){
-            mangerinfo.setId(id);
-            return mangerinfo;
-        }else{
-            mangerinfo.setId(id);
-            mangerinfo.setPassword(password);
-            return mangerinfo;
-        }
-    }
+
 }

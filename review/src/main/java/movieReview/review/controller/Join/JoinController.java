@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import movieReview.review.Domain.mangerInfo;
 import movieReview.review.Domain.userInfo;
+import movieReview.review.Session.SessionConst;
 import movieReview.review.service.Join.Mail.MailService;
 import movieReview.review.service.Join.joinService;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,11 +43,10 @@ public class JoinController {
             @Validated @ModelAttribute("JoinForm") JoinForm joinForm,
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes,
-            @SessionAttribute(name = "code", required = false) String CompareResult
+            @SessionAttribute(name = SessionConst.JoinSession, required = false) String CompareResult
     ) {
 
         if (bindingResult.hasErrors()) {
-            log.info("errors={}", bindingResult);
             return "/Join/signUp";
         }
 
