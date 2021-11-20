@@ -105,10 +105,4 @@ public class LoginServiceImpl implements LoginService{
         }
     }
 
-
-
-    @Override
-    public int noSuchuser(String id) {
-        return 0;
-    }
 }
