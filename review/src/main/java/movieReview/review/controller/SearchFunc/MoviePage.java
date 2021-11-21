@@ -41,7 +41,6 @@ public class MoviePage {
             uri.add(uploadService.makeUri(movie.get(i)));
             jpaMovieInfos.add(uri.get(i));
         }
-
         return jpaMovieInfos;
     }
 
