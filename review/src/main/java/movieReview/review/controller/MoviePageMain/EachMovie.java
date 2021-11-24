@@ -77,7 +77,7 @@ public class EachMovie {
                             BindingResult reviewError,
                             @RequestParam(value = "ids") String reviewIds) throws JsonProcessingException {
         if (id == null) {
-            reviewError.rejectValue("reviewUser", "noUser", "로그인 안함");
+            reviewError.rejectValue("reviewUser", "noUser","reviewUser.noUser");
         }
 
         if(DuplicateCheck.DuplicateCheck(id, reviewIds)){
