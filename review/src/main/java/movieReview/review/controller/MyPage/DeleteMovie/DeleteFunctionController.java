@@ -35,7 +35,7 @@ public class DeleteFunctionController {
         return "/MyPage/DeletePage";
     }
 
-    @GetMapping("/DeleteFunc")
+    @DeleteMapping("/DeleteFunc")
     @ResponseBody
     public int DeleteFunc(@RequestParam("deleteName") String DropOriName){
         movieInfo movieInfo = new movieInfo();

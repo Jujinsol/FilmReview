@@ -3,11 +3,15 @@ package movieReview.review.service.Upload;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import movieReview.review.Domain.FileInfo.photoUriInfo;
+import movieReview.review.Domain.MovieInfo.JpaMovieInfo;
 import movieReview.review.Domain.MovieInfo.movieInfo;
 import movieReview.review.repository.Upload.UploadRepository;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,6 +22,7 @@ public class UploadServiceImpl implements UploadService {
     private final UploadRepository uploadRepository;
     @Value("${file.dir}")
     private String fileDir;
+
 
     @Override
     public int create(movieInfo movieinfo) {
@@ -56,6 +61,22 @@ public class UploadServiceImpl implements UploadService {
     @Override
     public String getFullPath(String filename) {
         return fileDir + filename; // 파일 저장경로를 반환해준다. 파일저장폴더 + 원본파일명
+    }
+
+    @Override
+    public JpaMovieInfo makeUri(JpaMovieInfo movie) {
+        photoUriInfo photoUriinfo = new photoUriInfo();
+
+        photoUriinfo.setPhotoUri(movie.getPhotoUri());
+        photoUriinfo.setPhotoOriName(movie.getPhotoOriName());
+
+        photoUriInfo photoUriInfo = showPhoto(photoUriinfo);
+        ClassPathResource resource = new ClassPathResource("/moviePhoto/" + photoUriInfo.getPhotoOriName());
+
+        Path path1 = Paths.get(resource.getPath());
+
+        movie.setPhotoUri(path1.toString());
+        return movie;
     }
 
 }

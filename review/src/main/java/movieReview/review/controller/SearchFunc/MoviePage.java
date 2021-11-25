@@ -29,8 +29,6 @@ import java.util.List;
 public class MoviePage {
     private final UploadService uploadService;
     private final getMovieInfoService getMovieInfoService;
-    private final photoUriInfo photoUriinfo;
-    private ObjectMapper objectMapper = new ObjectMapper();
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/viewOneMovie")
@@ -40,10 +38,9 @@ public class MoviePage {
         List<JpaMovieInfo> uri = new ArrayList<>();
         List<JpaMovieInfo> movie = getMovieInfoService.getMovie(movieinfo);
         for (int i = 0; i < movie.size(); i++) {
-            uri.add(makeUri(movie.get(i)));
+            uri.add(uploadService.makeUri(movie.get(i)));
             jpaMovieInfos.add(uri.get(i));
         }
-
         return jpaMovieInfos;
     }
 
@@ -51,6 +48,7 @@ public class MoviePage {
     public String newPage(@RequestParam("movieJsonData") String jsonResult,
                           Model model,
                           @SessionAttribute(required = false, value = SessionConst.LoginId) String id) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
         List<String> jsonMovieSearchlist = objectMapper.readValue(jsonResult, List.class);
 
         model.addAttribute("SessionId",id);
@@ -59,18 +57,5 @@ public class MoviePage {
         return "/SerachPage/MovieSerachPage";
     }
 
-
-    public JpaMovieInfo makeUri(JpaMovieInfo movie) {
-        photoUriinfo.setPhotoUri(movie.getPhotoUri());
-        photoUriinfo.setPhotoOriName(movie.getPhotoOriName());
-
-        photoUriInfo photoUriInfo = uploadService.showPhoto(photoUriinfo);
-        ClassPathResource resource = new ClassPathResource("/moviePhoto/" + photoUriInfo.getPhotoOriName());
-
-        Path path1 = Paths.get(resource.getPath());
-
-        movie.setPhotoUri(path1.toString());
-        return movie;
-    }
 
 }

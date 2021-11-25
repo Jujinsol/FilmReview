@@ -8,6 +8,8 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
 
@@ -18,7 +20,7 @@ public class MailServiceImpl implements MailService{
     private final JavaMailSender javaMailSender;
 
     @Override
-    public boolean send(String subject, String text, String from, String to, String filePath) {
+    public boolean send(String code, String from, String to, String filePath) {
 
         // JavaMailSender의 createMimeMessage 사용
         MimeMessage message = javaMailSender.createMimeMessage();
@@ -27,9 +29,9 @@ public class MailServiceImpl implements MailService{
         try {
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
             // 메일 제목
-            helper.setSubject(subject);
+            helper.setSubject("회원가입 인증 코드 발급 안내 입니다.");
             // 메일 내용
-            helper.setText(text, true);
+            helper.setText("귀하의 인증 코드는 " + code + " 입니다.", true);
             // 보내는 메일 주소
             helper.setFrom(from);
             // 받는 메일 주소
@@ -53,7 +55,6 @@ public class MailServiceImpl implements MailService{
         return false;
     }
 
-    // 인증코드 비교
     @Override
     public int JoinCodeComparison(String myCode, String serverCode) {
         if(myCode.equals(serverCode)){
@@ -61,5 +62,32 @@ public class MailServiceImpl implements MailService{
         }else{
             return 0;
         }
+    }
+
+    @Override
+    public boolean checkEmail(String email) {
+        boolean result = true;
+        try {
+            InternetAddress emailAddr = new InternetAddress(email);
+            emailAddr.validate();
+        } catch (AddressException ex) {
+            result = false;
+        }
+        return result;
+    }
+
+    @Override
+    public String checkCode(String code) {
+        if(code == null || code.isBlank()){ // null이거나 비어있을 경우
+            return "false";
+        }else if(code.contains(" ")){ // 공백이 포함되었을 경우
+            StringBuilder br = new StringBuilder();
+            String[] splitResult = code.split(" ");
+            for(int i = 0; i<splitResult.length; i++){
+                br.append(splitResult[i]);
+            }
+            return br.toString();
+        }
+        return code;
     }
 }

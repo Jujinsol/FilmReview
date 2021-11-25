@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import movieReview.review.Session.SessionConst;
 import movieReview.review.Domain.MovieInfo.movieInfo;
 import movieReview.review.service.Login.LoginService;
+import movieReview.review.service.Upload.UploadService;
 import movieReview.review.service.Upload.UploadServiceImpl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -29,11 +30,13 @@ import static org.apache.commons.io.FilenameUtils.getFullPath;
 @PropertySource("classpath:application.properties")
 public class UploadController {
     private final LoginService loginServiceImpl;
-    private final UploadServiceImpl uploadService;
+    private final UploadService uploadService;
 
 
     @GetMapping
-    public String uploadPage(@SessionAttribute(value = SessionConst.LoginId, required = false) String id,Model model){
+    public String uploadPage(
+            @SessionAttribute(value = SessionConst.LoginId, required = false) String id,
+            Model model){
         if (loginServiceImpl.FirstCheck(id)==1){
             log.info("사용자가 업로드에 접근");
             return "redirect:/";

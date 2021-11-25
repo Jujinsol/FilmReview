@@ -8,7 +8,6 @@ import javax.validation.constraints.*;
 
 @Getter
 @Setter
-@Component
 public class userInfo {
     @NotBlank(message = "id는 필수로 작성해야 합니다.")
     private String id;

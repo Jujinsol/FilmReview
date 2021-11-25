@@ -1,7 +1,6 @@
 package movieReview.review.repository.Login;
 
-import movieReview.review.Domain.Login.loginMangerInfo;
-import movieReview.review.Domain.Login.loginUserInfo;
+import movieReview.review.Domain.Login.loginDto;
 import movieReview.review.Domain.mangerInfo;
 import movieReview.review.Domain.userInfo;
 import movieReview.review.repository.Join.joinRepositoryImpl;
@@ -20,17 +19,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 class LoginRepositoryImplTest {
+
     @Autowired
     joinRepositoryImpl joinRepository;
+
     @Autowired
     LoginRepositoryImpl loginRepository;
 
 
-    loginUserInfo userinfo = new loginUserInfo();
-    loginMangerInfo mangerinfo = new loginMangerInfo();
-
-    loginUserInfo loginuser = new loginUserInfo();
-    loginMangerInfo loginmanger = new loginMangerInfo();
+    loginDto userLogin = new loginDto();
+    loginDto mangerLogin = new loginDto();
 
     mangerInfo createmanger = new mangerInfo();
     userInfo createuser = new userInfo();
@@ -57,8 +55,8 @@ class LoginRepositoryImplTest {
 
         joinRepository.createUser(createuser);
 
-        loginuser.setId("jjs1111");
-        loginuser.setPassword(222);
+        userLogin.setId("jjs1111");
+        userLogin.setPassword(222);
 
         createmanger.setId("imy0111");
         createmanger.setPassword(222);
@@ -67,8 +65,8 @@ class LoginRepositoryImplTest {
 
         joinRepository.createManger(createmanger);
 
-        loginmanger.setId("imy0111");
-        loginmanger.setPassword(222);
+        mangerLogin.setId("imy0111");
+        mangerLogin.setPassword(222);
     }
 
     @AfterEach
@@ -81,7 +79,7 @@ class LoginRepositoryImplTest {
     @Test
     void userLoginCheck() {
         //when
-        loginUserInfo checkuser = loginRepository.userLoginCheck(loginuser,sql.get("userSql"));
+        loginDto checkuser = loginRepository.userLoginCheck(userLogin,sql.get("userSql"));
 
         //then
         assertThat(checkuser.getId()).isEqualTo("jjs1111");
@@ -92,7 +90,7 @@ class LoginRepositoryImplTest {
     @Test
     void mangerLoginCheck() {
         //when
-        loginMangerInfo checkmanger = loginRepository.mangerLoginCheck(loginmanger,sql.get("masterSql"));
+        loginDto checkmanger = loginRepository.mangerLoginCheck(mangerLogin,sql.get("masterSql"));
 
         //then
         assertThat(checkmanger.getId()).isEqualTo("imy0111");
@@ -102,7 +100,7 @@ class LoginRepositoryImplTest {
     @Test
     void userIdCheck(){
         //when
-        loginUserInfo check = loginRepository.userIdCheck(loginuser, sql.get("checkUserId"));
+        loginDto check = loginRepository.userIdCheck(userLogin, sql.get("checkUserId"));
 
         //then
         assertThat(check.getId()).isEqualTo("jjs1111");
@@ -112,7 +110,7 @@ class LoginRepositoryImplTest {
     @Test
     void userPwCheck(){
         //when
-        loginUserInfo check = loginRepository.userPwCheck(loginuser, sql.get("checkUserPassword"));
+        loginDto check = loginRepository.userPwCheck(userLogin, sql.get("checkUserPassword"));
         //then
         assertThat(check.getId()).isEqualTo("jjs1111");
         assertThat(check.getPassword()).isEqualTo(222);
@@ -122,7 +120,7 @@ class LoginRepositoryImplTest {
     @Test
     void mangerIdCheck(){
         //when
-        loginMangerInfo checkmanger = loginRepository.mangerIdCheck(loginmanger, sql.get("checkMasterId"));
+        loginDto checkmanger = loginRepository.mangerIdCheck(mangerLogin, sql.get("checkMasterId"));
 
         //then
         assertThat(checkmanger.getId()).isEqualTo("imy0111");
@@ -132,7 +130,7 @@ class LoginRepositoryImplTest {
     @Test
     void mangerPwCheck(){
         //when
-        loginMangerInfo checkmanger = loginRepository.mangerPwCheck(loginmanger, sql.get("checkMasterPassword"));
+        loginDto checkmanger = loginRepository.mangerPwCheck(mangerLogin, sql.get("checkMasterPassword"));
 
         //then
         assertThat(checkmanger.getId()).isEqualTo("imy0111");

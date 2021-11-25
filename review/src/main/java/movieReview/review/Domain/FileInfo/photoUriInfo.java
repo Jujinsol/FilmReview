@@ -8,7 +8,6 @@ import java.nio.file.Path;
 
 @Getter
 @Setter
-@Component
 public class photoUriInfo {
     private int id;
     private String photoOriName; // 원본 파일명

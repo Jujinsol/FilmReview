@@ -72,8 +72,11 @@ class ReviewFunctionRepositoryImplTest {
     void 테스트용더미정보삭제(){
         ReviewInfo reviewInfo = new ReviewInfo();
         reviewInfo.setReviewUser("imy123");
+        reviewInfo.setPhotoOriName("test.png");
+
         ReviewInfo reviewInfo1 = new ReviewInfo();
         reviewInfo1.setReviewUser("jjsair0412");
+        reviewInfo1.setPhotoOriName("test.png");
         // 리뷰삭제
         int i = reviewFunctionRepository.deleteReview(reviewInfo);
         assertThat(i).isEqualTo(1);

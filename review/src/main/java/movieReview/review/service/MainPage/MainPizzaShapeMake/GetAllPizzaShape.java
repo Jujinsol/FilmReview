@@ -6,6 +6,6 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 public interface GetAllPizzaShape {
-    public void GetAllPizzaShape(Page<JpaMovieInfo> movieList, List<String> pizzaShape) throws ClassNotFoundException;
+    void GetAllPizzaShape(Page<JpaMovieInfo> movieList, List<String> pizzaShape) throws ClassNotFoundException;
     // 모든영화의 피자점수 가져오기
 }

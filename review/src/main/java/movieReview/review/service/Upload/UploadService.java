@@ -1,6 +1,7 @@
 package movieReview.review.service.Upload;
 
 import movieReview.review.Domain.FileInfo.photoUriInfo;
+import movieReview.review.Domain.MovieInfo.JpaMovieInfo;
 import movieReview.review.Domain.MovieInfo.movieInfo;
 
 import java.util.List;
@@ -14,4 +15,5 @@ public interface UploadService {
     String createStoreFileName(String originalFilename);// 서버에 저장할 파일명 생성
     String extractExt(String originalFileName);// .을 기준으로 파일확장자명만 반환
     String getFullPath(String filename);// 파일 저장경로를 반환해준다. 파일저장폴더 + 원본파일명
+    JpaMovieInfo makeUri(JpaMovieInfo movie);
 }
