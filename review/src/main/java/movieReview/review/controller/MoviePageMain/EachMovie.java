@@ -1,7 +1,6 @@
 package movieReview.review.controller.MoviePageMain;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import movieReview.review.Session.SessionConst;
@@ -35,15 +34,21 @@ public class EachMovie {
     private final UserDuplicateCheckService DuplicateCheck; // 리뷰를 이미 달았는지 확인하는 서비스
 
     @GetMapping("/getMovieInfo")
-    public String EachMovieInfo(@RequestParam("photoOriName") String photoOriName,
-                                @ModelAttribute("movieInfo") movieInfo movieinfo,
-                                @ModelAttribute("ReviewInfo") ReviewInfo reviewInfo,
-                                Model model,
-                                @SessionAttribute(name = SessionConst.LoginId, required = false) String id,
-                                HttpServletResponse response) throws ClassNotFoundException, UnsupportedEncodingException {
-
+    public String EachMovieInfo(
+            Model model,
+            @RequestParam("photoOriName") String photoOriName,
+            @ModelAttribute("movieInfo") movieInfo movieinfo,
+            @ModelAttribute("ReviewInfo") ReviewInfo reviewInfo,
+            @SessionAttribute(name = SessionConst.LoginId, required = false) String id,
+            HttpServletResponse response) throws ClassNotFoundException, UnsupportedEncodingException
+    {
         if (photoOriName.contains("movie")) { // 검색기능통해 들어왔을경우
-            response.addCookie(new Cookie("photoOriName", getCookie(photoOriName, movieinfo, reviewInfo, model))); // reviewUplaod에서 사용하기 위해 쿠키에 원본사진이름 저장 .
+            response.addCookie(
+                    new Cookie(
+                            "photoOriName",
+                            getMovieInfoService.getCookie(photoOriName, movieinfo, reviewInfo, model)
+                    )
+            ); // reviewUplaod에서 사용하기 위해 쿠키에 원본사진이름 저장 .
         } else { // 메인페이지를통해 들어왔을경우
             model.addAttribute("photoPath", photoOriName); // 사진경로 처리후 모델에 담아서 전송
 
@@ -63,18 +68,6 @@ public class EachMovie {
         return "MoviePage/EachMovie";
     }
 
-    private String getCookie(String photoOriName,
-                             movieInfo movieinfo,
-                             ReviewInfo reviewInfo,
-                             Model model) throws UnsupportedEncodingException {
-        String originPhotoUri = photoOriName.substring(10); // 원본사진이름 추출
-        movieinfo.setPhotoOriName(originPhotoUri); // 영화정보 가져오기위해서 set
-        reviewInfo.setPhotoOriName(originPhotoUri); // 영화별 리뷰 전부다 가져오기위해서 set
-
-        model.addAttribute("photoPath", originPhotoUri); // 사진경로 처리후 모델에 담아서 전송
-
-        return URLEncoder.encode(originPhotoUri, "utf-8");// 한글파일 쿠키저장위해 인코딩
-    }
 
     @PostMapping("/reviewUpload")
     @ResponseBody
@@ -84,7 +77,7 @@ public class EachMovie {
                             BindingResult reviewError,
                             @RequestParam(value = "ids") String reviewIds) throws JsonProcessingException {
         if (id == null) {
-            reviewError.rejectValue("reviewUser", "noUser", "로그인 안함");
+            reviewError.rejectValue("reviewUser", "noUser","reviewUser.noUser");
         }
 
         if(DuplicateCheck.DuplicateCheck(id, reviewIds)){

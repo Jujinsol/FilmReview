@@ -40,13 +40,13 @@ public class MainPageController {
     private final MainPageService pageService;
     private final UploadService uploadService;
     private final GetAllPizzaShape getAllPizzaShape;
-    private List<String> pizzaShape = new ArrayList<>(); // 모든영화 피자모형 갖고있음
 
     @GetMapping
     // uri경로로 넘어오는 페이지번호를 받아서 출력
     public String goMainPage(Model model,
                              @RequestParam(required = false, defaultValue = "0", value = "page") int page,
                              @SessionAttribute(required = false, value = SessionConst.LoginId) String id) throws ClassNotFoundException {
+        List<String> pizzaShape = new ArrayList<>();
 
         Page<JpaMovieInfo> movieList = pageService.findAll(page); // 페이지 가져오기
         getAllPizzaShape.GetAllPizzaShape(movieList, pizzaShape); // 영화별 피자모형 생성
