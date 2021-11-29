@@ -9,6 +9,8 @@
 </head>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="/webjars/sockjs-client/sockjs.min.js"></script>
+<script src="/webjars/stomp-websocket/stomp.min.js"></script>
 <body>
 <header>
     <div class="Info">
@@ -31,6 +33,7 @@
         </div>
     </div>
 </header>
+<div id="greetings"></div>
 
 <div id="container">
     <th:block th:each="borads : ${boardList}">
@@ -64,6 +67,8 @@
     let SessionId = [[${SessionId}]];
     loginOrLogOutCheck(SessionId)
 </script>
+<script th:src="@{/js/WebSocketJs/socket.js}"></script>
+<script th:src="@{/js/WebSocketJs/socketConnect.js}"></script>
 <script th:src="@{/js/MainPizzaShapeFunc/pizzaShape.js}"></script>
 <script th:src="@{/js/SearchFunc/SearchFunc.js}"></script>
 </body>

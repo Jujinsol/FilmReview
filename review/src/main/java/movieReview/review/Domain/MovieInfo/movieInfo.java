@@ -15,6 +15,7 @@ public class movieInfo {
     @NotBlank
     private String movieName;
 
+    @NotNull
     private MultipartFile moviePoster;
 
     @NotNull

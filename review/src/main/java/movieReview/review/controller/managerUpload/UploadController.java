@@ -46,19 +46,20 @@ public class UploadController {
         return "MyPage/managerUpload";
     }
 
-    @PostMapping
-    public String uploadCompletion(@Validated movieInfo movieinfo,
-                                   BindingResult bindingResult,
-                                   MultipartFile moviePoster)
+    @PostMapping("/doUpload")
+    @ResponseBody
+    public String uploadCompletion(@Validated @ModelAttribute movieInfo movieinfo,
+                                   BindingResult bindingResult)
                                    throws IOException {
 
-        if(bindingResult.hasErrors() || moviePoster.isEmpty()){
+        if(bindingResult.hasErrors()){
             bindingResult.rejectValue("moviePoster","moviePosterEmpty");
             log.info("error={}",bindingResult);
             return "MyPage/managerUpload";
+
         }
 
-        moviePoster = movieinfo.getMoviePoster();
+        MultipartFile moviePoster = movieinfo.getMoviePoster();
         String storeFileName = uploadService.createStoreFileName(moviePoster.getOriginalFilename());
 
         // 경로에 파일 저장
@@ -69,13 +70,12 @@ public class UploadController {
 
         // db 저장
         uploadService.create(movieinfo);
-        return "redirect:/Upload/managerUploadSuccess";
+        return "/Upload/managerUploadSuccess";
     }
 
     @GetMapping("/managerUploadSuccess")
     public String SuccessPage(){
         return "/MyPage/managerUploadSuccess";
     }
-
 
 }
