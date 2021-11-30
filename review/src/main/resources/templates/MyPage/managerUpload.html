@@ -6,51 +6,57 @@
     <link rel="stylesheet" href="/css/managerUpload.css">
     <link rel="stylesheet" th:href="@{/css/managerUpload.css}">
 </head>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="/webjars/sockjs-client/sockjs.min.js"></script>
+<script src="/webjars/stomp-websocket/stomp.min.js"></script>
 <body>
-<form th:action th:method="post" th:object="${movieInfo}" enctype="multipart/form-data">
+<form id="HtmlForm" th:action th:method="post" th:object="${movieInfo}" enctype="multipart/form-data">
 <h1>관리자 영화 등록 페이지</h1>
     <div class="content">
         <div class="movieName">영화 이름</div>
-        <input type="text" th:name="movieName" th:field="*{movieName}"  th:errorclass="field-error" class="movieNameWrite">
+        <input type="text" id="movieName" th:name="movieName" th:field="*{movieName}"  th:errorclass="field-error" class="movieNameWrite">
         <div class = "field-error Emovie" th:errors="*{movieName}">
             영화 이름 오류
         </div>
 
         <div class="Poster">포스터</div>
-        <input type="file"  accept="image/*" th:name="moviePoster" th:field="*{moviePoster}" th:errorclass="field-error" class="PosterFile">
+        <input type="file"  accept="image/*" id="moviePoster" th:name="moviePoster" th:field="*{moviePoster}" th:errorclass="field-error" class="PosterFile">
         <div class = "field-error Eposter" th:errors="*{moviePoster}">
             포스터 사진 오류
         </div>
 
         <div class="iframe">예고편 iframe</div>
-        <input type="text" th:name="trailerCode" th:field="*{trailerCode}" th:errorclass="field-error" class="iframeWrite">
+        <input type="text" id="trailerCode" th:name="trailerCode" th:field="*{trailerCode}" th:errorclass="field-error" class="iframeWrite">
         <div class ="field-error Eiframe" th:errors="*{trailerCode}">
             예고편 오류
         </div>
 
         <div class="year">개봉 연도</div>
-        <input type="text" th:name="openYear" th:field="*{openYear}" th:errorclass="field-error" class="yearWrite">
+        <input type="text" id="openYear" th:name="openYear" th:field="*{openYear}" th:errorclass="field-error" class="yearWrite">
         <div class = "field-error Eyear" th:errors="*{openYear}">
             개봉 연도 오류
         </div>
 
         <div class="director">감독 이름</div>
-        <input type="text" th:name="directorName" th:field="*{directorName}" th:errorclass="field-error" class="directorWrite">
+        <input type="text" id="directorName" th:name="directorName" th:field="*{directorName}" th:errorclass="field-error" class="directorWrite">
         <div class = "field-error Edirector" th:errors="*{directorName}">
             감독 이름 오류
         </div>
 
         <div class="story">줄거리</div>
-        <input type="text" th:name="storyLine" th:field="*{storyLine}" th:errorclass="field-error" class="storyWrite">
+        <input type="text" id="storyLine" th:name="storyLine" th:field="*{storyLine}" th:errorclass="field-error" class="storyWrite">
         <div class = "field-error Estory" th:errors="*{storyLine}">
             줄거리 오류
         </div>
     </div>
-
     <div class="answer">
         <input type="button" value="메인페이지로 나가기" th:onclick="|location.href='@{/}'|">
-        <input type="submit" value="등록하기">
+        <input type="button" value="등록하기" onclick="uploadAlarm()">
     </div>
 </form>
+<script th:src="@{/js/MovieUpload/MovieUpload.js}"></script>
+<script th:src="@{/js/WebSocketJs/socket.js}"></script>
+<script th:src="@{/js/WebSocketJs/socketConnect.js}"></script>
 </body>
 </html>

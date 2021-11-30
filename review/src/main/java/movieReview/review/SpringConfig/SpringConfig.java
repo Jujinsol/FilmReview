@@ -2,6 +2,7 @@ package movieReview.review.SpringConfig;
 
 import lombok.RequiredArgsConstructor;
 import movieReview.review.SpringInterceptor.LoginInterceptor;
+import movieReview.review.SpringInterceptor.PageInterceptor;
 import movieReview.review.repository.GetMovieInfo.getMovieRepository;
 import movieReview.review.repository.GetMovieInfo.getMovieRepositoryImpl;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,6 +20,7 @@ import javax.persistence.EntityManager;
 public class SpringConfig implements WebMvcConfigurer {
     private final EntityManager em;
     private final LoginInterceptor loginInterceptor;
+    private final PageInterceptor pageInterceptor;
 
 
     @Override
@@ -27,12 +29,17 @@ public class SpringConfig implements WebMvcConfigurer {
                 .order(1)
                 .addPathPatterns("/Upload/**","/MyPage/**","/DeleteMovie/**","/EachMovie/reviewUpload","/EachMovie/reviewDelete","/logout")
                 .excludePathPatterns("/");
+
+        registry.addInterceptor(pageInterceptor)
+                .order(2)
+                .addPathPatterns("/");
     }
 
     @Bean
     public getMovieRepository getMovieRepository(){
         return new getMovieRepositoryImpl(em);
     }
+
 
     @Bean // form에서 지원하지않는 delete나 put등의 http 메서드를 사용하기 위해서, 필터로 잡아준다.
     public FilterRegistrationBean httpMethodFilter(){
