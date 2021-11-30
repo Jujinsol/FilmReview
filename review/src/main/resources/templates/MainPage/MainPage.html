@@ -33,7 +33,7 @@
         </div>
     </div>
 </header>
-<div id="greetings"></div>
+<div id="greetings"></div> <!-- 새로운영화 알람 붙는부분 -->
 
 <div id="container">
     <th:block th:each="borads : ${boardList}">
@@ -67,7 +67,6 @@
     let SessionId = [[${SessionId}]];
     loginOrLogOutCheck(SessionId)
 </script>
-<script th:src="@{/js/WebSocketJs/socket.js}"></script>
 <script th:src="@{/js/WebSocketJs/socketConnect.js}"></script>
 <script th:src="@{/js/MainPizzaShapeFunc/pizzaShape.js}"></script>
 <script th:src="@{/js/SearchFunc/SearchFunc.js}"></script>

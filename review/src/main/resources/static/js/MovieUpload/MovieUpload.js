@@ -11,7 +11,7 @@ function uploadAlarm() {
         contentType : false,
         processData : false,
         success: function (PageUri) {
-            stompClient.send("/app/hello", {}, JSON.stringify({'name': $("#movieName").val()}));
+            send($("#movieName").val());
             window.location.replace(PageUri);
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
