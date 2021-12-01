@@ -5,7 +5,6 @@ import movieReview.review.SpringInterceptor.LoginInterceptor;
 import movieReview.review.SpringInterceptor.PageInterceptor;
 import movieReview.review.repository.GetMovieInfo.getMovieRepository;
 import movieReview.review.repository.GetMovieInfo.getMovieRepositoryImpl;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,7 +32,10 @@ public class SpringConfig implements WebMvcConfigurer {
         registry.addInterceptor(pageInterceptor)
                 .order(2)
                 .addPathPatterns("/");
+
     }
+
+
 
     @Bean
     public getMovieRepository getMovieRepository(){

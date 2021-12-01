@@ -1,24 +1,25 @@
 package movieReview.review.SpringConfig;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import movieReview.review.SpringInterceptor.WebSocketHandler;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.messaging.simp.config.MessageBrokerRegistry;
-import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
-import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
-import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
+import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
+import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
 @Configuration
-@EnableWebSocketMessageBroker
-public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
-    private String[] origins = {"http://localhost:8123/*","http://localhost:8123/Upload"};
+@EnableWebSocket
+@RequiredArgsConstructor
+@Slf4j
+public class WebSocketConfig implements WebSocketConfigurer {
+
+    private final WebSocketHandler webSocketHandler;
 
     @Override
-    public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/topic");
-        config.setApplicationDestinationPrefixes("/app");
-    }
-
-    @Override
-    public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/gs-guide-websocket").setAllowedOrigins(origins).withSockJS();
+    public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
+        // 자바스크립트에     webSocket = new WebSocket("ws://localhost:8123/ConnectionUri");
+        // 이부분에 들어가는ㄷ ㅟ에 uri주소랑 여기 uri주소랑 똑같아야함
+        registry.addHandler(webSocketHandler,"/ConnectionUri");
     }
 }
