@@ -10,7 +10,6 @@ import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -40,12 +39,16 @@ public class WebSocketHandler extends TextWebSocketHandler
         ListOperations<String, String> stringStringListOperations = redisTemplate.opsForList();
         stringStringListOperations.rightPush("newMovieName",payload);
 
+        StringBuilder builder = new StringBuilder();
         List<String> movieDatas = redisService.ReturnAllNewMovieList();
+        for (String datas:movieDatas) {
+            builder.append(datas+"</br>");
+        }
 
         for(String key : sessionMap.keySet()) {
             WebSocketSession wss = sessionMap.get(key);
             try {
-                wss.sendMessage(new TextMessage(payload));
+                wss.sendMessage(new TextMessage(builder));
             }catch(Exception e) {
                 e.printStackTrace();
             }
