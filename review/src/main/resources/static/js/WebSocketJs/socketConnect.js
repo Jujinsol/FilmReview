@@ -19,7 +19,7 @@ function onMessage(data) {
 }
 
 function onClose() {
-
+    // 연결해제된 이후 부분
 }
 
 function onOpen() {

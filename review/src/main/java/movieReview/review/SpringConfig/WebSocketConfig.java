@@ -19,7 +19,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         // 자바스크립트에     webSocket = new WebSocket("ws://localhost:8123/ConnectionUri");
-        // 이부분에 들어가는ㄷ ㅟ에 uri주소랑 여기 uri주소랑 똑같아야함
+        // 이부분에 들어가는곳에 uri주소랑 여기 uri주소랑 똑같아야함
         registry.addHandler(webSocketHandler,"/ConnectionUri");
     }
 }
