@@ -8,7 +8,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 
-@Service
 @RequiredArgsConstructor
 public class MainPageServiceImpl implements MainPageService {
     private final MainPageRepository repository;

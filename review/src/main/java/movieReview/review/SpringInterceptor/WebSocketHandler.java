@@ -2,6 +2,7 @@ package movieReview.review.SpringInterceptor;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import movieReview.review.service.MainPage.MainPageProxy.cacheProxy;
 import movieReview.review.service.RedisService.RedisService;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -21,6 +22,7 @@ public class WebSocketHandler extends TextWebSocketHandler
 
     private final StringRedisTemplate redisTemplate;
     private final RedisService redisService;
+    private final cacheProxy cacheProxy;
     private HashMap<String, WebSocketSession> sessionMap = new HashMap<>(); //웹소켓 세션을 담아둘 맵
 
     @Override
@@ -44,6 +46,8 @@ public class WebSocketHandler extends TextWebSocketHandler
         for (String datas:movieDatas) {
             builder.append(datas+"</br>");
         }
+
+        cacheProxy.cacheReset();
 
         for(String key : sessionMap.keySet()) {
             WebSocketSession wss = sessionMap.get(key);
