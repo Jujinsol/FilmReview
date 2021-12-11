@@ -22,4 +22,5 @@ public class WebSocketConfig implements WebSocketConfigurer {
         // 이부분에 들어가는곳에 uri주소랑 여기 uri주소랑 똑같아야함
         registry.addHandler(webSocketHandler,"/ConnectionUri");
     }
+
 }

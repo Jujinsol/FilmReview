@@ -16,9 +16,8 @@ import java.util.Optional;
 public class CheckInfoExistImpl implements CheckInfoExist{
     private LoginRepository loginRepository;
     private Map<String,String> sql =new HashMap<>();
-
     @Autowired
-    public CheckInfoExistImpl(LoginRepositoryImpl loginRepository){
+    public CheckInfoExistImpl(LoginRepositoryImpl loginRepository) {
 
         this.loginRepository = loginRepository;
 
@@ -30,6 +29,7 @@ public class CheckInfoExistImpl implements CheckInfoExist{
 
         sql.put("checkUserPassword","SELECT userId, userPw, userEmail from user where userPw=?");
         sql.put("checkMasterPassword","select masterId, number, pw, email from master where pw=?");
+
     }
 
     @Override

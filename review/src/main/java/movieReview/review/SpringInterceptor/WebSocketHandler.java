@@ -67,6 +67,4 @@ public class WebSocketHandler extends TextWebSocketHandler
         super.afterConnectionClosed(session, status);
         // 소켓 연결 끊기는시점에 실행하는 메서드
     }
-
-
 }
