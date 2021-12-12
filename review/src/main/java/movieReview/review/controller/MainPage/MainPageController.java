@@ -8,6 +8,7 @@ import movieReview.review.Domain.ReviewInfo.JpaRevieTab;
 import movieReview.review.Domain.ReviewInfo.ReviewInfo;
 import movieReview.review.Session.SessionConst;
 import movieReview.review.repository.MainPage.MainPageRepository;
+import movieReview.review.service.MainPage.MainPageProxy.cacheProxy;
 import movieReview.review.service.MainPage.MainPageService;
 import movieReview.review.service.MainPage.MainPizzaShapeMake.GetAllPizzaShape;
 import movieReview.review.service.RedisService.RedisService;
@@ -31,6 +32,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.lang.reflect.Proxy;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,10 +53,8 @@ public class MainPageController {
                              @SessionAttribute(required = false, value = SessionConst.LoginId) String id) throws ClassNotFoundException {
         List<String> pizzaShape = new ArrayList<>();
 
-
         Page<JpaMovieInfo> movieList = pageService.findAll(page); // 페이지 가져오기
         getAllPizzaShape.GetAllPizzaShape(movieList, pizzaShape); // 영화별 피자모형 생성
-
 
         model.addAttribute("SessionId",id); // 로그인한상태인지 확인하기 위해 세션값 모델에담아 전송
         model.addAttribute("nowPage", page); // 현재 페이지정보 전송
