@@ -70,7 +70,7 @@ public class joinRepositoryImpl implements joinRepository{
             @Override
             public userInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
                 userinfo.setId(rs.getString("userId"));
-                userinfo.setPassword(rs.getInt("userPw"));
+                userinfo.setPassword(rs.getString("userPw"));
                 userinfo.setEmail(rs.getString("userEmail"));
                 return userinfo;
             }
@@ -101,7 +101,7 @@ public class joinRepositoryImpl implements joinRepository{
             @Override
             public mangerInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
                 mangerinfo.setId(rs.getString("masterId"));
-                mangerinfo.setPassword(rs.getInt("pw"));
+                mangerinfo.setPassword(rs.getString("pw"));
                 mangerinfo.setEmail(rs.getString("email"));
                 mangerinfo.setNumber(rs.getInt("number"));
                 return mangerinfo;

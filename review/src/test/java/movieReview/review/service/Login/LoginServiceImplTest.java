@@ -33,7 +33,7 @@ class LoginServiceImplTest {
     void createUserAndMaster(){
 
         userinfo.setId("jjs1111");
-        userinfo.setPassword(222);
+        userinfo.setPassword("222");
         userinfo.setEmail("abcd");
 
         joinRepository.createUser(userinfo);
@@ -42,7 +42,7 @@ class LoginServiceImplTest {
         loginuser.setPassword(222);
 
         mangerinfo.setId("imy0111");
-        mangerinfo.setPassword(222);
+        mangerinfo.setPassword("222");
         mangerinfo.setEmail("imy0529@asdf");
         mangerinfo.setNumber(1111);
 
