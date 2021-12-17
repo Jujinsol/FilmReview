@@ -6,6 +6,7 @@ import movieReview.review.Domain.mangerInfo;
 import movieReview.review.Domain.userInfo;
 import movieReview.review.controller.Join.JoinForm;
 import movieReview.review.repository.Join.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -16,6 +17,12 @@ import java.util.Optional;
 public class joinServiceImpl implements joinService{
 
     private final joinRepository joinRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    // 암호화
+    private String EncodePassword(int password){
+        return passwordEncoder.encode(Integer.toString(password));
+    }
 
     @Override
     public String join(JoinForm joinForm) {
@@ -23,7 +30,7 @@ public class joinServiceImpl implements joinService{
             userInfo userInfo = new userInfo();
             userInfo.setId(joinForm.getId());
             userInfo.setEmail(joinForm.getEmail());
-            userInfo.setPassword(joinForm.getPassword());
+            userInfo.setPassword(EncodePassword(joinForm.getPassword()));
 
             userInfo findUser = joinRepository.selectMyinfo(userInfo);
 
@@ -43,7 +50,7 @@ public class joinServiceImpl implements joinService{
             mangerinfo.setId(joinForm.getId());
             mangerinfo.setEmail(joinForm.getEmail());
             mangerinfo.setNumber(joinForm.getNumber());
-            mangerinfo.setPassword(joinForm.getPassword());
+            mangerinfo.setPassword(EncodePassword(joinForm.getPassword()));
 
             mangerInfo findmanger = joinRepository.selectMangerinfo(mangerinfo);
 
@@ -80,7 +87,7 @@ public class joinServiceImpl implements joinService{
     public int update(String id,int password) {
         userInfo userinfo = new userInfo();
         userinfo.setId(id);
-        userinfo.setPassword(password);
+        userinfo.setPassword(EncodePassword(password));
         return joinRepository.updateMyinfo(userinfo);
     }
 
@@ -88,7 +95,7 @@ public class joinServiceImpl implements joinService{
     public int mangerUpdate(String id, int password) {
         mangerInfo mangerinfo = new mangerInfo();
         mangerinfo.setId(id);
-        mangerinfo.setPassword(password);
+        mangerinfo.setPassword(EncodePassword(password));
         return joinRepository.updateMangInfo(mangerinfo);
     }
 

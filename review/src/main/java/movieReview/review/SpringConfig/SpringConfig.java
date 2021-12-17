@@ -52,7 +52,7 @@ public class SpringConfig implements WebMvcConfigurer {
     }
 
     @Bean // form에서 지원하지않는 delete나 put등의 http 메서드를 사용하기 위해서, 필터로 잡아준다.
-    public FilterRegistrationBean httpMethodFilter(){
+    public FilterRegistrationBean httpMethodFilter(){   
         FilterRegistrationBean filter = new FilterRegistrationBean();
         filter.setFilter(new HiddenHttpMethodFilter());
         filter.setName("httpMethodFilter");

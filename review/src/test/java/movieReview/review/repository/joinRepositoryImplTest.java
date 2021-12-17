@@ -24,7 +24,7 @@ class joinRepositoryImplTest {
     void createUser() {
         //given
         userinfo.setId("jjs0412");
-        userinfo.setPassword(1234);
+        userinfo.setPassword("1234");
         userinfo.setEmail("jjsair0412@naver.com");
 
         //when
@@ -47,7 +47,7 @@ class joinRepositoryImplTest {
     void createAndDeleteManger() {
         //given
         mangerinfo.setId("imy0529");
-        mangerinfo.setPassword(1234);
+        mangerinfo.setPassword("1234");
         mangerinfo.setEmail("imy0529@naver.com");
         mangerinfo.setNumber(3333);
         //when
@@ -68,11 +68,11 @@ class joinRepositoryImplTest {
         userInfo userInfo = jo.selectMyinfo(userinfo);
         //when
         String id = userInfo.getId();
-        int password = userInfo.getPassword();
+        String password = userInfo.getPassword();
         String email = userInfo.getEmail();
         //then
         assertThat(id).isEqualTo("jjs0412");
-        assertThat(password).isEqualTo(1234);
+        assertThat(password).isEqualTo("1234");
         assertThat(email).isEqualTo("jjsair0412@naver.com");
     }
 
@@ -82,7 +82,7 @@ class joinRepositoryImplTest {
         userInfo updateParam = new userInfo();
         //when
         updateParam.setId("jjs0412");
-        updateParam.setPassword(3333);
+        updateParam.setPassword("3333");
         int i = jo.updateMyinfo(updateParam);
         //then
 
@@ -93,7 +93,7 @@ class joinRepositoryImplTest {
         //given
         mangerinfo.setId("imy0529");
         mangerinfo.setEmail("imy0529@naver.com");
-        mangerinfo.setPassword(1111);
+        mangerinfo.setPassword("1111");
         mangerinfo.setNumber(2222);
 
         jo.createManger(mangerinfo);
