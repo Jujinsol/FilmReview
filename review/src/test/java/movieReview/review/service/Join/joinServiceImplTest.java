@@ -26,7 +26,7 @@ class joinServiceImplTest {
         JoinForm joinForm = new JoinForm();
         joinForm.setId("MyUser");
         joinForm.setEmail("jjsair0412@naver.com");
-        joinForm.setPassword(1234);
+        joinForm.setPassword("1234");
 
         String result = joinService.join(joinForm);
 
@@ -40,12 +40,12 @@ class joinServiceImplTest {
         JoinForm joinForm = new JoinForm();
         joinForm.setId("MyUser");
         joinForm.setEmail("jjsair0412@naver.com");
-        joinForm.setPassword(1234);
+        joinForm.setPassword("1234");
 
         JoinForm joinForm2 = new JoinForm();
         joinForm2.setId("MyUser");
         joinForm2.setEmail("jjsair04122@naver.com");
-        joinForm2.setPassword(12345);
+        joinForm2.setPassword("12345");
 
         joinService.join(joinForm);
         String result2 = joinService.join(joinForm2);
@@ -60,7 +60,7 @@ class joinServiceImplTest {
         JoinForm joinForm = new JoinForm();
         joinForm.setId("MyMang");
         joinForm.setEmail("jjsair0412@naver.com");
-        joinForm.setPassword(1234);
+        joinForm.setPassword("1234");
         joinForm.setNumber(1111);
 
         String result = joinService.join(joinForm);
@@ -74,13 +74,13 @@ class joinServiceImplTest {
         JoinForm joinForm = new JoinForm();
         joinForm.setId("MyMang");
         joinForm.setEmail("jjsair0412@naver.com");
-        joinForm.setPassword(1234);
+        joinForm.setPassword("1234");
         joinForm.setNumber(1111);
 
         JoinForm joinForm2 = new JoinForm();
         joinForm2.setId("MyMang");
         joinForm2.setEmail("jjsair04122@naver.com");
-        joinForm2.setPassword(12345);
+        joinForm2.setPassword("12345");
         joinForm2.setNumber(11111);
 
         joinService.join(joinForm);

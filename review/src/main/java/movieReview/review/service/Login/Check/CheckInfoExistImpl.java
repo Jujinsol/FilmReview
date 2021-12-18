@@ -32,90 +32,31 @@ public class CheckInfoExistImpl implements CheckInfoExist {
         sql.put("userSql", "SELECT userId, userPw,userEmail from user where userId=?");
         sql.put("masterSql", "select masterId, number, pw, email from master where masterId=?");
 
-        sql.put("checkUserId", "SELECT userId, userPw, userEmail from user where userId=?");
-        sql.put("checkMasterId", "select masterId, number, pw, email from master where masterId=?");
-
-        sql.put("checkUserPassword", "SELECT userId, userPw, userEmail from user where userPw=?");
-        sql.put("checkMasterPassword", "select masterId, number, pw, email from master where pw=?");
-
     }
 
+    private loginDto matcheTest(CharSequence rawPassword, String encodePassword, loginDto dto){
+        log.info("rawPassword={}",rawPassword);
+        log.info("encodePassword={}",encodePassword);
+        boolean matches = passwordEncoder.matches(rawPassword, encodePassword);
+        log.info("result={}",matches);
+        if (matches) {
+            return dto;
+        }
+        return null;
+    }
 
     @Override
     public loginDto checkUser(String id, String password) {
-        Optional<loginDto> userInfoCheck =
-                Optional.ofNullable((loginRepository.userLoginCheck(setInfo(id, password), sql.get("userSql"))));
-        loginDto userInfo = userInfoCheck.get();
-        boolean matches = passwordEncoder.matches(password, userInfo.getPassword());
-        if (matches) {
-            return userInfo;
-        }
-        return null;
-
+        loginDto userInfoCheck = loginRepository.userLoginCheck(setInfo(id, password), sql.get("userSql"));
+        return userInfoCheck == null ? null : matcheTest(password,userInfoCheck.getPassword(), userInfoCheck);
     }
 
     @Override
     public loginDto checkManger(String id, String password) {
-
-        Optional<loginDto> mangerInfoCheck =
-                Optional.ofNullable(loginRepository.mangerLoginCheck(setInfo(id, password), sql.get("masterSql")));
-        loginDto mangerInfo = mangerInfoCheck.get();
-        boolean matches = passwordEncoder.matches(password, mangerInfo.getPassword());
-        if (matches) {
-            return mangerInfo;
-        }
-        return null;
-
+        loginDto mangerInfoCheck = loginRepository.mangerLoginCheck(setInfo(id, password), sql.get("masterSql"));
+        return mangerInfoCheck == null ? null : matcheTest(password,mangerInfoCheck.getPassword(), mangerInfoCheck);
     }
 
-    @Override
-    public loginDto userIdCheck(String id) {
-        Optional<loginDto> userIdCheck =
-                Optional.ofNullable(loginRepository.userIdCheck(setInfo(id, null), sql.get("checkUserId")));
-        if (userIdCheck.isEmpty()) {
-            return null;
-        } else {
-            loginDto userInfo = userIdCheck.get();
-            return userInfo;
-        }
-    }
-
-    @Override
-    public loginDto mangerIdCheck(String id) {
-        Optional<loginDto> mangerIdCheck =
-                Optional.ofNullable(loginRepository.mangerIdCheck(setInfo(id, null), sql.get("checkMasterId")));
-        if (mangerIdCheck.isEmpty()) {
-            return null;
-        } else {
-            loginDto mangerInfo = mangerIdCheck.get();
-            return mangerInfo;
-        }
-    }
-
-    @Override
-    public loginDto userPwChcek(String password) {
-        Optional<loginDto> userPwCheck =
-                Optional.ofNullable(loginRepository.userPwCheck(setInfo(null, password), sql.get("checkUserPassword")));
-
-        loginDto userInfo = userPwCheck.get();
-        boolean matches = passwordEncoder.matches(password, userInfo.getPassword());
-        if (matches) {
-            return userInfo;
-        }
-        return null;
-    }
-
-    @Override
-    public loginDto mangerPwCheck(String password) {
-        Optional<loginDto> mangerPwCheck =
-                Optional.ofNullable(loginRepository.mangerPwCheck(setInfo(null, password), sql.get("checkMasterPassword")));
-        loginDto mangerInfo = mangerPwCheck.get();
-        boolean matches = passwordEncoder.matches(password, mangerInfo.getPassword());
-        if (matches) {
-            return mangerInfo;
-        }
-        return null;
-    }
 
 
     private loginDto setInfo(String id, String password) {

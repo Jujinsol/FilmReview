@@ -107,43 +107,4 @@ class LoginRepositoryImplTest {
         assertThat(checkmanger.getPassword()).isEqualTo(managerPassword);
     }
 
-    @Test
-    void userIdCheck(){
-        //when
-        loginDto check = loginRepository.userIdCheck(userLogin, sql.get("checkUserId"));
-
-        //then
-        assertThat(check.getId()).isEqualTo(userid);
-        assertThat(check.getPassword()).isEqualTo(userpassword);
-    }
-
-    @Test
-    void userPwCheck(){
-        //when
-        loginDto check = loginRepository.userPwCheck(userLogin, sql.get("checkUserPassword"));
-        //then
-        assertThat(check.getId()).isEqualTo(userid);
-        assertThat(check.getPassword()).isEqualTo(userpassword);
-
-    }
-
-    @Test
-    void mangerIdCheck(){
-        //when
-        loginDto checkmanger = loginRepository.mangerIdCheck(mangerLogin, sql.get("checkMasterId"));
-
-        //then
-        assertThat(checkmanger.getId()).isEqualTo(managerId);
-        assertThat(checkmanger.getPassword()).isEqualTo(managerPassword);
-    }
-
-    @Test
-    void mangerPwCheck(){
-        //when
-        loginDto checkmanger = loginRepository.mangerPwCheck(mangerLogin, sql.get("checkMasterPassword"));
-
-        //then
-        assertThat(checkmanger.getId()).isEqualTo(managerId);
-        assertThat(checkmanger.getPassword()).isEqualTo(managerPassword);
-    }
 }

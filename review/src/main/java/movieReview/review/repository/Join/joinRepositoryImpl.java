@@ -120,7 +120,6 @@ public class joinRepositoryImpl implements joinRepository{
         int result = 0;
 
         final String sql = "UPDATE user SET userPw = ? WHERE userId = ?";
-        // select를 제외한 CUD들은 template.update를 사용하면 된다.
         result = template.update(sql,
                 userinfo.getPassword(),
                 userinfo.getId()
@@ -134,7 +133,6 @@ public class joinRepositoryImpl implements joinRepository{
         int result = 0;
 
         final String sql = "UPDATE master SET pw = ? WHERE masterId = ?";
-        // select를 제외한 CUD들은 template.update를 사용하면 된다.
         result = template.update(sql,
                 mangerinfo.getPassword(),
                 mangerinfo.getId()

@@ -1,15 +1,18 @@
 package movieReview.review.service.Login;
 
-import movieReview.review.Domain.Login.loginMangerInfo;
-import movieReview.review.Domain.Login.loginUserInfo;
+import movieReview.review.Domain.Login.loginForm;
 import movieReview.review.Domain.mangerInfo;
 import movieReview.review.Domain.userInfo;
-import movieReview.review.repository.Join.joinRepositoryImpl;
+import movieReview.review.controller.Join.JoinForm;
+import movieReview.review.repository.Join.joinRepository;
+import movieReview.review.service.Join.joinService;
+import org.junit.After;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -21,42 +24,92 @@ class LoginServiceImplTest {
     LoginServiceImpl loginServiceImpl;
 
     @Autowired
-    joinRepositoryImpl joinRepository;
+    joinService joinService;
 
-    userInfo userinfo = new userInfo();
-    mangerInfo mangerinfo = new mangerInfo();
+    @Autowired
+    joinRepository joinRepository;
 
-    loginUserInfo loginuser = new loginUserInfo();
-    loginMangerInfo loginmanger = new loginMangerInfo();
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    JoinForm userinfo = new JoinForm();
+    JoinForm mangerinfo = new JoinForm();
+
 
     @BeforeEach
-    void createUserAndMaster(){
+    void 유저_관리자_회원가입(){
 
         userinfo.setId("jjs1111");
         userinfo.setPassword("222");
         userinfo.setEmail("abcd");
 
-        joinRepository.createUser(userinfo);
-
-        loginuser.setId("jjs1111");
-        loginuser.setPassword("222");
+        joinService.join(userinfo);
 
         mangerinfo.setId("imy0111");
         mangerinfo.setPassword("222");
         mangerinfo.setEmail("imy0529@asdf");
         mangerinfo.setNumber(1111);
 
-        joinRepository.createManger(mangerinfo);
-
-        loginmanger.setId("imy0111");
-        loginmanger.setPassword("222");
+        joinService.join(mangerinfo);
     }
 
     @AfterEach
     void delete(){
-        joinRepository.delete(userinfo);
-        joinRepository.deleteManger(mangerinfo);
+        userInfo delUser = new userInfo();
+        mangerInfo delManager = new mangerInfo();
+
+        delUser.setId(userinfo.getId());
+        delManager.setId(mangerinfo.getId());
+
+        joinRepository.delete(delUser);
+        joinRepository.deleteManger(delManager);
     }
+
+    @Test
+    void 사용자_로그인_성공(){
+        loginForm form = new loginForm();
+        form.setId("jjs1111");
+        form.setPassword("222");
+        int i = loginServiceImpl.loginResult(form);
+        assertThat(i).isEqualTo(1);
+    }
+
+    @Test
+    void 사용자_로그인_실패_PW_불일치(){
+        loginForm form = new loginForm();
+        form.setId("jjs1111");
+        form.setPassword("1");
+        int i = loginServiceImpl.loginResult(form);
+        assertThat(i).isEqualTo(0);
+    }
+
+    @Test
+    void 관리자_로그인_성공(){
+        loginForm form = new loginForm();
+        form.setId("imy0111");
+        form.setPassword("222");
+        int i = loginServiceImpl.loginResult(form);
+        assertThat(i).isEqualTo(1);
+    }
+
+    @Test
+    void 관리자_로그인_실패_PW_불일치(){
+        loginForm form = new loginForm();
+        form.setId("imy0111");
+        form.setPassword("1");
+        int i = loginServiceImpl.loginResult(form);
+        assertThat(i).isEqualTo(0);
+    }
+
+    @Test
+    void 정보_없어서_회원가입_필요(){
+        loginForm form = new loginForm();
+        form.setId("A");
+        form.setPassword("222");
+        int i = loginServiceImpl.loginResult(form);
+        assertThat(i).isEqualTo(2);
+    }
+
 
     @Test
     void findUserOrManger(){
@@ -73,33 +126,4 @@ class LoginServiceImplTest {
         assertThat(failure).isEqualTo(0);
     }
 
-    @Test
-    void userLogin() {
-        //사용자 성공
-        loginUserInfo result = loginServiceImpl.userLogin(loginuser);
-
-        assertThat(result.getId()).isEqualTo("jjs1111");
-        assertThat(result.getPassword()).isEqualTo("222");
-    }
-
-    @Test
-    void userLoginid실패시(){
-        loginUserInfo user = new loginUserInfo();
-        user.setId("jj");
-        user.setPassword("222");
-
-        loginUserInfo result = loginServiceImpl.userLogin(user);
-
-        assertThat(result).isEqualTo(null);
-    }
-
-    @Test
-    void mangerLogin() {
-        // 관리자 성공
-        loginMangerInfo result = loginServiceImpl.mangerLogin(loginmanger);
-
-        assertThat(result.getId()).isEqualTo("imy0111");
-        assertThat(result.getPassword()).isEqualTo("222");
-
-    }
 }

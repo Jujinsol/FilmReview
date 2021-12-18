@@ -23,13 +23,13 @@ public class checkMangerOrUser {
             //사용자
             return 1;
         }else if (userInfo.isEmpty()){
-            // 관리자거나 아예 없을경우
             if(!findManger.isEmpty()){
-                // 관리자일때
+                // 관리자
                 return 2;
             }
+            // 아예없을때
+            return 0;
         }
-        //아예없을때
         return 0;
     }
 

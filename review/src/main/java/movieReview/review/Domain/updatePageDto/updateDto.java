@@ -11,5 +11,5 @@ public class updateDto {
 
 
     @NotNull(message = "필수로 작성해야 합니다.")
-    private int password;
+    private String password;
 }

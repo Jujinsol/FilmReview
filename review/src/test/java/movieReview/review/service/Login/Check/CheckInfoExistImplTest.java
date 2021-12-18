@@ -65,7 +65,7 @@ class CheckInfoExistImplTest {
 
 
     @Test
-    void checkUser성공() {
+    void checkUser_성공() {
         //when
         loginDto userInfo = checkInfoExist.checkUser("jjs1111", "222");
 
@@ -75,93 +75,58 @@ class CheckInfoExistImplTest {
     }
 
     @Test
-    void checkUser로그인실패아예다른idpw작성시(){
+    void checkUser_로그인실패_아예다른_idpw_작성시(){
         //when
         loginDto jjj = checkInfoExist.checkUser("jjj", "1");
         //then
         assertThat(jjj).isNull();
     }
 
+
     @Test
-    void checkManger성공() {
+    void checkUser_로그인실패_id_잘못작성(){
+        //when
+        loginDto jjj = checkInfoExist.checkUser("jjj", "222");
+        //then
+        assertThat(jjj).isNull();
+    }
+
+    @Test
+    void checkUser_로그인실패_pw_잘못작성(){
+        //when
+        loginDto jjj = checkInfoExist.checkUser("jjs1111", "1234");
+        //then
+        assertThat(jjj).isNull();
+    }
+
+    @Test
+    void checkManger_성공() {
         //given
         loginDto mangerInfo = checkInfoExist.checkManger("imy0111", "222");
 
         assertThat(mangerInfo.getId()).isEqualTo("imy0111");
         assertThat(mangerInfo.getPassword()).isEqualTo(encodePassword);
-
     }
 
     @Test
-    void checkManger로그인실패아에다른idpw작성시(){
+    void checkManger_로그인실패_아예다른_idpw_작성시(){
         loginDto iii = checkInfoExist.checkManger("iii", "11");
         assertThat(iii).isNull();
     }
 
 
     @Test
-    void userIdCheck성공() {
-        //when
-        loginDto userInfo = checkInfoExist.userIdCheck("jjs1111");
-        //then
-        assertThat(userInfo.getId()).isEqualTo("jjs1111");
-        assertThat(userInfo.getPassword()).isEqualTo(encodePassword);
-
+    void checkManger_로그인실패_id_잘못작성한경우() {
+        //given
+        loginDto mangerInfo = checkInfoExist.checkManger("imy0111123", "222");
+        assertThat(mangerInfo).isNull();
     }
 
     @Test
-    void userIdCheck실패(){
-        //when
-        loginDto jjs1111 = checkInfoExist.userIdCheck("jjs0");
-        //then
-        assertThat(jjs1111).isNull();
+    void checkManger_로그인실패_pw_잘못작성한경우() {
+        //given
+        loginDto mangerInfo = checkInfoExist.checkManger("imy0111", "212312322");
+        assertThat(mangerInfo).isNull();
     }
 
-    @Test
-    void mangerIdCheck성공() {
-        //when
-        loginDto mangerInfo = checkInfoExist.mangerIdCheck("imy0111");
-
-        //then
-        assertThat(mangerInfo.getId()).isEqualTo("imy0111");
-        assertThat(mangerInfo.getPassword()).isEqualTo(encodePassword);
-    }
-
-    @Test
-    void mangerIdCheck실패(){
-        //when
-        loginDto imy = checkInfoExist.mangerIdCheck("imy");
-        //then
-        assertThat(imy).isNull();
-
-    }
-
-    @Test
-    void userPwChcek성공() {
-        //when
-        loginDto userInfo = checkInfoExist.userPwChcek("222");
-
-        //then
-        assertThat(userInfo.getId()).isEqualTo("jjs1111");
-        assertThat(userInfo.getPassword()).isEqualTo(encodePassword);
-    }
-
-    @Test
-    void userPwCheck실패(){
-        //when
-        loginDto userInfo = checkInfoExist.userPwChcek("1");
-        //then
-        assertThat(userInfo).isNull();
-
-    }
-
-    @Test
-    void mangerPwCheck성공() {
-        //when
-        loginDto mangerInfo = checkInfoExist.mangerPwCheck("222");
-
-        //then
-        assertThat(mangerInfo.getId()).isEqualTo("imy0111");
-        assertThat(mangerInfo.getPassword()).isEqualTo(encodePassword);
-    }
 }
