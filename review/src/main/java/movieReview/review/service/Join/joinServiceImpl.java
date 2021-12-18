@@ -19,10 +19,6 @@ public class joinServiceImpl implements joinService{
     private final joinRepository joinRepository;
     private final PasswordEncoder passwordEncoder;
 
-    // 암호화
-    private String EncodePassword(int password){
-        return passwordEncoder.encode(Integer.toString(password));
-    }
 
     @Override
     public String join(JoinForm joinForm) {
@@ -30,7 +26,7 @@ public class joinServiceImpl implements joinService{
             userInfo userInfo = new userInfo();
             userInfo.setId(joinForm.getId());
             userInfo.setEmail(joinForm.getEmail());
-            userInfo.setPassword(EncodePassword(joinForm.getPassword()));
+            userInfo.setPassword(passwordEncoder.encode(joinForm.getPassword()));
 
             userInfo findUser = joinRepository.selectMyinfo(userInfo);
 
@@ -50,7 +46,7 @@ public class joinServiceImpl implements joinService{
             mangerinfo.setId(joinForm.getId());
             mangerinfo.setEmail(joinForm.getEmail());
             mangerinfo.setNumber(joinForm.getNumber());
-            mangerinfo.setPassword(EncodePassword(joinForm.getPassword()));
+            mangerinfo.setPassword(passwordEncoder.encode(joinForm.getPassword()));
 
             mangerInfo findmanger = joinRepository.selectMangerinfo(mangerinfo);
 
@@ -84,18 +80,18 @@ public class joinServiceImpl implements joinService{
     }
 
     @Override
-    public int update(String id,int password) {
+    public int update(String id,String password) {
         userInfo userinfo = new userInfo();
         userinfo.setId(id);
-        userinfo.setPassword(EncodePassword(password));
+        userinfo.setPassword(passwordEncoder.encode(password));
         return joinRepository.updateMyinfo(userinfo);
     }
 
     @Override
-    public int mangerUpdate(String id, int password) {
+    public int mangerUpdate(String id, String password) {
         mangerInfo mangerinfo = new mangerInfo();
         mangerinfo.setId(id);
-        mangerinfo.setPassword(EncodePassword(password));
+        mangerinfo.setPassword(passwordEncoder.encode(password));
         return joinRepository.updateMangInfo(mangerinfo);
     }
 

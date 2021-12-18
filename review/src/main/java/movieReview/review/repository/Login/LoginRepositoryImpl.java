@@ -32,10 +32,10 @@ public class LoginRepositoryImpl implements LoginRepository {
             public loginDto mapRow(ResultSet rs, int rowNum) throws SQLException {
                 loginDto loginDto = new loginDto();
                 loginDto.setId(rs.getString("userId"));
-                loginDto.setPassword(rs.getInt("userPw"));
+                loginDto.setPassword(rs.getString("userPw"));
                 return loginDto;
             }
-        }, dto.getId(), dto.getPassword());
+        }, dto.getId());
         return result.size() == 0 ? null : result.get(0);
     }
 
@@ -48,66 +48,10 @@ public class LoginRepositoryImpl implements LoginRepository {
             public loginDto mapRow(ResultSet rs, int rowNum) throws SQLException {
                 loginDto loginDto = new loginDto();
                 loginDto.setId(rs.getString("masterId"));
-                loginDto.setPassword(rs.getInt("pw"));
-                return loginDto;
-            }
-        }, dto.getId(), dto.getPassword());
-        return result.size() == 0 ? null : result.get(0);
-    }
-
-    @Override
-    public loginDto userIdCheck(loginDto dto, String sql) {
-        List<loginDto> result = template.query(sql, new RowMapper<loginDto>() {
-            @Override
-            public loginDto mapRow(ResultSet rs, int rowNum) throws SQLException {
-                loginDto loginDto = new loginDto();
-                loginDto.setId(rs.getString("userId"));
-                loginDto.setPassword(rs.getInt("userPw"));
+                loginDto.setPassword(rs.getString("pw"));
                 return loginDto;
             }
         }, dto.getId());
-        return result.size() == 0 ? null : result.get(0);
-    }
-
-    @Override
-    public loginDto mangerIdCheck(loginDto dto, String sql) {
-        List<loginDto> result = template.query(sql, new RowMapper<loginDto>() {
-            @Override
-            public loginDto mapRow(ResultSet rs, int rowNum) throws SQLException {
-                loginDto loginDto = new loginDto();
-                loginDto.setId(rs.getString("masterId"));
-                loginDto.setPassword(rs.getInt("pw"));
-                return loginDto;
-            }
-        }, dto.getId());
-        return result.size() == 0 ? null : result.get(0);
-    }
-
-    @Override
-    public loginDto userPwCheck(loginDto dto, String sql) {
-        List<loginDto> result = template.query(sql, new RowMapper<loginDto>() {
-            @Override
-            public loginDto mapRow(ResultSet rs, int rowNum) throws SQLException {
-                loginDto loginDto = new loginDto();
-                loginDto.setId(rs.getString("userId"));
-                loginDto.setPassword(rs.getInt("userPw"));
-                return loginDto;
-            }
-        }, dto.getPassword());
-        return result.size() == 0 ? null : result.get(0);
-    }
-
-    @Override
-    public loginDto mangerPwCheck(loginDto dto, String sql) {
-        List<loginDto> result = template.query(sql, new RowMapper<loginDto>() {
-            @Override
-            public loginDto mapRow(ResultSet rs, int rowNum) throws SQLException {
-                loginDto loginDto = new loginDto();
-                loginDto.setId(rs.getString("masterId"));
-                loginDto.setPassword(rs.getInt("pw"));
-                return loginDto;
-            }
-        }, dto.getPassword());
         return result.size() == 0 ? null : result.get(0);
     }
 }
