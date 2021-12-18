@@ -55,6 +55,7 @@ public class JoinController {
             return "Join/signUp";
         }
 
+
         String join = joinService.join(joinForm);
 
         switch (join){

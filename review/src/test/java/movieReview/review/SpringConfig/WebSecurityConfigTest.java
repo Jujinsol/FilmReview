@@ -26,11 +26,7 @@ class WebSecurityConfigTest {
         assertThat(passwordEncoder.matches(rawPassword,encodeResult)).isEqualTo(true);
     }
 
-    @Test
-    void passwordEncoder_matches_test(){
-        boolean matches = passwordEncoder.matches("1", "$2a$10$ir/LRR/RWwCnxd8cgMUVxu8c9Ydz9CWIUzVTYBsIbFI8UfoXHKZ5K");
-        System.out.println("matches = " + matches);
-    }
+
     @Test
     void 회원가입시_비밀번호_암호화테스트_비밀번호숫자만있을경우(){
         String rawPassword = "1234";

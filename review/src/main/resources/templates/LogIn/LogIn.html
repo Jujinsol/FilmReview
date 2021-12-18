@@ -9,7 +9,6 @@
 <body>
     <form th:action th:object="${loginForm}" method="post">
         <h1>로그인</h1>
-
         <div th:if="${#fields.hasGlobalErrors()}" th:each="err : ${#fields.globalErrors()}">
             <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>
         </div>
