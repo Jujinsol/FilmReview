@@ -12,5 +12,5 @@ import javax.validation.constraints.Positive;
 public class loginMangerInfo {
     private String id;
 
-    private int password;
+    private String password;
 }

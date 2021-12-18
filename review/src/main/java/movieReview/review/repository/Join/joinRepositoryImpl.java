@@ -34,7 +34,6 @@ public class joinRepositoryImpl implements joinRepository{
                 userinfo.getId(),
                 userinfo.getPassword(),
                 userinfo.getEmail());
-
         return result;
     }
 

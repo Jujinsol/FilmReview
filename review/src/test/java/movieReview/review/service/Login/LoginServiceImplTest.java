@@ -39,7 +39,7 @@ class LoginServiceImplTest {
         joinRepository.createUser(userinfo);
 
         loginuser.setId("jjs1111");
-        loginuser.setPassword(222);
+        loginuser.setPassword("222");
 
         mangerinfo.setId("imy0111");
         mangerinfo.setPassword("222");
@@ -49,7 +49,7 @@ class LoginServiceImplTest {
         joinRepository.createManger(mangerinfo);
 
         loginmanger.setId("imy0111");
-        loginmanger.setPassword(222);
+        loginmanger.setPassword("222");
     }
 
     @AfterEach
@@ -79,14 +79,14 @@ class LoginServiceImplTest {
         loginUserInfo result = loginServiceImpl.userLogin(loginuser);
 
         assertThat(result.getId()).isEqualTo("jjs1111");
-        assertThat(result.getPassword()).isEqualTo(222);
+        assertThat(result.getPassword()).isEqualTo("222");
     }
 
     @Test
     void userLoginid실패시(){
         loginUserInfo user = new loginUserInfo();
         user.setId("jj");
-        user.setPassword(222);
+        user.setPassword("222");
 
         loginUserInfo result = loginServiceImpl.userLogin(user);
 
@@ -99,7 +99,7 @@ class LoginServiceImplTest {
         loginMangerInfo result = loginServiceImpl.mangerLogin(loginmanger);
 
         assertThat(result.getId()).isEqualTo("imy0111");
-        assertThat(result.getPassword()).isEqualTo(222);
+        assertThat(result.getPassword()).isEqualTo("222");
 
     }
 }

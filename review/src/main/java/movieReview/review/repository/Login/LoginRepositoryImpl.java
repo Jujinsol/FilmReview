@@ -32,10 +32,10 @@ public class LoginRepositoryImpl implements LoginRepository {
             public loginDto mapRow(ResultSet rs, int rowNum) throws SQLException {
                 loginDto loginDto = new loginDto();
                 loginDto.setId(rs.getString("userId"));
-                loginDto.setPassword(rs.getInt("userPw"));
+                loginDto.setPassword(rs.getString("userPw"));
                 return loginDto;
             }
-        }, dto.getId(), dto.getPassword());
+        }, dto.getId());
         return result.size() == 0 ? null : result.get(0);
     }
 
@@ -48,10 +48,10 @@ public class LoginRepositoryImpl implements LoginRepository {
             public loginDto mapRow(ResultSet rs, int rowNum) throws SQLException {
                 loginDto loginDto = new loginDto();
                 loginDto.setId(rs.getString("masterId"));
-                loginDto.setPassword(rs.getInt("pw"));
+                loginDto.setPassword(rs.getString("pw"));
                 return loginDto;
             }
-        }, dto.getId(), dto.getPassword());
+        }, dto.getId());
         return result.size() == 0 ? null : result.get(0);
     }
 
@@ -62,7 +62,7 @@ public class LoginRepositoryImpl implements LoginRepository {
             public loginDto mapRow(ResultSet rs, int rowNum) throws SQLException {
                 loginDto loginDto = new loginDto();
                 loginDto.setId(rs.getString("userId"));
-                loginDto.setPassword(rs.getInt("userPw"));
+                loginDto.setPassword(rs.getString("userPw"));
                 return loginDto;
             }
         }, dto.getId());
@@ -76,7 +76,7 @@ public class LoginRepositoryImpl implements LoginRepository {
             public loginDto mapRow(ResultSet rs, int rowNum) throws SQLException {
                 loginDto loginDto = new loginDto();
                 loginDto.setId(rs.getString("masterId"));
-                loginDto.setPassword(rs.getInt("pw"));
+                loginDto.setPassword(rs.getString("pw"));
                 return loginDto;
             }
         }, dto.getId());
@@ -90,7 +90,7 @@ public class LoginRepositoryImpl implements LoginRepository {
             public loginDto mapRow(ResultSet rs, int rowNum) throws SQLException {
                 loginDto loginDto = new loginDto();
                 loginDto.setId(rs.getString("userId"));
-                loginDto.setPassword(rs.getInt("userPw"));
+                loginDto.setPassword(rs.getString("userPw"));
                 return loginDto;
             }
         }, dto.getPassword());
@@ -104,7 +104,7 @@ public class LoginRepositoryImpl implements LoginRepository {
             public loginDto mapRow(ResultSet rs, int rowNum) throws SQLException {
                 loginDto loginDto = new loginDto();
                 loginDto.setId(rs.getString("masterId"));
-                loginDto.setPassword(rs.getInt("pw"));
+                loginDto.setPassword(rs.getString("pw"));
                 return loginDto;
             }
         }, dto.getPassword());

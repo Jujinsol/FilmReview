@@ -14,6 +14,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -34,6 +35,15 @@ class LoginRepositoryImplTest {
     userInfo createuser = new userInfo();
     public static Map<String,String> sql = new HashMap<>();
 
+    String userid = "user1";
+    String userpassword = UUID.randomUUID().toString();
+    String userEmail = UUID.randomUUID().toString();
+
+    String managerId = "manager1";
+    String managerPassword = UUID.randomUUID().toString();
+    String managerEmail = UUID.randomUUID().toString();
+
+
     @BeforeAll
     static void createSql(){
         sql.put("userSql","SELECT userId, userPw,userEmail from user where userId=? AND userPw =?;");
@@ -49,24 +59,24 @@ class LoginRepositoryImplTest {
     @BeforeEach
     void createUserAndMaster(){
 
-        createuser.setId("jjs1111");
-        createuser.setPassword("222");
-        createuser.setEmail("abcd");
+        createuser.setId(userid);
+        createuser.setPassword(userpassword);
+        createuser.setEmail(userEmail);
 
         joinRepository.createUser(createuser);
 
-        userLogin.setId("jjs1111");
-        userLogin.setPassword(222);
+        userLogin.setId(userid);
+        userLogin.setPassword(userpassword);
 
-        createmanger.setId("imy0111");
-        createmanger.setPassword("222");
-        createmanger.setEmail("imy0529@asdf");
+        createmanger.setId(managerId);
+        createmanger.setPassword(managerPassword);
+        createmanger.setEmail(managerEmail);
         createmanger.setNumber(1111);
 
         joinRepository.createManger(createmanger);
 
-        mangerLogin.setId("imy0111");
-        mangerLogin.setPassword(222);
+        mangerLogin.setId(managerId);
+        mangerLogin.setPassword(managerPassword);
     }
 
     @AfterEach
@@ -82,8 +92,8 @@ class LoginRepositoryImplTest {
         loginDto checkuser = loginRepository.userLoginCheck(userLogin,sql.get("userSql"));
 
         //then
-        assertThat(checkuser.getId()).isEqualTo("jjs1111");
-        assertThat(checkuser.getPassword()).isEqualTo(222);
+        assertThat(checkuser.getId()).isEqualTo(userid);
+        assertThat(checkuser.getPassword()).isEqualTo(userpassword);
 
     }
 
@@ -93,8 +103,8 @@ class LoginRepositoryImplTest {
         loginDto checkmanger = loginRepository.mangerLoginCheck(mangerLogin,sql.get("masterSql"));
 
         //then
-        assertThat(checkmanger.getId()).isEqualTo("imy0111");
-        assertThat(checkmanger.getPassword()).isEqualTo(222);
+        assertThat(checkmanger.getId()).isEqualTo(managerId);
+        assertThat(checkmanger.getPassword()).isEqualTo(managerPassword);
     }
 
     @Test
@@ -103,8 +113,8 @@ class LoginRepositoryImplTest {
         loginDto check = loginRepository.userIdCheck(userLogin, sql.get("checkUserId"));
 
         //then
-        assertThat(check.getId()).isEqualTo("jjs1111");
-        assertThat(check.getPassword()).isEqualTo(222);
+        assertThat(check.getId()).isEqualTo(userid);
+        assertThat(check.getPassword()).isEqualTo(userpassword);
     }
 
     @Test
@@ -112,8 +122,8 @@ class LoginRepositoryImplTest {
         //when
         loginDto check = loginRepository.userPwCheck(userLogin, sql.get("checkUserPassword"));
         //then
-        assertThat(check.getId()).isEqualTo("jjs1111");
-        assertThat(check.getPassword()).isEqualTo(222);
+        assertThat(check.getId()).isEqualTo(userid);
+        assertThat(check.getPassword()).isEqualTo(userpassword);
 
     }
 
@@ -123,8 +133,8 @@ class LoginRepositoryImplTest {
         loginDto checkmanger = loginRepository.mangerIdCheck(mangerLogin, sql.get("checkMasterId"));
 
         //then
-        assertThat(checkmanger.getId()).isEqualTo("imy0111");
-        assertThat(checkmanger.getPassword()).isEqualTo(222);
+        assertThat(checkmanger.getId()).isEqualTo(managerId);
+        assertThat(checkmanger.getPassword()).isEqualTo(managerPassword);
     }
 
     @Test
@@ -133,7 +143,7 @@ class LoginRepositoryImplTest {
         loginDto checkmanger = loginRepository.mangerPwCheck(mangerLogin, sql.get("checkMasterPassword"));
 
         //then
-        assertThat(checkmanger.getId()).isEqualTo("imy0111");
-        assertThat(checkmanger.getPassword()).isEqualTo(222);
+        assertThat(checkmanger.getId()).isEqualTo(managerId);
+        assertThat(checkmanger.getPassword()).isEqualTo(managerPassword);
     }
 }

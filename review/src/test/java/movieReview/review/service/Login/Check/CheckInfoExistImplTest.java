@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -26,6 +27,11 @@ class CheckInfoExistImplTest {
     @Autowired
     joinRepositoryImpl joinRepository;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    String encodePassword;
+    String password;
 
     userInfo userinfo = new userInfo();
     mangerInfo mangerinfo = new mangerInfo();
@@ -33,15 +39,18 @@ class CheckInfoExistImplTest {
     @BeforeEach
     void createUserAndMaster(){
 
+        password = "222";
+        encodePassword = passwordEncoder.encode(password);
+
         userinfo.setId("jjs1111");
-        userinfo.setPassword("222");
+        userinfo.setPassword(encodePassword);
         userinfo.setEmail("abcd");
 
         joinRepository.createUser(userinfo);
 
 
         mangerinfo.setId("imy0111");
-        mangerinfo.setPassword("222");
+        mangerinfo.setPassword(encodePassword);
         mangerinfo.setEmail("imy0529@asdf");
         mangerinfo.setNumber(1111);
 
@@ -58,17 +67,17 @@ class CheckInfoExistImplTest {
     @Test
     void checkUser성공() {
         //when
-        loginDto userInfo = checkInfoExist.checkUser("jjs1111", 222);
+        loginDto userInfo = checkInfoExist.checkUser("jjs1111", "222");
 
         //then
         assertThat(userInfo.getId()).isEqualTo("jjs1111");
-        assertThat(userInfo.getPassword()).isEqualTo(222);
+        assertThat(userInfo.getPassword()).isEqualTo(encodePassword);
     }
 
     @Test
     void checkUser로그인실패아예다른idpw작성시(){
         //when
-        loginDto jjj = checkInfoExist.checkUser("jjj", 1);
+        loginDto jjj = checkInfoExist.checkUser("jjj", "1");
         //then
         assertThat(jjj).isNull();
     }
@@ -76,16 +85,16 @@ class CheckInfoExistImplTest {
     @Test
     void checkManger성공() {
         //given
-        loginDto mangerInfo = checkInfoExist.checkManger("imy0111", 222);
+        loginDto mangerInfo = checkInfoExist.checkManger("imy0111", "222");
 
         assertThat(mangerInfo.getId()).isEqualTo("imy0111");
-        assertThat(mangerInfo.getPassword()).isEqualTo(222);
+        assertThat(mangerInfo.getPassword()).isEqualTo(encodePassword);
 
     }
 
     @Test
     void checkManger로그인실패아에다른idpw작성시(){
-        loginDto iii = checkInfoExist.checkManger("iii", 11);
+        loginDto iii = checkInfoExist.checkManger("iii", "11");
         assertThat(iii).isNull();
     }
 
@@ -96,7 +105,7 @@ class CheckInfoExistImplTest {
         loginDto userInfo = checkInfoExist.userIdCheck("jjs1111");
         //then
         assertThat(userInfo.getId()).isEqualTo("jjs1111");
-        assertThat(userInfo.getPassword()).isEqualTo(222);
+        assertThat(userInfo.getPassword()).isEqualTo(encodePassword);
 
     }
 
@@ -115,7 +124,7 @@ class CheckInfoExistImplTest {
 
         //then
         assertThat(mangerInfo.getId()).isEqualTo("imy0111");
-        assertThat(mangerInfo.getPassword()).isEqualTo(222);
+        assertThat(mangerInfo.getPassword()).isEqualTo(encodePassword);
     }
 
     @Test
@@ -130,17 +139,17 @@ class CheckInfoExistImplTest {
     @Test
     void userPwChcek성공() {
         //when
-        loginDto userInfo = checkInfoExist.userPwChcek(222);
+        loginDto userInfo = checkInfoExist.userPwChcek("222");
 
         //then
         assertThat(userInfo.getId()).isEqualTo("jjs1111");
-        assertThat(userInfo.getPassword()).isEqualTo(222);
+        assertThat(userInfo.getPassword()).isEqualTo(encodePassword);
     }
 
     @Test
     void userPwCheck실패(){
         //when
-        loginDto userInfo = checkInfoExist.userPwChcek(1);
+        loginDto userInfo = checkInfoExist.userPwChcek("1");
         //then
         assertThat(userInfo).isNull();
 
@@ -149,10 +158,10 @@ class CheckInfoExistImplTest {
     @Test
     void mangerPwCheck성공() {
         //when
-        loginDto mangerInfo = checkInfoExist.mangerPwCheck(222);
+        loginDto mangerInfo = checkInfoExist.mangerPwCheck("222");
 
         //then
         assertThat(mangerInfo.getId()).isEqualTo("imy0111");
-        assertThat(mangerInfo.getPassword()).isEqualTo(222);
+        assertThat(mangerInfo.getPassword()).isEqualTo(encodePassword);
     }
 }
