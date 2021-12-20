@@ -4,6 +4,7 @@ import movieReview.review.Domain.MovieInfo.JpaMovieInfo;
 import movieReview.review.Domain.MovieInfo.movieInfo;
 import movieReview.review.repository.Upload.UploadRepositoryImpl;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ class getMovieRepositoryImplTest {
     getMovieRepository getMovieRepository;
 
     @AfterEach
-    void delete(){
+    void delete() {
         int i = uploadRepository.movieDelete(movieinfo);
         assertThat(i).isEqualTo(1);
     }
@@ -48,22 +49,26 @@ class getMovieRepositoryImplTest {
     void findMovie() {
         List<JpaMovieInfo> movie = getMovieRepository.findMovie(movieinfo);
         JpaMovieInfo jpaMovieInfo = movie.get(0);
-        assertThat(jpaMovieInfo.getMovieName()).isEqualTo("제목");
-        assertThat(jpaMovieInfo.getOpenYear()).isEqualTo(2010);
-        assertThat(jpaMovieInfo.getPhotoUri()).isEqualTo("static/---");
-        assertThat(jpaMovieInfo.getPhotoOriName()).isEqualTo("test.png");
-        assertThat(jpaMovieInfo.getDirectorName()).isEqualTo("주진성");
-        assertThat(jpaMovieInfo.getStoryLine()).isEqualTo("줄거리");
+        Assertions.assertAll(
+                () -> assertThat(jpaMovieInfo.getMovieName()).isEqualTo("제목"),
+                () -> assertThat(jpaMovieInfo.getOpenYear()).isEqualTo(2010),
+                () -> assertThat(jpaMovieInfo.getPhotoUri()).isEqualTo("static/---"),
+                () -> assertThat(jpaMovieInfo.getPhotoOriName()).isEqualTo("test.png"),
+                () -> assertThat(jpaMovieInfo.getDirectorName()).isEqualTo("주진성"),
+                () -> assertThat(jpaMovieInfo.getStoryLine()).isEqualTo("줄거리")
+        );
     }
 
     @Test
-    void photoName으로findMovie(){
+    void photoName으로_findMovie() {
         JpaMovieInfo jpaMovieInfo = getMovieRepository.EachMovieInfo(movieinfo);
-        assertThat(jpaMovieInfo.getMovieName()).isEqualTo("제목");
-        assertThat(jpaMovieInfo.getOpenYear()).isEqualTo(2010);
-        assertThat(jpaMovieInfo.getPhotoUri()).isEqualTo("static/---");
-        assertThat(jpaMovieInfo.getPhotoOriName()).isEqualTo("test.png");
-        assertThat(jpaMovieInfo.getDirectorName()).isEqualTo("주진성");
-        assertThat(jpaMovieInfo.getStoryLine()).isEqualTo("줄거리");
+        Assertions.assertAll(
+                () -> assertThat(jpaMovieInfo.getMovieName()).isEqualTo("제목"),
+                () -> assertThat(jpaMovieInfo.getOpenYear()).isEqualTo(2010),
+                () -> assertThat(jpaMovieInfo.getPhotoUri()).isEqualTo("static/---"),
+                () -> assertThat(jpaMovieInfo.getPhotoOriName()).isEqualTo("test.png"),
+                () -> assertThat(jpaMovieInfo.getDirectorName()).isEqualTo("주진성"),
+                () -> assertThat(jpaMovieInfo.getStoryLine()).isEqualTo("줄거리")
+        );
     }
 }

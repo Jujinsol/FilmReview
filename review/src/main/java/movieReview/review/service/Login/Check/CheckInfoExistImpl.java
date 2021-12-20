@@ -35,10 +35,7 @@ public class CheckInfoExistImpl implements CheckInfoExist {
     }
 
     private loginDto matcheTest(CharSequence rawPassword, String encodePassword, loginDto dto){
-        log.info("rawPassword={}",rawPassword);
-        log.info("encodePassword={}",encodePassword);
         boolean matches = passwordEncoder.matches(rawPassword, encodePassword);
-        log.info("result={}",matches);
         if (matches) {
             return dto;
         }
