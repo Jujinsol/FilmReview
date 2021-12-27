@@ -103,7 +103,7 @@ class joinRepositoryImplTest {
         //then
         assertThat(findResult.getId()).isEqualTo("imy0529");
         assertThat(findResult.getEmail()).isEqualTo("imy0529@naver.com");
-        assertThat(findResult.getPassword()).isEqualTo(1111);
+        assertThat(findResult.getPassword()).isEqualTo("1111");
         assertThat(findResult.getNumber()).isEqualTo(2222);
 
         jo.deleteManger(mangerinfo);

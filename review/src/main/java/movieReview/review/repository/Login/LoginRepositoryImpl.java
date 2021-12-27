@@ -27,14 +27,11 @@ public class LoginRepositoryImpl implements LoginRepository {
     // 유저로그인 체크
     @Override
     public loginDto userLoginCheck(loginDto dto, String sql) {
-        List<loginDto> result = template.query(sql, new RowMapper<loginDto>() {
-            @Override
-            public loginDto mapRow(ResultSet rs, int rowNum) throws SQLException {
-                loginDto loginDto = new loginDto();
-                loginDto.setId(rs.getString("userId"));
-                loginDto.setPassword(rs.getString("userPw"));
-                return loginDto;
-            }
+        List<loginDto> result = template.query(sql, (rs, rowNum) -> {
+            loginDto loginDto = new loginDto();
+            loginDto.setId(rs.getString("userId"));
+            loginDto.setPassword(rs.getString("userPw"));
+            return loginDto;
         }, dto.getId());
         return result.size() == 0 ? null : result.get(0);
     }
@@ -43,15 +40,12 @@ public class LoginRepositoryImpl implements LoginRepository {
     // 관리자로그인 체크
     @Override
     public loginDto mangerLoginCheck(loginDto dto, String sql) {
-        List<loginDto> result = template.query(sql, new RowMapper<loginDto>() {
-            @Override
-            public loginDto mapRow(ResultSet rs, int rowNum) throws SQLException {
-                loginDto loginDto = new loginDto();
-                loginDto.setId(rs.getString("masterId"));
-                loginDto.setPassword(rs.getString("pw"));
-                return loginDto;
-            }
-        }, dto.getId());
+        List<loginDto> result = template.query(sql, (rs, rowNum) -> {
+            loginDto loginDto = new loginDto();
+            loginDto.setId(rs.getString("masterId"));
+            loginDto.setPassword(rs.getString("pw"));
+            return loginDto;
+        },dto.getId());
         return result.size() == 0 ? null : result.get(0);
     }
 }

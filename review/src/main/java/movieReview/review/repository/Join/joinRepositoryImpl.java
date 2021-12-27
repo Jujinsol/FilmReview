@@ -16,11 +16,12 @@ import java.util.List;
 
 @Slf4j
 @Repository
-public class joinRepositoryImpl implements joinRepository{
+public class joinRepositoryImpl implements joinRepository {
 
     private final JdbcTemplate template;
+
     @Autowired
-    public joinRepositoryImpl(JdbcTemplate template){
+    public joinRepositoryImpl(JdbcTemplate template) {
         this.template = template;
     }
 
@@ -54,118 +55,68 @@ public class joinRepositoryImpl implements joinRepository{
     // 내정보 확인 ( 유저 )
     @Override
     public userInfo selectMyinfo(userInfo userinfo) {
-        List<userInfo> stocks = null;
-        final String sql = "SELECT * FROM user WHERE userId = ?";
-
-        stocks = template.query(sql, new PreparedStatementSetter() {
-
-            @Override
-            public void setValues(PreparedStatement pstmt) throws SQLException {
-                pstmt.setString(1, userinfo.getId());
-
-            }
-        }, new RowMapper<userInfo>() {
-
-            @Override
-            public userInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
-                userinfo.setId(rs.getString("userId"));
-                userinfo.setPassword(rs.getString("userPw"));
-                userinfo.setEmail(rs.getString("userEmail"));
-                return userinfo;
-            }
-
-        });
-        if (stocks.isEmpty()) {
-            return null;
-        } else {
-            return userinfo;
-        }
+        String sql = "SELECT * FROM user WHERE userId = ?";
+        List<userInfo> result = template.query(
+                sql, (rs, rowNum) -> {
+                    userInfo user = new userInfo();
+                    user.setId(rs.getString("userId"));
+                    user.setPassword(rs.getString("userPw"));
+                    user.setEmail(rs.getString("userEmail"));
+                    return user;
+                }, userinfo.getId()
+        );
+        return result.size() != 0 ? result.get(0) : null;
     }
 
     // 관리자 정보확인
     @Override
     public mangerInfo selectMangerinfo(mangerInfo mangerinfo) {
-        List<mangerInfo> mang = null;
-        final String sql = "SELECT * FROM master WHERE masterId = ?";
-
-        mang = template.query(sql, new PreparedStatementSetter() {
-
-            @Override
-            public void setValues(PreparedStatement pstmt) throws SQLException {
-                pstmt.setString(1, mangerinfo.getId());
-
-            }
-        }, new RowMapper<mangerInfo>() {
-
-            @Override
-            public mangerInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
-                mangerinfo.setId(rs.getString("masterId"));
-                mangerinfo.setPassword(rs.getString("pw"));
-                mangerinfo.setEmail(rs.getString("email"));
-                mangerinfo.setNumber(rs.getInt("number"));
-                return mangerinfo;
-            }
-
-        });
-        if (mang.isEmpty()) {
-            return null;
-        } else {
-            return mangerinfo;
-        }
+        String sql = "SELECT * FROM master WHERE masterId = ?";
+        List<mangerInfo> result = template.query(sql, (rs, rowNum) -> {
+            mangerInfo manager = new mangerInfo();
+            manager.setId(rs.getString("masterId"));
+            manager.setPassword(rs.getString("pw"));
+            manager.setEmail(rs.getString("email"));
+            manager.setNumber(rs.getInt("number"));
+            return manager;
+        }, mangerinfo.getId());
+        return result.size() != 0 ? result.get(0) : null;
     }
 
     // 유저 비밀번호 변경
     @Override
     public int updateMyinfo(userInfo userinfo) {
-        int result = 0;
-
-        final String sql = "UPDATE user SET userPw = ? WHERE userId = ?";
-        result = template.update(sql,
+        String sql = "UPDATE user SET userPw = ? WHERE userId = ?";
+        return template.update(sql,
                 userinfo.getPassword(),
                 userinfo.getId()
         );
-
-        return result;
     }
 
     @Override
     public int updateMangInfo(mangerInfo mangerinfo) {
-        int result = 0;
-
-        final String sql = "UPDATE master SET pw = ? WHERE masterId = ?";
-        result = template.update(sql,
+        String sql = "UPDATE master SET pw = ? WHERE masterId = ?";
+        return template.update(sql,
                 mangerinfo.getPassword(),
                 mangerinfo.getId()
         );
-
-        return result;
     }
 
     // 유저 회원 탈퇴
     @Override
     public int delete(userInfo userinfo) {
-        int result = 0;
-
-        final String sql = "DELETE FROM user WHERE userId = ?";
-        result = template.update(sql,
+        String sql = "DELETE FROM user WHERE userId = ?";
+        return template.update(sql,
                 userinfo.getId()
         );
-
-        return result;
     }
 
     // 관리자 회원 탈퇴
     @Override
-    public int deleteManger(mangerInfo mangerinfo){
-        int result = 0;
-
-
-        final String sql = "DELETE FROM master WHERE masterId = ?";
-        result = template.update(sql,
+    public int deleteManger(mangerInfo mangerinfo) {
+        String sql = "DELETE FROM master WHERE masterId = ?";
+        return template.update(sql,
                 mangerinfo.getId()
         );
-
-        return result;
     }
-
 }
