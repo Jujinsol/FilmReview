@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import movieReview.review.Domain.ReviewInfo.JpaRevieTab;
 import movieReview.review.Domain.ReviewInfo.ReviewInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -44,36 +43,26 @@ public class ReviewFunctionRepositoryImpl implements ReviewFunctionRepository {
     @Override
     public List<JpaRevieTab> selectReview(ReviewInfo reviewInfo) {
         String sql = "select * from reviewTab where photoOriName = ?";
-        return template.query(
-                sql, new RowMapper<JpaRevieTab>() {
-                    @Override
-                    public JpaRevieTab mapRow(ResultSet rs, int rowNum) throws SQLException {
-                        JpaRevieTab reviews = new JpaRevieTab();
-                        reviews.setPhotoOriName(rs.getString("photoOriName"));
-                        reviews.setReviewUser(rs.getString("reviewUser"));
-                        reviews.setMovieReivew(rs.getString("movieReview"));
-                        reviews.setMoviePoint(rs.getInt("moviePoint"));
-                        return reviews;
-                    }
-                }, reviewInfo.getPhotoOriName()
-        );
+        return template.query(sql, (rs, rowNum) -> {
+            JpaRevieTab reviews = new JpaRevieTab();
+            reviews.setPhotoOriName(rs.getString("photoOriName"));
+            reviews.setReviewUser(rs.getString("reviewUser"));
+            reviews.setMovieReivew(rs.getString("movieReview"));
+            reviews.setMoviePoint(rs.getInt("moviePoint"));
+            return reviews;
+        }, reviewInfo.getPhotoOriName());
     }
 
     @Override
     public List<ReviewInfo> selectMyReviews(ReviewInfo reviewInfo) {
         String sql = "select * from reviewTab where reviewUser = ?";
-        return template.query(
-                sql, new RowMapper<ReviewInfo>() {
-                    @Override
-                    public ReviewInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
-                        ReviewInfo reviewInfo1 = new ReviewInfo();
-                        reviewInfo1.setPhotoOriName(rs.getString("photoOriName"));
-                        reviewInfo1.setReviewUser(rs.getString("reviewUser"));
-                        reviewInfo1.setMovieReivew(rs.getString("movieReview"));
-                        reviewInfo1.setMoviePoint(rs.getInt("moviePoint"));
-                        return reviewInfo1;
-                    }
-                }, reviewInfo.getReviewUser()
-        );
+        return template.query(sql, (rs, rowNum) -> {
+            ReviewInfo reviewInfo1 = new ReviewInfo();
+            reviewInfo1.setPhotoOriName(rs.getString("photoOriName"));
+            reviewInfo1.setReviewUser(rs.getString("reviewUser"));
+            reviewInfo1.setMovieReivew(rs.getString("movieReview"));
+            reviewInfo1.setMoviePoint(rs.getInt("moviePoint"));
+            return reviewInfo1;
+        },reviewInfo.getReviewUser());
     }
 }

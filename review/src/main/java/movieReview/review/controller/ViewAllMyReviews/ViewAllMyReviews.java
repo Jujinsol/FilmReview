@@ -2,7 +2,6 @@ package movieReview.review.controller.ViewAllMyReviews;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import movieReview.review.Domain.ReviewInfo.ReviewInfo;
 import movieReview.review.Session.SessionConst;
 import movieReview.review.service.reviewFunction.GetAllMyReviews.ChangeOriginalMovieName;
 import movieReview.review.service.reviewFunction.GetAllMyReviews.GetAllMyReviews;

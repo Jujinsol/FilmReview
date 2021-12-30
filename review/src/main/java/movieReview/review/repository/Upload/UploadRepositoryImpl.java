@@ -23,7 +23,7 @@ import java.util.Map;
 @Repository
 @Slf4j
 @RequiredArgsConstructor
-public class UploadRepositoryImpl implements UploadRepository{
+public class UploadRepositoryImpl implements UploadRepository {
 
     private final JdbcTemplate template;
 
@@ -44,52 +44,35 @@ public class UploadRepositoryImpl implements UploadRepository{
         );
 
         final String sql2 = "INSERT INTO reviewTab (photoOriName) values (?)";
-        result2 =  template.update(sql2,
+        result2 = template.update(sql2,
                 movieinfo.getPhotoOriName());
 
-        if(result == 1 && result2 == 1){
+        if (result == 1 && result2 == 1) {
             return 1;
-        }else{
+        } else {
             return 0;
         }
     }
 
     @Override
     public photoUriInfo select(photoUriInfo photoUriinfo) {
-        List<photoUriInfo> mang = null;
-        final String sql = "SELECT photoUri FROM photoinfo WHERE photoOriName = ?";
-
-        mang = template.query(sql, new PreparedStatementSetter() {
-
-            @Override
-            public void setValues(PreparedStatement pstmt) throws SQLException {
-                pstmt.setString(1, photoUriinfo.getPhotoOriName());
-
-            }
-        }, new RowMapper<photoUriInfo>() {
-
-            @Override
-            public photoUriInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
-                photoUriinfo.setPhotoUri(rs.getString("photoUri"));
-                return photoUriinfo;
-            }
-
-        });
-        if (mang.isEmpty()) {
-            return null;
-        } else {
-            return photoUriinfo;
-        }
+        String sql = "SELECT photoUri FROM photoinfo WHERE photoOriName = ?";
+        List<photoUriInfo> result = template.query(sql, (rs, rowNum) -> {
+            photoUriInfo info = new photoUriInfo();
+            info.setPhotoUri(rs.getString("photoUri"));
+            return info;
+        }, photoUriinfo.getPhotoOriName());
+        return result.size() != 0 ? result.get(0) : null;
     }
 
     @Override
     public int movieDelete(movieInfo movieinfo) {
         int result = 0;
-        Map<Integer,String> sql = new HashMap<>();
-        sql.put(0,"DELETE FROM photoinfo WHERE photoOriName = ?");
-        sql.put(1,"DELETE FROM reviewTab WHERE photoOriName=?");
+        Map<Integer, String> sql = new HashMap<>();
+        sql.put(0, "DELETE FROM photoinfo WHERE photoOriName = ?");
+        sql.put(1, "DELETE FROM reviewTab WHERE photoOriName=?");
 
-        for(int i = 0; i<sql.size(); i++){
+        for (int i = 0; i < sql.size(); i++) {
             result = template.update(
                     sql.get(i),
                     movieinfo.getPhotoOriName()
@@ -101,16 +84,11 @@ public class UploadRepositoryImpl implements UploadRepository{
     @Override
     public List<photoUriInfo> findMyPhotoOriName(movieInfo movieInfo) {
         String sql = "select photoOriName from photoinfo where movieName=?";
-        return template.query(
-                sql, new RowMapper<photoUriInfo>() {
-                    @Override
-                    public photoUriInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
-                        photoUriInfo photoUriInfos = new photoUriInfo();
-                        photoUriInfos.setPhotoOriName(rs.getString("photoOriName"));
-                        return photoUriInfos;
-                    }
-                }, movieInfo.getMovieName()
-        );
+        return template.query(sql, (rs, rowNum) -> {
+            photoUriInfo photoUriInfos = new photoUriInfo();
+            photoUriInfos.setPhotoOriName(rs.getString("photoOriName"));
+            return photoUriInfos;
+        }, movieInfo.getMovieName());
     }
 
 }
