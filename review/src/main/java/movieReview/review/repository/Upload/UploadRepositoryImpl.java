@@ -29,10 +29,10 @@ public class UploadRepositoryImpl implements UploadRepository {
 
     @Override
     public int insert(movieInfo movieinfo) {
-        int result = 0;
-        int result2 = 0;
+        int result;
+        int result2;
 
-        final String sql = "INSERT INTO photoinfo (photoOriName, photoUri, storyLine, movieName, openYear, directorName, trailerCode) values (?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO photoinfo (photoOriName, photoUri, storyLine, movieName, openYear, directorName, trailerCode) values (?,?,?,?,?,?,?)";
         result = template.update(sql,
                 movieinfo.getPhotoOriName(),
                 movieinfo.getPhotoUri(),
@@ -43,15 +43,10 @@ public class UploadRepositoryImpl implements UploadRepository {
                 movieinfo.getTrailerCode()
         );
 
-        final String sql2 = "INSERT INTO reviewTab (photoOriName) values (?)";
+        String sql2 = "INSERT INTO reviewTab (photoOriName) values (?)";
         result2 = template.update(sql2,
                 movieinfo.getPhotoOriName());
-
-        if (result == 1 && result2 == 1) {
-            return 1;
-        } else {
-            return 0;
-        }
+        return result == 1 && result2 == 1 ? 1 : 0;
     }
 
     @Override
@@ -68,17 +63,21 @@ public class UploadRepositoryImpl implements UploadRepository {
     @Override
     public int movieDelete(movieInfo movieinfo) {
         int result = 0;
-        Map<Integer, String> sql = new HashMap<>();
-        sql.put(0, "DELETE FROM photoinfo WHERE photoOriName = ?");
-        sql.put(1, "DELETE FROM reviewTab WHERE photoOriName=?");
 
-        for (int i = 0; i < sql.size(); i++) {
-            result = template.update(
-                    sql.get(i),
-                    movieinfo.getPhotoOriName()
-            );
-        }
-        return result;
+        String sql = "DELETE FROM photoinfo WHERE photoOriName = ?";
+        return template.update(sql,movieinfo.getPhotoOriName());
+
+//        Map<Integer, String> sql = new HashMap<>();
+//        sql.put(0, "DELETE FROM photoinfo WHERE photoOriName = ?");
+//        sql.put(1, "DELETE FROM reviewTab WHERE photoOriName=?");
+//
+//        for (int i = 0; i < sql.size(); i++) {
+//            result = template.update(
+//                    sql.get(i),
+//                    movieinfo.getPhotoOriName()
+//            );
+//        }
+//        return result;
     }
 
     @Override
