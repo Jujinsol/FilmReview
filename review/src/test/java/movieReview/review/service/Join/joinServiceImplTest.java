@@ -54,6 +54,18 @@ class joinServiceImplTest {
     }
 
     @Test
+    void 유저회원탈퇴(){
+        JoinForm joinForm = new JoinForm();
+        joinForm.setId("MyUser");
+        joinForm.setEmail("jjsair0412@naver.com");
+        joinForm.setPassword("1234");
+        joinService.join(joinForm);
+
+        int deleteResult = joinService.delete(joinForm.getId());
+        assertThat(deleteResult).isEqualTo(1);
+    }
+
+    @Test
     @Transactional
     @Rollback
     void 관리자가입성공(){
