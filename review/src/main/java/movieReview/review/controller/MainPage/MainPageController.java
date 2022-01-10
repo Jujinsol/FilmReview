@@ -49,6 +49,7 @@ public class MainPageController {
     @ResponseBody
     @GetMapping("/moviePhoto/{filename}")
     public Resource downloadImage(@PathVariable String filename) throws MalformedURLException {
+        log.info("uri={}",uploadService.getFullPath(filename));
         return new UrlResource("file:"+uploadService.getFullPath(filename));
     }
 
